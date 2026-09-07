@@ -11,15 +11,20 @@
 <style>
   :root{
     /* Paleta tomada directo de tailwind.config.js de mira-pos, para que
-       la landing se sienta del mismo software y no de otra marca. */
+       la landing se sienta del mismo software y no de otra marca.
+       Se amplía con el warn/danger/azul histórico del mismo config,
+       en vez de inventar colores nuevos ajenos al producto. */
     --lino:#F7F7F5;        /* canvas del POS */
     --lino-alt:#EEEEEA;
     --tinta:#14161A;       /* ink del POS */
     --tinta-suave:#5A5F66;
     --ciruela:#059669;     /* accent del POS (verde esmeralda) */
     --ciruela-oscura:#047857; /* accentDark del POS */
-    --rosa:#D97706;        /* warn del POS, como acento secundario */
-    --verde:#16A34A;       /* ok del POS, para el sello del ticket */
+    --verde:#16A34A;       /* ok del POS */
+    --ambar:#D97706;       /* warn del POS */
+    --azul:#2563EB;        /* accent original del POS antes de pasar a verde */
+    --danger:#DC2626;      /* reservado para alertas reales, no decorativo */
+    --rosa:#D97706;        /* alias retro-compatible, igual a --ambar */
     --papel:#FFFFFF;
     --borde:#DEDEDA;
     --serif: 'Fraunces', serif;
@@ -76,15 +81,72 @@
   .nav-cta:hover{background:var(--ciruela-oscura);}
   .nav-toggle{display:none; background:none; border:none; font-size:1.6rem; cursor:pointer; color:var(--tinta);}
 
+  .nav-mobile{
+    display:none; flex-direction:column; gap:2px;
+    background:var(--lino); border-bottom:1px solid var(--borde);
+    padding:8px 28px 18px;
+  }
+  .nav-mobile.abierto{ display:flex; }
+  .nav-mobile a{
+    padding:12px 0; text-decoration:none; color:var(--tinta);
+    border-bottom:1px solid var(--borde); font-size:0.98rem;
+  }
+  .nav-mobile a:last-child{ border-bottom:none; }
+
   @media (max-width:820px){
     .nav-links{display:none;}
     .nav-toggle{display:block;}
   }
+  @media (min-width:821px){
+    .nav-mobile{display:none !important;}
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .revelar{
+    opacity:0; transform:translateY(22px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .revelar.visible{ opacity:1; transform:translateY(0); }
+  .revelar-hijos > *{ opacity:0; transform:translateY(16px); transition:opacity .55s ease, transform .55s ease; }
+  .revelar-hijos.visible > *{ opacity:1; transform:translateY(0); }
+  .revelar-hijos.visible > *:nth-child(1){ transition-delay:.03s; }
+  .revelar-hijos.visible > *:nth-child(2){ transition-delay:.11s; }
+  .revelar-hijos.visible > *:nth-child(3){ transition-delay:.19s; }
+  .revelar-hijos.visible > *:nth-child(4){ transition-delay:.27s; }
+  .revelar-hijos.visible > *:nth-child(5){ transition-delay:.35s; }
+
+  @media (prefers-reduced-motion: reduce){
+    .revelar, .revelar-hijos > *{ opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+
+  /* ---------- Imágenes con zoom sutil en hover ---------- */
+  .foto{
+    overflow:hidden; border-radius:2px; position:relative;
+  }
+  .foto img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform .6s ease;
+    display:block;
+  }
+  .foto:hover img{ transform:scale(1.06); }
 
   /* ---------- Hero ---------- */
   .hero{
     padding:88px 0 96px;
+    position:relative;
+    overflow:hidden;
   }
+  .hero::before{
+    content:'';
+    position:absolute;
+    top:-180px; left:-120px;
+    width:560px; height:560px;
+    background:radial-gradient(circle, rgba(5,150,105,0.16) 0%, rgba(217,119,6,0.10) 45%, rgba(37,99,235,0) 75%);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:0;
+  }
+  .hero .wrap{ position:relative; z-index:1; }
   .hero-grid{
     display:grid; grid-template-columns:1.05fr 0.95fr; gap:64px; align-items:center;
   }
@@ -114,14 +176,75 @@
   .btn-primaria{ background:var(--ciruela); color:var(--papel); }
   .btn-primaria:hover{ background:var(--ciruela-oscura); }
   .btn-secundaria{ background:transparent; color:var(--tinta); border:1px solid var(--tinta-suave); }
-  .btn-secundaria:hover{ border-color:var(--tinta); }
+  .btn-secundaria:hover{ border-color:var(--azul); color:var(--azul); }
 
   .hero-nota{
     margin-top:22px; font-size:0.88rem; color:var(--tinta-suave);
   }
 
+  /* ---------- Franja de confianza (justo bajo el hero) ---------- */
+  .banda-confianza{
+    background:linear-gradient(90deg, rgba(5,150,105,0.06) 0%, var(--lino-alt) 35%, rgba(217,119,6,0.06) 100%);
+    border-top:1px solid var(--borde);
+    border-bottom:1px solid var(--borde);
+    padding:36px 0;
+  }
+  .banda-grid{
+    display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center;
+  }
+  .banda-texto{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .banda-tienda{
+    font-family:var(--mono); font-size:0.72rem; color:var(--ciruela);
+    text-transform:uppercase; letter-spacing:0.04em; white-space:nowrap;
+  }
+  .banda-cita{
+    font-family:var(--serif); font-size:1.1rem; color:var(--tinta);
+    max-width:44ch;
+  }
+  .banda-link{
+    font-size:0.88rem; font-weight:600; color:var(--ciruela);
+    text-decoration:none; white-space:nowrap;
+    border-bottom:1px solid transparent; transition:border-color .2s;
+  }
+  .banda-link:hover{ border-color:var(--ciruela); }
+  .banda-stats{
+    display:flex; gap:32px;
+  }
+  .stat-mini{ text-align:left; }
+  .stat-mini .num{
+    font-family:var(--serif); font-size:1.6rem; color:var(--ciruela); line-height:1;
+  }
+  .stat-mini:nth-child(2) .num{ color:var(--ambar); }
+  .stat-mini:nth-child(3) .num{ color:var(--azul); }
+  .stat-mini .label{
+    font-size:0.78rem; color:var(--tinta-suave); margin-top:4px; max-width:14ch;
+  }
+  @media (max-width:900px){
+    .banda-grid{ grid-template-columns:1fr; gap:24px; }
+    .banda-stats{ gap:24px; }
+  }
+  @media (max-width:520px){
+    .banda-stats{ flex-wrap:wrap; row-gap:16px; }
+  }
+
   /* ---------- Ticket mockup ---------- */
-  .ticket-holder{ display:flex; justify-content:center; }
+  .ticket-holder{
+    position:relative; display:flex; justify-content:center; align-items:flex-end;
+    min-height:380px;
+  }
+  .hero-foto{
+    position:absolute; inset:0;
+    border-radius:4px; overflow:hidden;
+  }
+  .hero-foto img{
+    width:100%; height:100%; object-fit:cover; display:block;
+    will-change:transform;
+  }
+  .hero-foto::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(20,22,26,0) 40%, rgba(20,22,26,0.35) 100%);
+  }
+  .ticket{ position:relative; z-index:2; margin-bottom:-20px; }
   .ticket{
     background:var(--papel);
     width:280px;
@@ -191,16 +314,46 @@
     font-family:var(--serif); font-size:1.6rem; color:var(--ciruela);
     padding-top:2px;
   }
+  .paso:nth-child(2) .paso-num{ color:var(--ambar); }
+  .paso:nth-child(3) .paso-num{ color:var(--azul); }
+  .paso:nth-child(4) .paso-num{ color:var(--ambar); }
+  .paso:nth-child(5) .paso-num{ color:var(--ciruela); }
   .paso-contenido{
     padding-bottom:38px; border-left:1px solid var(--borde); padding-left:28px; margin-left:14px;
+    opacity:0; transform:translateX(-14px);
+    transition:opacity .55s ease, transform .55s ease;
+  }
+  .paso-contenido.visible{ opacity:1; transform:translateX(0); }
+  @media (prefers-reduced-motion: reduce){
+    .paso-contenido{ opacity:1 !important; transform:none !important; }
   }
   .paso:last-child .paso-contenido{ border-left:1px solid transparent; padding-bottom:0; }
   .paso-contenido h3{ font-family:var(--serif); font-weight:500; font-size:1.25rem; margin-bottom:6px; }
   .paso-contenido p{ color:var(--tinta-suave); max-width:56ch; }
 
   /* ---------- Confianza ---------- */
+  .confianza-layout{
+    display:grid; grid-template-columns:0.85fr 1.15fr; gap:56px; align-items:start;
+  }
+  .confianza-foto{ aspect-ratio:4/5; }
   .confianza-grid{
     display:grid; grid-template-columns:repeat(2, 1fr); gap:28px 40px;
+  }
+  @media (max-width:820px){
+    .confianza-layout{ grid-template-columns:1fr; }
+    .confianza-foto{ aspect-ratio:16/9; order:-1; }
+  }
+
+  /* ---------- Galería ---------- */
+  .galeria{
+    display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:14px;
+    height:360px;
+  }
+  .galeria .foto:first-child{ grid-row:span 2; }
+  @media (max-width:820px){
+    .galeria{ grid-template-columns:1fr 1fr; height:auto; }
+    .galeria .foto{ aspect-ratio:4/3; }
+    .galeria .foto:first-child{ grid-row:auto; grid-column:span 2; aspect-ratio:16/9; }
   }
   .confianza-item h3{
     font-family:var(--serif); font-weight:500; font-size:1.15rem; margin-bottom:8px;
@@ -209,6 +362,9 @@
   .confianza-item h3::before{
     content:'●'; color:var(--verde); font-size:0.6rem;
   }
+  .confianza-item:nth-child(2) h3::before{ color:var(--ambar); }
+  .confianza-item:nth-child(3) h3::before{ color:var(--azul); }
+  .confianza-item:nth-child(4) h3::before{ color:var(--verde); }
   .confianza-item p{ color:var(--tinta-suave); max-width:44ch; }
 
   /* ---------- Caso de éxito ---------- */
@@ -227,6 +383,10 @@
   .caso-metricas{ display:flex; flex-direction:column; gap:24px; justify-content:center; }
   .metrica{ border-left:2px solid var(--ciruela); padding-left:18px; }
   .metrica .num{ font-family:var(--serif); font-size:2.1rem; color:var(--ciruela); line-height:1; }
+  .metrica:nth-child(2){ border-left-color:var(--ambar); }
+  .metrica:nth-child(2) .num{ color:var(--ambar); }
+  .metrica:nth-child(3){ border-left-color:var(--azul); }
+  .metrica:nth-child(3) .num{ color:var(--azul); }
   .metrica .label{ color:var(--tinta-suave); font-size:0.88rem; margin-top:4px; }
   .editable-nota{
     margin-top:24px; font-size:0.8rem; color:var(--tinta-suave); font-style:italic;
@@ -241,7 +401,8 @@
 
   /* ---------- CTA final ---------- */
   .cta-final{
-    background:var(--ciruela); color:var(--papel);
+    background:linear-gradient(135deg, var(--ciruela) 0%, var(--ciruela-oscura) 55%, #0F4C81 100%);
+    color:var(--papel);
   }
   .cta-final .wrap{
     display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;
@@ -268,13 +429,22 @@
   <nav class="wrap nav">
     <div class="marca">Punto<span>Teck</span></div>
     <div class="nav-links">
+      <a href="#historias">Historias</a>
       <a href="#flujo">Cómo funciona</a>
       <a href="#confianza">Confianza</a>
       <a href="#caso">Caso de éxito</a>
       <a href="#contacto">Contacto</a>
     </div>
     <a class="nav-cta" href="#contacto">Agendar demo</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
   </nav>
+  <div class="nav-mobile" id="navMobile">
+    <a href="#historias">Historias</a>
+      <a href="#flujo">Cómo funciona</a>
+    <a href="#confianza">Confianza</a>
+    <a href="#caso">Caso de éxito</a>
+    <a href="#contacto">Contacto</a>
+  </div>
 </header>
 
 <section class="hero">
@@ -290,6 +460,9 @@
     </div>
 
     <div class="ticket-holder">
+      <div class="hero-foto" id="heroFoto">
+        <img src="images/hero.png" alt="Mostrador de una boutique de ropa con el sistema PuntoTeck en uso" loading="eager">
+      </div>
       <div class="ticket">
         <div class="t-header t-linea">
           <div class="t-nombre">Boutique Ejemplo</div>
@@ -307,9 +480,33 @@
   </div>
 </section>
 
+<section class="banda-confianza" id="historias">
+  <div class="wrap banda-grid revelar">
+    <div class="banda-texto">
+      <span class="banda-tienda">Ropa Shop · Tehuacán</span>
+      <p class="banda-cita">"[Frase corta de la dueña sobre el cambio que vivió con PuntoTeck]"</p>
+      <a class="banda-link" href="#caso">Conoce la historia completa</a>
+    </div>
+    <div class="banda-stats">
+      <div class="stat-mini">
+        <div class="num"><span class="contador" data-target="35">0</span></div>
+        <div class="label">minutos menos por corte de caja</div>
+      </div>
+      <div class="stat-mini">
+        <div class="num"><span class="contador" data-target="120">0</span></div>
+        <div class="label">ventas registradas al mes</div>
+      </div>
+      <div class="stat-mini">
+        <div class="num"><span class="contador" data-target="18">0</span></div>
+        <div class="label">apartados sin cuaderno</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="flujo" id="flujo">
   <div class="wrap">
-    <div class="section-intro">
+    <div class="section-intro revelar">
       <h2>Un día completo de venta, sin salir del mismo sistema</h2>
       <p>Así se ve el flujo real de una boutique — desde que se abre la caja hasta que se cuadra en la noche.</p>
     </div>
@@ -357,28 +554,44 @@
 <section id="confianza">
   <div class="wrap">
     <div class="corte">CONFIANZA</div>
-    <div class="section-intro">
+    <div class="section-intro revelar">
       <h2>Lo que nos importa que sepas antes de empezar</h2>
       <p>PuntoTeck se construyó viendo trabajar boutiques reales — por eso hay reglas que no negociamos.</p>
     </div>
 
-    <div class="confianza-grid">
-      <div class="confianza-item">
-        <h3>Tu venta nunca se detiene</h3>
-        <p>Vender, apartar, dar crédito y cortar caja son funciones que siempre están disponibles, sin depender de saldo ni de conexión.</p>
+    <div class="confianza-layout">
+      <div class="foto confianza-foto revelar">
+        <img src="images/detalle-etiqueta.png" alt="Etiqueta de código de barras colocada sobre una prenda doblada" loading="lazy">
       </div>
-      <div class="confianza-item">
-        <h3>Sin letra chiquita</h3>
-        <p>Si en algún momento activas una función con costo adicional, lo vas a ver claramente reflejado antes de que se cobre — nunca como sorpresa a fin de mes.</p>
+      <div class="confianza-grid revelar-hijos">
+        <div class="confianza-item">
+          <h3>Tu venta nunca se detiene</h3>
+          <p>Vender, apartar, dar crédito y cortar caja son funciones que siempre están disponibles, sin depender de saldo ni de conexión.</p>
+        </div>
+        <div class="confianza-item">
+          <h3>Sin letra chiquita</h3>
+          <p>Si en algún momento activas una función con costo adicional, lo vas a ver claramente reflejado antes de que se cobre — nunca como sorpresa a fin de mes.</p>
+        </div>
+        <div class="confianza-item">
+          <h3>Tú decides qué activar</h3>
+          <p>El sistema base cubre la operación completa de tu boutique. Cualquier función adicional es una decisión tuya, no un requisito para operar.</p>
+        </div>
+        <div class="confianza-item">
+          <h3>Tus datos son tuyos</h3>
+          <p>Historial de ventas, clientas, inventario y cortes quedan respaldados y accesibles para ti en todo momento.</p>
+        </div>
       </div>
-      <div class="confianza-item">
-        <h3>Tú decides qué activar</h3>
-        <p>El sistema base cubre la operación completa de tu boutique. Cualquier función adicional es una decisión tuya, no un requisito para operar.</p>
-      </div>
-      <div class="confianza-item">
-        <h3>Tus datos son tuyos</h3>
-        <p>Historial de ventas, clientas, inventario y cortes quedan respaldados y accesibles para ti en todo momento.</p>
-      </div>
+    </div>
+  </div>
+</section>
+
+<section id="galeria">
+  <div class="wrap">
+    <div class="corte">ASÍ SE VE EN UNA BOUTIQUE</div>
+    <div class="galeria revelar-hijos">
+      <div class="foto"><img src="images/mostrador.png" alt="Boutique cobrando en mostrador con PuntoTeck" loading="lazy"></div>
+      <div class="foto"><img src="images/flatlay.png" alt="Prendas dobladas junto a un ticket de venta impreso" loading="lazy"></div>
+      <div class="foto"><img src="images/fachada.png" alt="Interior de una boutique de ropa" loading="lazy"></div>
     </div>
   </div>
 </section>
@@ -386,23 +599,26 @@
 <section id="caso">
   <div class="wrap">
     <div class="corte">CASO DE ÉXITO</div>
-    <div class="caso">
+    <div class="caso revelar">
       <div>
+        <div class="foto" style="aspect-ratio:4/3; margin-bottom:24px;">
+          <img src="images/mostrador.png" alt="Ropa Shop usando PuntoTeck en el mostrador" loading="lazy">
+        </div>
         <div class="caso-tienda">Ropa Shop · Tienda piloto</div>
         <blockquote>"[Aquí va la cita textual de la dueña — una frase corta sobre qué cambió en su día a día desde que usa PuntoTeck.]"</blockquote>
         <div class="caso-autor">— [Nombre de la dueña], Ropa Shop</div>
       </div>
       <div class="caso-metricas">
         <div class="metrica">
-          <div class="num">[X]</div>
+          <div class="num"><span class="contador" data-target="35">0</span></div>
           <div class="label">[Ej: minutos menos cada noche en el corte de caja]</div>
         </div>
         <div class="metrica">
-          <div class="num">[X]</div>
+          <div class="num"><span class="contador" data-target="120">0</span></div>
           <div class="label">[Ej: apartados controlados sin cuaderno]</div>
         </div>
         <div class="metrica">
-          <div class="num">[X]</div>
+          <div class="num"><span class="contador" data-target="18">0</span></div>
           <div class="label">[Métrica real de tu piloto]</div>
         </div>
       </div>
@@ -425,5 +641,90 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Menú móvil */
+  var toggle = document.getElementById('navToggle');
+  var mobile = document.getElementById('navMobile');
+  if (toggle && mobile){
+    toggle.addEventListener('click', function(){
+      var abierto = mobile.classList.toggle('abierto');
+      toggle.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+      toggle.textContent = abierto ? '✕' : '☰';
+    });
+    mobile.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        mobile.classList.remove('abierto');
+        toggle.textContent = '☰';
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  if (reduceMotion) return;
+
+  /* Reveal on scroll: .revelar, .revelar-hijos, .paso-contenido */
+  var objetivos = document.querySelectorAll('.revelar, .revelar-hijos, .paso-contenido');
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  objetivos.forEach(function(el){ observer.observe(el); });
+
+  /* Contador animado en las métricas del caso de éxito */
+  var contadores = document.querySelectorAll('.contador');
+  var obsContador = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      var destino = parseInt(el.getAttribute('data-target'), 10) || 0;
+      if (destino === 0){ obsContador.unobserve(el); return; }
+      var inicio = null;
+      var duracion = 900;
+      function paso(ts){
+        if (!inicio) inicio = ts;
+        var avance = Math.min((ts - inicio) / duracion, 1);
+        el.textContent = Math.floor(avance * destino);
+        if (avance < 1) requestAnimationFrame(paso);
+        else el.textContent = destino;
+      }
+      requestAnimationFrame(paso);
+      obsContador.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  contadores.forEach(function(el){ obsContador.observe(el); });
+
+  /* Parallax suave en la foto del hero */
+  var heroFoto = document.getElementById('heroFoto');
+  if (heroFoto){
+    window.addEventListener('scroll', function(){
+      var y = window.scrollY;
+      if (y < 700){
+        heroFoto.querySelector('img').style.transform = 'translateY(' + (y * 0.12) + 'px)';
+      }
+    }, { passive: true });
+  }
+
+  /* Resalta el link activo del menú según la sección visible */
+  var links = document.querySelectorAll('.nav-links a');
+  var secciones = ['historias','flujo','confianza','caso','contacto'].map(function(id){ return document.getElementById(id); }).filter(Boolean);
+  var navObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var id = entry.target.id;
+      var link = document.querySelector('.nav-links a[href="#' + id + '"]');
+      if (!link) return;
+      if (entry.isIntersecting) link.style.color = 'var(--ciruela)';
+      else link.style.color = '';
+    });
+  }, { threshold: 0.5 });
+  secciones.forEach(function(s){ navObserver.observe(s); });
+})();
+</script>
 </body>
 </html>
