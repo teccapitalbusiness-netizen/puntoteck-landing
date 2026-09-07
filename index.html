@@ -447,7 +447,94 @@
     .confianza-foto{ aspect-ratio:16/9; order:-1; }
   }
 
-  /* ---------- Galería ---------- */
+  /* ---------- Mazo de pantallas del sistema ---------- */
+  .baraja{
+    position:relative;
+    height:330px;
+    display:flex; justify-content:center; align-items:center;
+    margin-bottom:12px;
+  }
+  .carta-pantalla{
+    position:absolute;
+    width:176px; height:236px;
+    background:var(--papel);
+    border-radius:16px;
+    box-shadow:0 16px 34px rgba(20,22,26,0.16);
+    overflow:hidden;
+    cursor:pointer;
+    display:flex; flex-direction:column;
+    transform:translateX(var(--tx)) rotate(var(--tilt));
+    transition:transform .5s cubic-bezier(.22,.9,.28,1), box-shadow .4s ease;
+  }
+  .carta-pantalla:nth-child(1){ z-index:1; }
+  .carta-pantalla:nth-child(2){ z-index:2; }
+  .carta-pantalla:nth-child(3){ z-index:3; }
+  .carta-pantalla:nth-child(4){ z-index:2; }
+  .carta-pantalla:nth-child(5){ z-index:1; }
+  .carta-pantalla.activa{
+    transform:translateX(var(--tx)) translateY(-26px) rotate(0deg) scale(1.08);
+    box-shadow:0 32px 60px rgba(20,22,26,0.30);
+    z-index:20;
+  }
+  .carta-mock{
+    flex:1; padding:14px 12px; display:flex; flex-direction:column; gap:7px;
+  }
+  .carta-etiqueta{
+    padding:9px 12px; font-size:0.7rem; font-weight:600; color:var(--tinta);
+    border-top:1px solid var(--borde);
+    display:flex; align-items:center; gap:6px;
+  }
+  .carta-etiqueta::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--ciruela); }
+  .carta-pantalla:nth-child(2) .carta-etiqueta::before{ background:var(--ambar); }
+  .carta-pantalla:nth-child(3) .carta-etiqueta::before{ background:var(--azul); }
+  .carta-pantalla:nth-child(4) .carta-etiqueta::before{ background:var(--ambar); }
+  .carta-pantalla:nth-child(5) .carta-etiqueta::before{ background:var(--ciruela); }
+
+  /* mini contenido: panel de venta */
+  .cv-header{ height:8px; width:60%; border-radius:3px; background:var(--tinta); opacity:0.85; }
+  .cv-fila{ display:flex; justify-content:space-between; }
+  .cv-fila span:first-child{ height:6px; width:65%; border-radius:3px; background:var(--lino-alt); }
+  .cv-fila span:last-child{ height:6px; width:20%; border-radius:3px; background:var(--borde); }
+  .cv-total{ margin-top:auto; height:22px; border-radius:6px; background:var(--ciruela); opacity:0.9; }
+
+  /* mini contenido: registro de producto */
+  .cr-campo .cr-label{ height:5px; width:35%; border-radius:2px; background:var(--borde); margin-bottom:5px; }
+  .cr-campo .cr-input{ height:14px; border-radius:5px; background:var(--lino-alt); }
+  .cr-barcode{ margin-top:auto; height:26px; display:flex; align-items:flex-end; gap:2px; }
+  .cr-barcode span{ flex:1; background:var(--tinta); }
+
+  /* mini contenido: gráficas y reportes */
+  .cg-kpi{ display:flex; justify-content:space-between; align-items:flex-end; }
+  .cg-kpi .num{ font-family:var(--serif); font-size:1.1rem; color:var(--tinta); }
+  .cg-kpi .pill{ font-size:0.55rem; font-weight:600; color:var(--verde); background:rgba(22,163,74,0.14); padding:2px 7px; border-radius:8px; }
+  .cg-chart{ margin-top:auto; flex:1; display:flex; align-items:flex-end; gap:4px; }
+  .cg-chart .barra{ flex:1; border-radius:3px 3px 0 0; background:var(--azul); opacity:0.85; }
+  .cg-chart .barra:nth-child(3n+2){ background:var(--ambar); }
+  .cg-chart .barra:nth-child(3n){ background:var(--ciruela); }
+
+  /* mini contenido: apartados y créditos */
+  .ca-fila{ display:flex; align-items:center; gap:8px; }
+  .ca-fila .ca-avatar{ width:22px; height:22px; border-radius:50%; background:var(--lino-alt); flex-shrink:0; }
+  .ca-fila .ca-texto{ flex:1; height:6px; border-radius:3px; background:var(--lino-alt); }
+  .ca-fila .ca-pill{ font-size:0.5rem; font-weight:600; padding:2px 6px; border-radius:7px; white-space:nowrap; }
+  .ca-fila:nth-child(1) .ca-pill{ background:rgba(22,163,74,0.14); color:var(--verde); }
+  .ca-fila:nth-child(2) .ca-pill{ background:rgba(217,119,6,0.14); color:var(--ambar); }
+  .ca-fila:nth-child(3) .ca-pill{ background:rgba(37,99,235,0.14); color:var(--azul); }
+
+  /* mini contenido: inventario */
+  .ci-grid{ flex:1; display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
+  .ci-grid div{ border-radius:4px; background:var(--verde); opacity:0.75; }
+  .ci-grid div:nth-child(3n){ background:var(--ambar); }
+  .ci-grid div:nth-child(5n){ background:var(--tinta-suave); opacity:0.35; }
+
+  @media (max-width:620px){
+    .baraja{ height:270px; }
+    .carta-pantalla{ width:132px; height:180px; }
+    .carta-etiqueta{ font-size:0.62rem; padding:7px 10px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .carta-pantalla{ transition:none; }
+  }
   .galeria{
     display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:14px;
     height:360px;
@@ -680,6 +767,79 @@
   </div>
 </section>
 
+<section id="pantallas">
+  <div class="wrap">
+    <div class="corte revelar">EL SISTEMA POR DENTRO</div>
+    <div class="section-intro revelar">
+      <h2>Cada pantalla, pensada para vender ropa</h2>
+      <p>Del cobro al reporte del mes, así se ve PuntoTeck por dentro. Tócalas para verlas de cerca.</p>
+    </div>
+
+    <div class="baraja revelar" id="baraja">
+      <div class="carta-pantalla" style="--tx:-132px; --tilt:-14deg;">
+        <div class="carta-mock">
+          <div class="cv-header"></div>
+          <div class="cv-fila"><span></span><span></span></div>
+          <div class="cv-fila"><span></span><span></span></div>
+          <div class="cv-fila"><span></span><span></span></div>
+          <div class="cv-total"></div>
+        </div>
+        <div class="carta-etiqueta">Panel de venta</div>
+      </div>
+
+      <div class="carta-pantalla" style="--tx:-66px; --tilt:-7deg;">
+        <div class="carta-mock">
+          <div class="cr-campo"><div class="cr-label"></div><div class="cr-input"></div></div>
+          <div class="cr-campo"><div class="cr-label"></div><div class="cr-input"></div></div>
+          <div class="cr-campo"><div class="cr-label"></div><div class="cr-input"></div></div>
+          <div class="cr-barcode">
+            <span style="flex-grow:2"></span><span></span><span style="flex-grow:3"></span><span></span>
+            <span style="flex-grow:2"></span><span></span><span style="flex-grow:1"></span><span></span>
+            <span style="flex-grow:3"></span><span></span><span style="flex-grow:2"></span>
+          </div>
+        </div>
+        <div class="carta-etiqueta">Registro de producto</div>
+      </div>
+
+      <div class="carta-pantalla activa" style="--tx:0px; --tilt:0deg;">
+        <div class="carta-mock">
+          <div class="cg-kpi"><span class="num">+18%</span><span class="pill">este mes</span></div>
+          <div class="cg-chart">
+            <div class="barra" style="height:35%"></div>
+            <div class="barra" style="height:55%"></div>
+            <div class="barra" style="height:40%"></div>
+            <div class="barra" style="height:70%"></div>
+            <div class="barra" style="height:50%"></div>
+            <div class="barra" style="height:85%"></div>
+            <div class="barra" style="height:60%"></div>
+          </div>
+        </div>
+        <div class="carta-etiqueta">Gráficas y reportes</div>
+      </div>
+
+      <div class="carta-pantalla" style="--tx:66px; --tilt:7deg;">
+        <div class="carta-mock">
+          <div class="ca-fila"><div class="ca-avatar"></div><div class="ca-texto"></div><span class="ca-pill">Pagado</span></div>
+          <div class="ca-fila"><div class="ca-avatar"></div><div class="ca-texto"></div><span class="ca-pill">Pendiente</span></div>
+          <div class="ca-fila"><div class="ca-avatar"></div><div class="ca-texto"></div><span class="ca-pill">Parcial</span></div>
+        </div>
+        <div class="carta-etiqueta">Apartados y créditos</div>
+      </div>
+
+      <div class="carta-pantalla" style="--tx:132px; --tilt:14deg;">
+        <div class="carta-mock">
+          <div class="ci-grid">
+            <div></div><div></div><div></div><div></div>
+            <div></div><div></div><div></div><div></div>
+            <div></div><div></div><div></div><div></div>
+          </div>
+        </div>
+        <div class="carta-etiqueta">Inventario</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="flujo" id="flujo">
   <div class="wrap">
     <div class="section-intro revelar">
@@ -844,6 +1004,31 @@
         toggle.setAttribute('aria-expanded', 'false');
       });
     });
+  }
+
+  /* Mazo de pantallas: rota sola y reacciona al tocarla */
+  var cartas = document.querySelectorAll('.carta-pantalla');
+  if (cartas.length){
+    var idxActivo = 2;
+    var temporizador = null;
+    var activarCarta = function(i){
+      cartas.forEach(function(c, ci){ c.classList.toggle('activa', ci === i); });
+      idxActivo = i;
+    };
+    var iniciarAuto = function(){
+      if (reduceMotion) return;
+      clearInterval(temporizador);
+      temporizador = setInterval(function(){
+        activarCarta((idxActivo + 1) % cartas.length);
+      }, 2800);
+    };
+    cartas.forEach(function(c, i){
+      c.addEventListener('click', function(){
+        activarCarta(i);
+        iniciarAuto();
+      });
+    });
+    iniciarAuto();
   }
 
   if (reduceMotion) return;
