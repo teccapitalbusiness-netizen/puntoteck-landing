@@ -256,6 +256,14 @@
   }
   .cinta-tarjeta:hover{ box-shadow:0 24px 46px rgba(11,25,20,0.38); transform:translateY(-6px); }
 
+  /* MODIFICADO: foto de portada opcional para tarjetas con imagen real de la tienda */
+  .cinta-tarjeta.con-foto{ padding-top:0; }
+  .ct-foto{
+    margin:0 -24px 16px; height:132px; overflow:hidden;
+    border-radius:13px 13px 0 0;
+  }
+  .ct-foto img{ width:100%; height:100%; object-fit:cover; display:block; }
+
   .ct-encabezado{ position:relative; display:flex; align-items:center; gap:10px; margin-bottom:14px; }
   .ct-nombre{ font-weight:600; font-size:0.92rem; color:var(--tinta); }
   .ct-ubicacion{ font-size:0.75rem; color:var(--tinta-suave); }
@@ -671,6 +679,9 @@
   }
   .caso-fotos{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px; }
   .caso-fotos .foto{ aspect-ratio:3/4; border-radius:16px; }
+  /* MODIFICADO: variante para cuando solo hay 1 foto real (sin dejar hueco vacío) */
+  .caso-fotos.una-foto{ grid-template-columns:1fr; }
+  .caso-fotos.una-foto .foto{ aspect-ratio:16/10; }
   .caso-autor-fila{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
   .caso-ubicacion{ font-size:0.82rem; color:var(--tinta-suave); }
   .caso-tienda{ font-family:var(--mono); font-size:0.8rem; color:var(--ciruela); margin-bottom:10px; }
@@ -783,6 +794,12 @@
   }
   .modal-cerrar:hover{ background:var(--danger); color:#fff; transform:rotate(90deg); }
   .modal-cerrar svg{ width:18px; height:18px; }
+  /* MODIFICADO: galería opcional del modal — se llena por JS solo si la historia trae fotos */
+  .modal-galeria{ display:none; gap:10px; margin-bottom:18px; }
+  .modal-galeria.tiene-fotos{ display:grid; grid-template-columns:1fr 1fr; }
+  .modal-galeria.una-foto{ grid-template-columns:1fr; }
+  .modal-galeria img{ width:100%; height:150px; object-fit:cover; border-radius:12px; display:block; }
+  .modal-galeria.una-foto img{ height:220px; }
   .modal-header{ display:flex; align-items:center; gap:14px; margin-bottom:6px; padding-right:44px; }
   .modal-avatar{
     width:52px; height:52px; border-radius:50%;
@@ -825,6 +842,9 @@
   @media (max-width:560px){
     .modal-historia{ padding:16px; }
     .modal-caja{ padding:34px 22px 26px; border-radius:20px; }
+    .modal-galeria.tiene-fotos{ grid-template-columns:1fr; }
+    .modal-galeria img{ height:180px; }
+    .modal-galeria.una-foto img{ height:180px; }
     .modal-header{ gap:12px; }
     .modal-avatar{ width:46px; height:46px; font-size:1.05rem; }
     .modal-nombre{ font-size:1.18rem; }
@@ -955,11 +975,12 @@
   <div class="cinta-contenedor">
     <div class="cinta-pista" id="cintaPista">
       <!-- MODIFICADO: cada tarjeta abre su modal vía data-historia -->
-      <a class="cinta-tarjeta" href="#" data-historia="amara" role="button" tabindex="0" aria-label="Leer la historia de Amara Boutique">
+      <a class="cinta-tarjeta con-foto" href="#" data-historia="amora" role="button" tabindex="0" aria-label="Leer la historia de Amora Boutique">
+        <div class="ct-foto"><img src="images/amara.jpeg" alt="Amora Boutique" loading="lazy"></div>
         <div class="ct-encabezado">
           <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">AB</div>
           <div>
-            <div class="ct-nombre">Amara Boutique</div>
+            <div class="ct-nombre">Amora Boutique</div>
             <div class="ct-ubicacion">San José Miahuatlán, Puebla</div>
           </div>
         </div>
@@ -967,7 +988,8 @@
         <span class="ct-vermas">Ver más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
 
-      <a class="cinta-tarjeta" href="#" data-historia="estilo-urbano" role="button" tabindex="0" aria-label="Leer la historia de Estilo Urbano">
+      <a class="cinta-tarjeta con-foto" href="#" data-historia="estilo-urbano" role="button" tabindex="0" aria-label="Leer la historia de Estilo Urbano">
+        <div class="ct-foto"><img src="images/urbano.jpeg" alt="Estilo Urbano" loading="lazy"></div>
         <div class="ct-encabezado">
           <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">EU</div>
           <div>
@@ -979,7 +1001,8 @@
         <span class="ct-vermas">Ver más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
 
-      <a class="cinta-tarjeta" href="#" data-historia="luna-moda" role="button" tabindex="0" aria-label="Leer la historia de Luna Moda">
+      <a class="cinta-tarjeta con-foto" href="#" data-historia="luna-moda" role="button" tabindex="0" aria-label="Leer la historia de Luna Moda">
+        <div class="ct-foto"><img src="images/luna.jpeg" alt="Luna Moda" loading="lazy"></div>
         <div class="ct-encabezado">
           <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">LM</div>
           <div>
@@ -991,7 +1014,8 @@
         <span class="ct-vermas">Ver más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
 
-      <a class="cinta-tarjeta" href="#" data-historia="bella-co" role="button" tabindex="0" aria-label="Leer la historia de Bella & Co.">
+      <a class="cinta-tarjeta con-foto" href="#" data-historia="bella-co" role="button" tabindex="0" aria-label="Leer la historia de Bella & Co.">
+        <div class="ct-foto"><img src="images/bella&amp;co.jpeg" alt="Bella & Co." loading="lazy"></div>
         <div class="ct-encabezado">
           <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">BC</div>
           <div>
@@ -1149,23 +1173,22 @@
   <div class="wrap">
     <div class="corte">CASO DE ÉXITO</div>
     <div class="caso-encabezado revelar">
-      <h2>Amara Boutique: más control para hacer crecer mi negocio</h2>
+      <h2>Amora Boutique: más control para hacer crecer mi negocio</h2>
     </div>
 
     <div class="caso revelar">
       <div>
-        <div class="caso-fotos">
-          <div class="foto"><img src="images/amara-1.png" alt="Interior de Amara Boutique en San José Miahuatlán, Puebla" loading="lazy"></div>
-          <div class="foto"><img src="images/amara-2.png" alt="Amara Boutique atendiendo con PuntoTeck" loading="lazy"></div>
+        <div class="caso-fotos una-foto">
+          <div class="foto"><img src="images/amara.jpeg" alt="Amora Boutique en San José Miahuatlán, Puebla" loading="lazy"></div>
         </div>
         <div class="caso-autor-fila">
           <div class="avatar-mini">AB</div>
           <div>
-            <div class="caso-tienda" style="margin-bottom:0;">Amara Boutique</div>
+            <div class="caso-tienda" style="margin-bottom:0;">Amora Boutique</div>
             <div class="caso-ubicacion">San José Miahuatlán, Puebla</div>
           </div>
-          <!-- MODIFICADO: enlace real a Facebook de Amara Boutique -->
-          <a class="caso-social" href="https://www.facebook.com/share/1HCW32ea8S/" target="_blank" rel="noopener" title="Facebook de Amara Boutique" aria-label="Facebook de Amara Boutique">
+          <!-- MODIFICADO: enlace real a Facebook de Amora Boutique -->
+          <a class="caso-social" href="https://www.facebook.com/share/1HCW32ea8S/" target="_blank" rel="noopener" title="Facebook de Amora Boutique" aria-label="Facebook de Amora Boutique">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0022 12z"/></svg>
           </a>
         </div>
@@ -1173,7 +1196,7 @@
         <blockquote>"PuntoTeck me permite administrar mi boutique de una forma más sencilla, tener mi negocio al alcance de mi teléfono y dedicar más tiempo a hacerlo crecer."</blockquote>
 
         <!-- MODIFICADO: el botón abre el modal-tarjeta en vez de desplegar el texto hacia abajo -->
-        <button class="caso-toggle" type="button" data-historia="amara">
+        <button class="caso-toggle" type="button" data-historia="amora">
           <span>Leer la historia completa</span>
           <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
         </button>
@@ -1218,10 +1241,11 @@
     <button class="modal-cerrar" type="button" data-cerrar aria-label="Cerrar historia">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
+    <div class="modal-galeria" id="modalGaleria"></div>
     <div class="modal-header">
       <div class="modal-avatar" id="modalAvatar">AB</div>
       <div>
-        <div class="modal-nombre" id="modalNombre">Amara Boutique</div>
+        <div class="modal-nombre" id="modalNombre">Amora Boutique</div>
         <div class="modal-ubicacion" id="modalUbicacion">San José Miahuatlán, Puebla</div>
       </div>
     </div>
@@ -1259,28 +1283,30 @@
     });
   }
 
-  /* MODIFICADO: modal-tarjeta de historias de éxito (Amara + boutiques nuevas).
+  /* MODIFICADO: modal-tarjeta de historias de éxito (Amora + boutiques nuevas).
      Los textos de cada historia viven aquí; agregar una boutique nueva
      es solo añadir una entrada a HISTORIAS y una tarjeta con su data-historia. */
   var HISTORIAS = {
-    'amara': {
-      nombre:'Amara Boutique', iniciales:'AB',
+    'amora': {
+      nombre:'Amora Boutique', iniciales:'AB',
       ubicacion:'San José Miahuatlán, Puebla',
       facebook:'https://www.facebook.com/share/1HCW32ea8S/',
       instagram:'https://www.instagram.com/',
+      fotos:['images/amara.jpeg'],
       parrafos:[
-        'PuntoTeck me ha ayudado muchísimo a tener un mejor control de Amara Boutique. Antes era más complicado llevar el registro de las ventas y saber exactamente qué productos tenía disponibles.',
+        'PuntoTeck me ha ayudado muchísimo a tener un mejor control de Amora Boutique. Antes era más complicado llevar el registro de las ventas y saber exactamente qué productos tenía disponibles.',
         'Ahora puedo revisar mis ventas, consultar mi inventario y conocer cuáles son las prendas que más se venden de una forma mucho más sencilla.',
-        'Algo que me gusta mucho es que no necesito estar siempre dentro de la tienda para saber cómo va mi negocio. Si tengo que salir o estoy fuera, puedo entrar desde mi teléfono y revisar las ventas y la información importante de Amara Boutique. Esto me da mucha tranquilidad porque puedo mantenerme al tanto de lo que sucede aunque no esté físicamente en la boutique.',
+        'Algo que me gusta mucho es que no necesito estar siempre dentro de la tienda para saber cómo va mi negocio. Si tengo que salir o estoy fuera, puedo entrar desde mi teléfono y revisar las ventas y la información importante de Amora Boutique. Esto me da mucha tranquilidad porque puedo mantenerme al tanto de lo que sucede aunque no esté físicamente en la boutique.',
         'Además, contar con una página web para mi negocio ha sido una gran ventaja. Los productos que tengo registrados en mi inventario pueden mostrarse en mi tienda en línea, por lo que no tengo que estar agregando la misma información en diferentes lugares.',
         'Cuando realizo cambios en mis productos o agrego nueva mercancía al inventario, puedo tener todo más organizado y mantener actualizada la información de mi boutique.',
-        'Gracias a PuntoTeck, ahora siento que tengo un mayor control de Amara Boutique, tanto de las ventas que realizamos en la tienda como de los productos que mostramos en nuestra página web.'
+        'Gracias a PuntoTeck, ahora siento que tengo un mayor control de Amora Boutique, tanto de las ventas que realizamos en la tienda como de los productos que mostramos en nuestra página web.'
       ]
     },
     'estilo-urbano': {
       nombre:'Estilo Urbano', iniciales:'EU',
       ubicacion:'San José Miahuatlán, Puebla',
       facebook:'https://www.facebook.com/', instagram:'https://www.instagram.com/',
+      fotos:['images/urbano.jpeg'],
       parrafos:[
         'Cuando iniciamos Estilo Urbano, una de las cosas que más se nos complicaba era tener un control claro de todo lo que teníamos en la tienda. A veces necesitábamos revisar manualmente qué productos se habían vendido y cuáles ya estaban por terminarse.',
         'Con PuntoTeck hemos podido organizar mucho mejor nuestro negocio. Ahora podemos consultar las ventas, revisar el inventario y conocer cuáles son los productos que tienen mayor movimiento.',
@@ -1293,6 +1319,7 @@
       nombre:'Luna Moda', iniciales:'LM',
       ubicacion:'San José Miahuatlán, Puebla',
       facebook:'https://www.facebook.com/', instagram:'https://www.instagram.com/',
+      fotos:['images/luna.jpeg'],
       parrafos:[
         'Para mí era importante encontrar una herramienta que me ayudara a administrar mi negocio sin hacerlo más complicado. Quería poder saber qué estaba vendiendo, qué productos tenía disponibles y cómo estaba funcionando la tienda.',
         'Desde que comenzamos a utilizar PuntoTeck, tenemos toda esa información en un solo lugar. Podemos registrar nuestros productos, llevar el control del inventario y consultar las ventas de una manera mucho más rápida.',
@@ -1305,6 +1332,7 @@
       nombre:'Bella & Co.', iniciales:'BC',
       ubicacion:'San José Miahuatlán, Puebla',
       facebook:'https://www.facebook.com/', instagram:'https://www.instagram.com/',
+      fotos:['images/bella&amp;co.jpeg'],
       parrafos:[
         'Nuestro objetivo siempre ha sido ofrecer ropa y accesorios que nuestras clientas puedan disfrutar, pero conforme el negocio fue creciendo también fue necesario encontrar una mejor forma de organizarnos.',
         'Antes, llevar el control de las prendas, las ventas y el inventario podía tomar mucho tiempo. Con PuntoTeck ahora podemos tener una visión mucho más clara de nuestro negocio.',
@@ -1326,6 +1354,7 @@
     var mUbic   = document.getElementById('modalUbicacion');
     var mCuerpo = document.getElementById('modalCuerpo');
     var mRedes  = document.getElementById('modalRedes');
+    var mGaleria = document.getElementById('modalGaleria');
     var caja    = modal.querySelector('.modal-caja');
     var btnCerrar = modal.querySelector('.modal-cerrar');
     var ultimoFoco = null;
@@ -1336,6 +1365,14 @@
       mAvatar.textContent = h.iniciales;
       mNombre.textContent = h.nombre;
       mUbic.textContent   = h.ubicacion;
+      if (h.fotos && h.fotos.length){
+        mGaleria.innerHTML = h.fotos.map(function(src){ return '<img src="' + src + '" alt="' + h.nombre + '" loading="lazy">'; }).join('');
+        mGaleria.classList.add('tiene-fotos');
+        mGaleria.classList.toggle('una-foto', h.fotos.length === 1);
+      } else {
+        mGaleria.innerHTML = '';
+        mGaleria.classList.remove('tiene-fotos', 'una-foto');
+      }
       mCuerpo.innerHTML = h.parrafos.map(function(p){ return '<p>' + p + '</p>'; }).join('');
       var redes = '';
       if (h.facebook){ redes += '<a class="modal-red fb" href="' + h.facebook + '" target="_blank" rel="noopener">' + SVG_FB + 'Facebook</a>'; }
