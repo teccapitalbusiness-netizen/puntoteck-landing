@@ -497,6 +497,13 @@
   .carta-pantalla:nth-child(3) .carta-mock::before{ background:linear-gradient(160deg, rgba(37,99,235,0.14) 0%, rgba(37,99,235,0) 55%); }
   .carta-pantalla:nth-child(4) .carta-mock::before{ background:linear-gradient(160deg, rgba(217,119,6,0.14) 0%, rgba(217,119,6,0) 55%); }
   .carta-pantalla:nth-child(5) .carta-mock::before{ background:linear-gradient(160deg, rgba(5,150,105,0.14) 0%, rgba(5,150,105,0) 55%); }
+
+  /* Cuando la tarjeta trae una captura real, sin relleno ni tinte encima */
+  .carta-mock.tiene-imagen{ padding:0; }
+  .carta-mock.tiene-imagen::before{ display:none; }
+  .carta-mock.tiene-imagen img{
+    width:100%; height:100%; object-fit:cover; object-position:top center; display:block;
+  }
   .carta-etiqueta{
     position:relative;
     padding:13px 16px; font-size:0.86rem; font-weight:600; color:var(--tinta);
@@ -800,62 +807,36 @@
 
     <div class="baraja revelar" id="baraja">
       <div class="carta-pantalla" style="--tx:-175px; --tilt:-14deg;">
-        <div class="carta-mock">
-          <div class="cv-header"></div>
-          <div class="cv-fila"><span></span><span></span></div>
-          <div class="cv-fila"><span></span><span></span></div>
-          <div class="cv-fila"><span></span><span></span></div>
-          <div class="cv-total"></div>
+        <div class="carta-mock tiene-imagen">
+          <img src="images/dashboard.png" alt="Panel principal (dashboard) de PuntoTeck" loading="lazy">
         </div>
-        <div class="carta-etiqueta">Panel de venta</div>
+        <div class="carta-etiqueta">Dashboard</div>
       </div>
 
       <div class="carta-pantalla" style="--tx:-88px; --tilt:-7deg;">
-        <div class="carta-mock">
-          <div class="cr-campo"><div class="cr-label"></div><div class="cr-input"></div></div>
-          <div class="cr-campo"><div class="cr-label"></div><div class="cr-input"></div></div>
-          <div class="cr-campo"><div class="cr-label"></div><div class="cr-input"></div></div>
-          <div class="cr-barcode">
-            <span style="flex-grow:2"></span><span></span><span style="flex-grow:3"></span><span></span>
-            <span style="flex-grow:2"></span><span></span><span style="flex-grow:1"></span><span></span>
-            <span style="flex-grow:3"></span><span></span><span style="flex-grow:2"></span>
-          </div>
+        <div class="carta-mock tiene-imagen">
+          <img src="images/punto_venta.png" alt="Pantalla de punto de venta de PuntoTeck" loading="lazy">
         </div>
-        <div class="carta-etiqueta">Registro de producto</div>
+        <div class="carta-etiqueta">Punto de venta</div>
       </div>
 
       <div class="carta-pantalla activa" style="--tx:0px; --tilt:0deg;">
-        <div class="carta-mock">
-          <div class="cg-kpi"><span class="num">+18%</span><span class="pill">este mes</span></div>
-          <div class="cg-chart">
-            <div class="barra" style="height:35%"></div>
-            <div class="barra" style="height:55%"></div>
-            <div class="barra" style="height:40%"></div>
-            <div class="barra" style="height:70%"></div>
-            <div class="barra" style="height:50%"></div>
-            <div class="barra" style="height:85%"></div>
-            <div class="barra" style="height:60%"></div>
-          </div>
+        <div class="carta-mock tiene-imagen">
+          <img src="images/reportes.png" alt="Reportes y gráficas de ventas en PuntoTeck" loading="lazy">
         </div>
-        <div class="carta-etiqueta">Gráficas y reportes</div>
+        <div class="carta-etiqueta">Reportes</div>
       </div>
 
       <div class="carta-pantalla" style="--tx:88px; --tilt:7deg;">
-        <div class="carta-mock">
-          <div class="ca-fila"><div class="ca-avatar"></div><div class="ca-texto"></div><span class="ca-pill">Pagado</span></div>
-          <div class="ca-fila"><div class="ca-avatar"></div><div class="ca-texto"></div><span class="ca-pill">Pendiente</span></div>
-          <div class="ca-fila"><div class="ca-avatar"></div><div class="ca-texto"></div><span class="ca-pill">Parcial</span></div>
+        <div class="carta-mock tiene-imagen">
+          <img src="images/pag_web.png" alt="Página web pública generada automáticamente a partir del inventario" loading="lazy">
         </div>
-        <div class="carta-etiqueta">Apartados y créditos</div>
+        <div class="carta-etiqueta">Tu página web</div>
       </div>
 
       <div class="carta-pantalla" style="--tx:175px; --tilt:14deg;">
-        <div class="carta-mock">
-          <div class="ci-grid">
-            <div></div><div></div><div></div><div></div>
-            <div></div><div></div><div></div><div></div>
-            <div></div><div></div><div></div><div></div>
-          </div>
+        <div class="carta-mock tiene-imagen">
+          <img src="images/inventario.png" alt="Control de inventario en PuntoTeck" loading="lazy">
         </div>
         <div class="carta-etiqueta">Inventario</div>
       </div>
