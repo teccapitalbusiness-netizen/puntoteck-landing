@@ -279,19 +279,6 @@
   a.cinta-tarjeta:nth-of-type(3n) .ct-vermas{ background:var(--azul); }
   a.cinta-tarjeta:nth-of-type(3n) .avatar-mini{ background:var(--azul); }
 
-  .cinta-tarjeta-proxima{
-    background:rgba(255,255,255,0.12);
-    border:1px dashed rgba(255,255,255,0.45);
-    backdrop-filter:blur(6px);
-    box-shadow:none; cursor:default;
-  }
-  .cinta-tarjeta-proxima::after{ color:rgba(255,255,255,0.10); }
-  .cinta-tarjeta-proxima:hover{ transform:none; box-shadow:none; }
-  .cinta-tarjeta-proxima .ct-nombre{ color:#fff; }
-  .cinta-tarjeta-proxima .ct-ubicacion{ color:rgba(255,255,255,0.7); }
-  .cinta-tarjeta-proxima .ct-cita{ color:rgba(255,255,255,0.85); font-style:italic; margin-bottom:0; }
-  .cinta-tarjeta-proxima .avatar-mini{ background:rgba(255,255,255,0.2); color:#fff; }
-
   @keyframes desplazar-cinta{
     from{ transform:translateX(0); }
     to{ transform:translateX(-50%); }
@@ -715,14 +702,6 @@
   .caso-toggle[aria-expanded="true"] svg{ transform:rotate(180deg); }
   .caso-toggle:hover{ color:var(--ciruela-oscura); }
 
-  .caso-texto{
-    max-height:0; overflow:hidden;
-    transition:max-height .55s ease;
-  }
-  .caso-texto.abierto{ max-height:1400px; }
-  .caso-texto-inner{ padding-top:20px; display:flex; flex-direction:column; gap:14px; }
-  .caso-texto-inner p{ color:var(--tinta-suave); line-height:1.6; }
-
   .caso-metricas{ display:flex; flex-direction:column; gap:24px; justify-content:center; }
   .metrica{
     border-left:2px solid var(--ciruela); padding:14px 18px;
@@ -764,6 +743,97 @@
   }
   footer a{ text-decoration:none; }
   footer a:hover{ color:var(--ciruela); }
+
+  /* ---------- MODIFICADO: modal-tarjeta de historia de éxito ---------- */
+  .modal-historia{
+    position:fixed; inset:0; z-index:100;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+    opacity:0; visibility:hidden; pointer-events:none;
+    transition:opacity .3s ease, visibility .3s ease;
+  }
+  .modal-historia.abierto{ opacity:1; visibility:visible; pointer-events:auto; }
+  .modal-backdrop{
+    position:absolute; inset:0;
+    background:rgba(11,25,20,0.55);
+    backdrop-filter:blur(6px);
+  }
+  .modal-caja{
+    position:relative; z-index:1;
+    background:linear-gradient(170deg, #FFFFFF 0%, var(--lino-alt) 135%);
+    border-radius:24px;
+    border-top:6px solid var(--ciruela);
+    width:100%; max-width:620px;
+    max-height:86vh; overflow-y:auto;
+    padding:40px 40px 34px;
+    box-shadow:0 40px 90px rgba(11,25,20,0.42);
+    transform:translateY(22px) scale(.97);
+    transition:transform .35s cubic-bezier(.22,.9,.28,1);
+  }
+  .modal-historia.abierto .modal-caja{ transform:translateY(0) scale(1); }
+  .modal-caja::-webkit-scrollbar{ width:8px; }
+  .modal-caja::-webkit-scrollbar-thumb{ background:rgba(20,22,26,0.16); border-radius:8px; }
+  .modal-cerrar{
+    position:absolute; top:16px; right:16px;
+    width:38px; height:38px; border-radius:50%;
+    border:none; cursor:pointer;
+    background:var(--lino-alt); color:var(--tinta-suave);
+    display:flex; align-items:center; justify-content:center;
+    transition:background .2s ease, color .2s ease, transform .3s ease;
+  }
+  .modal-cerrar:hover{ background:var(--danger); color:#fff; transform:rotate(90deg); }
+  .modal-cerrar svg{ width:18px; height:18px; }
+  .modal-header{ display:flex; align-items:center; gap:14px; margin-bottom:6px; padding-right:44px; }
+  .modal-avatar{
+    width:52px; height:52px; border-radius:50%;
+    background:var(--ciruela); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif); font-weight:600; font-size:1.2rem; flex-shrink:0;
+  }
+  .modal-nombre{ font-family:var(--serif); font-weight:600; font-size:1.35rem; color:var(--tinta); line-height:1.1; }
+  .modal-ubicacion{ font-size:0.85rem; color:var(--tinta-suave); margin-top:3px; }
+  .modal-tag{
+    display:inline-block; margin-top:18px;
+    font-family:var(--mono); font-size:0.68rem; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--ciruela);
+  }
+  .modal-cuerpo{ margin-top:10px; }
+  .modal-cuerpo p{
+    color:var(--tinta-suave); line-height:1.65; font-size:0.97rem; margin-bottom:14px;
+  }
+  .modal-cuerpo p:last-child{ margin-bottom:0; }
+  .modal-cuerpo p:first-child{
+    font-family:var(--serif); font-size:1.15rem; color:var(--tinta); line-height:1.42;
+  }
+  .modal-redes{
+    display:flex; gap:12px; flex-wrap:wrap;
+    margin-top:26px; padding-top:22px; border-top:1px solid var(--borde);
+  }
+  .modal-red{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:0.88rem; font-weight:600; text-decoration:none;
+    padding:10px 18px; border-radius:999px; color:#fff;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .modal-red svg{ width:17px; height:17px; }
+  .modal-red.fb{ background:#1877F2; box-shadow:0 8px 18px rgba(24,119,242,0.30); }
+  .modal-red.ig{ background:linear-gradient(45deg,#F58529 0%,#DD2A7B 45%,#8134AF 75%,#515BD4 100%); box-shadow:0 8px 18px rgba(221,42,123,0.28); }
+  .modal-red:hover{ transform:translateY(-2px); box-shadow:0 12px 24px rgba(0,0,0,0.18); }
+
+  body.modal-abierto{ overflow:hidden; }
+
+  @media (max-width:560px){
+    .modal-historia{ padding:16px; }
+    .modal-caja{ padding:34px 22px 26px; border-radius:20px; }
+    .modal-header{ gap:12px; }
+    .modal-avatar{ width:46px; height:46px; font-size:1.05rem; }
+    .modal-nombre{ font-size:1.18rem; }
+    .modal-cuerpo p:first-child{ font-size:1.05rem; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .modal-historia, .modal-caja, .modal-cerrar{ transition:none; }
+    .modal-caja{ transform:none; }
+  }
 </style>
 </head>
 <body>
@@ -884,7 +954,8 @@
 
   <div class="cinta-contenedor">
     <div class="cinta-pista" id="cintaPista">
-      <a class="cinta-tarjeta" href="#caso">
+      <!-- MODIFICADO: cada tarjeta abre su modal vía data-historia -->
+      <a class="cinta-tarjeta" href="#" data-historia="amara" role="button" tabindex="0" aria-label="Leer la historia de Amara Boutique">
         <div class="ct-encabezado">
           <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">AB</div>
           <div>
@@ -896,49 +967,39 @@
         <span class="ct-vermas">Ver más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
 
-      <div class="cinta-tarjeta cinta-tarjeta-proxima">
+      <a class="cinta-tarjeta" href="#" data-historia="estilo-urbano" role="button" tabindex="0" aria-label="Leer la historia de Estilo Urbano">
         <div class="ct-encabezado">
-          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">+</div>
+          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">EU</div>
           <div>
-            <div class="ct-nombre">Próxima historia</div>
-            <div class="ct-ubicacion">Muy pronto</div>
-          </div>
-        </div>
-        <p class="ct-cita">Estamos documentando el siguiente caso real de una boutique usando PuntoTeck.</p>
-      </div>
-
-      <a class="cinta-tarjeta" href="#caso">
-        <div class="ct-encabezado">
-          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">AB</div>
-          <div>
-            <div class="ct-nombre">Amara Boutique</div>
+            <div class="ct-nombre">Estilo Urbano</div>
             <div class="ct-ubicacion">San José Miahuatlán, Puebla</div>
           </div>
         </div>
-        <p class="ct-cita">"Puedo revisar mis ventas, mi inventario y las prendas que más se venden de forma sencilla."</p>
+        <p class="ct-cita">"Ahora consultamos las ventas, el inventario y los productos que más se mueven."</p>
         <span class="ct-vermas">Ver más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
 
-      <div class="cinta-tarjeta cinta-tarjeta-proxima">
+      <a class="cinta-tarjeta" href="#" data-historia="luna-moda" role="button" tabindex="0" aria-label="Leer la historia de Luna Moda">
         <div class="ct-encabezado">
-          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">+</div>
+          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">LM</div>
           <div>
-            <div class="ct-nombre">Próxima historia</div>
-            <div class="ct-ubicacion">Muy pronto</div>
-          </div>
-        </div>
-        <p class="ct-cita">Este espacio se va a llenar con más boutiques reales usando PuntoTeck.</p>
-      </div>
-
-      <a class="cinta-tarjeta" href="#caso">
-        <div class="ct-encabezado">
-          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">AB</div>
-          <div>
-            <div class="ct-nombre">Amara Boutique</div>
+            <div class="ct-nombre">Luna Moda</div>
             <div class="ct-ubicacion">San José Miahuatlán, Puebla</div>
           </div>
         </div>
-        <p class="ct-cita">"Contar con página web ha sido una gran ventaja para mostrar mi inventario."</p>
+        <p class="ct-cita">"Toda la información de mi negocio en un solo lugar y siempre a la mano."</p>
+        <span class="ct-vermas">Ver más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+      </a>
+
+      <a class="cinta-tarjeta" href="#" data-historia="bella-co" role="button" tabindex="0" aria-label="Leer la historia de Bella & Co.">
+        <div class="ct-encabezado">
+          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">BC</div>
+          <div>
+            <div class="ct-nombre">Bella &amp; Co.</div>
+            <div class="ct-ubicacion">San José Miahuatlán, Puebla</div>
+          </div>
+        </div>
+        <p class="ct-cita">"Menos tiempo preocupándonos por el control y más tiempo para hacer crecer el negocio."</p>
         <span class="ct-vermas">Ver más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
     </div>
@@ -1103,28 +1164,19 @@
             <div class="caso-tienda" style="margin-bottom:0;">Amara Boutique</div>
             <div class="caso-ubicacion">San José Miahuatlán, Puebla</div>
           </div>
-          <a class="caso-social" href="#" title="Agregar redes sociales de Amara Boutique" aria-label="Redes sociales de Amara Boutique">
-            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 3a2.5 2.5 0 110 5 2.5 2.5 0 010-5zm4.8 3.2c.7 0 1.2.6 1.2 1.3v6c0 2-1.6 3.5-3.5 3.5H9.5C7.6 19 6 17.5 6 15.5v-6c0-.7.5-1.3 1.2-1.3h9.6z" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+          <!-- MODIFICADO: enlace real a Facebook de Amara Boutique -->
+          <a class="caso-social" href="https://www.facebook.com/share/1HCW32ea8S/" target="_blank" rel="noopener" title="Facebook de Amara Boutique" aria-label="Facebook de Amara Boutique">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0022 12z"/></svg>
           </a>
         </div>
 
         <blockquote>"PuntoTeck me permite administrar mi boutique de una forma más sencilla, tener mi negocio al alcance de mi teléfono y dedicar más tiempo a hacerlo crecer."</blockquote>
 
-        <button class="caso-toggle" id="casoToggle" aria-expanded="false" aria-controls="casoTexto">
+        <!-- MODIFICADO: el botón abre el modal-tarjeta en vez de desplegar el texto hacia abajo -->
+        <button class="caso-toggle" type="button" data-historia="amara">
           <span>Leer la historia completa</span>
-          <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
         </button>
-
-        <div class="caso-texto" id="casoTexto">
-          <div class="caso-texto-inner">
-            <p>"PuntoTeck me ha ayudado muchísimo a tener un mejor control de Amara Boutique. Antes era más complicado llevar el registro de las ventas y saber exactamente qué productos tenía disponibles."</p>
-            <p>"Ahora puedo revisar mis ventas, consultar mi inventario y conocer cuáles son las prendas que más se venden de una forma mucho más sencilla."</p>
-            <p>"Algo que me gusta mucho es que no necesito estar siempre dentro de la tienda para saber cómo va mi negocio. Si tengo que salir o estoy fuera, puedo entrar desde mi teléfono y revisar las ventas y la información importante de Amara Boutique. Esto me da mucha tranquilidad porque puedo mantenerme al tanto de lo que sucede aunque no esté físicamente en la boutique."</p>
-            <p>"Además, contar con una página web para mi negocio ha sido una gran ventaja. Los productos que tengo registrados en mi inventario pueden mostrarse en mi tienda en línea, por lo que no tengo que estar agregando la misma información en diferentes lugares."</p>
-            <p>"Cuando realizo cambios en mis productos o agrego nueva mercancía al inventario, puedo tener todo más organizado y mantener actualizada la información de mi boutique."</p>
-            <p>"Gracias a PuntoTeck, ahora siento que tengo un mayor control de Amara Boutique, tanto de las ventas que realizamos en la tienda como de los productos que mostramos en nuestra página web."</p>
-          </div>
-        </div>
       </div>
 
       <div class="caso-metricas">
@@ -1159,6 +1211,26 @@
   </div>
 </footer>
 
+<!-- MODIFICADO: modal-tarjeta reutilizable para historias de éxito -->
+<div class="modal-historia" id="modalHistoria" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalNombre">
+  <div class="modal-backdrop" data-cerrar></div>
+  <div class="modal-caja" role="document">
+    <button class="modal-cerrar" type="button" data-cerrar aria-label="Cerrar historia">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="modal-header">
+      <div class="modal-avatar" id="modalAvatar">AB</div>
+      <div>
+        <div class="modal-nombre" id="modalNombre">Amara Boutique</div>
+        <div class="modal-ubicacion" id="modalUbicacion">San José Miahuatlán, Puebla</div>
+      </div>
+    </div>
+    <span class="modal-tag">Historia de éxito · PuntoTeck</span>
+    <div class="modal-cuerpo" id="modalCuerpo"></div>
+    <div class="modal-redes" id="modalRedes"></div>
+  </div>
+</div>
+
 <script>
 (function(){
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1187,14 +1259,122 @@
     });
   }
 
-  /* Caso de éxito: "Leer la historia completa" con transición suave */
-  var casoToggle = document.getElementById('casoToggle');
-  var casoTexto = document.getElementById('casoTexto');
-  if (casoToggle && casoTexto){
-    casoToggle.addEventListener('click', function(){
-      var abierto = casoTexto.classList.toggle('abierto');
-      casoToggle.setAttribute('aria-expanded', abierto ? 'true' : 'false');
-      casoToggle.querySelector('span').textContent = abierto ? 'Ver menos' : 'Leer la historia completa';
+  /* MODIFICADO: modal-tarjeta de historias de éxito (Amara + boutiques nuevas).
+     Los textos de cada historia viven aquí; agregar una boutique nueva
+     es solo añadir una entrada a HISTORIAS y una tarjeta con su data-historia. */
+  var HISTORIAS = {
+    'amara': {
+      nombre:'Amara Boutique', iniciales:'AB',
+      ubicacion:'San José Miahuatlán, Puebla',
+      facebook:'https://www.facebook.com/share/1HCW32ea8S/',
+      instagram:'https://www.instagram.com/',
+      parrafos:[
+        'PuntoTeck me ha ayudado muchísimo a tener un mejor control de Amara Boutique. Antes era más complicado llevar el registro de las ventas y saber exactamente qué productos tenía disponibles.',
+        'Ahora puedo revisar mis ventas, consultar mi inventario y conocer cuáles son las prendas que más se venden de una forma mucho más sencilla.',
+        'Algo que me gusta mucho es que no necesito estar siempre dentro de la tienda para saber cómo va mi negocio. Si tengo que salir o estoy fuera, puedo entrar desde mi teléfono y revisar las ventas y la información importante de Amara Boutique. Esto me da mucha tranquilidad porque puedo mantenerme al tanto de lo que sucede aunque no esté físicamente en la boutique.',
+        'Además, contar con una página web para mi negocio ha sido una gran ventaja. Los productos que tengo registrados en mi inventario pueden mostrarse en mi tienda en línea, por lo que no tengo que estar agregando la misma información en diferentes lugares.',
+        'Cuando realizo cambios en mis productos o agrego nueva mercancía al inventario, puedo tener todo más organizado y mantener actualizada la información de mi boutique.',
+        'Gracias a PuntoTeck, ahora siento que tengo un mayor control de Amara Boutique, tanto de las ventas que realizamos en la tienda como de los productos que mostramos en nuestra página web.'
+      ]
+    },
+    'estilo-urbano': {
+      nombre:'Estilo Urbano', iniciales:'EU',
+      ubicacion:'San José Miahuatlán, Puebla',
+      facebook:'https://www.facebook.com/', instagram:'https://www.instagram.com/',
+      parrafos:[
+        'Cuando iniciamos Estilo Urbano, una de las cosas que más se nos complicaba era tener un control claro de todo lo que teníamos en la tienda. A veces necesitábamos revisar manualmente qué productos se habían vendido y cuáles ya estaban por terminarse.',
+        'Con PuntoTeck hemos podido organizar mucho mejor nuestro negocio. Ahora podemos consultar las ventas, revisar el inventario y conocer cuáles son los productos que tienen mayor movimiento.',
+        'Una de las cosas que más nos ha ayudado es poder revisar el negocio desde el teléfono. Como dueña, no siempre puedo estar dentro de la tienda, pero si tengo que salir puedo consultar rápidamente cómo van las ventas y revisar la información importante desde cualquier lugar.',
+        'También nos gustó mucho contar con nuestra propia página web. Los productos que registramos dentro del inventario pueden utilizarse para mostrar nuestra mercancía en línea, lo que nos ayuda a tener todo mucho más organizado.',
+        'PuntoTeck nos ha permitido tener mayor control, ahorrar tiempo y administrar nuestro negocio de una manera mucho más sencilla.'
+      ]
+    },
+    'luna-moda': {
+      nombre:'Luna Moda', iniciales:'LM',
+      ubicacion:'San José Miahuatlán, Puebla',
+      facebook:'https://www.facebook.com/', instagram:'https://www.instagram.com/',
+      parrafos:[
+        'Para mí era importante encontrar una herramienta que me ayudara a administrar mi negocio sin hacerlo más complicado. Quería poder saber qué estaba vendiendo, qué productos tenía disponibles y cómo estaba funcionando la tienda.',
+        'Desde que comenzamos a utilizar PuntoTeck, tenemos toda esa información en un solo lugar. Podemos registrar nuestros productos, llevar el control del inventario y consultar las ventas de una manera mucho más rápida.',
+        'Lo que más tranquilidad me da es saber que puedo revisar mi negocio aunque esté fuera. Si tengo algún compromiso o necesito salir de la tienda, puedo entrar desde mi teléfono y mantenerme informada sobre lo que está sucediendo.',
+        'Además, tener una página web conectada con nuestros productos nos ayuda a darle mayor presencia a Luna Moda. Podemos mostrar nuestra mercancía en internet sin tener que administrar todo por separado.',
+        'PuntoTeck me ha ayudado a sentir que tengo mi negocio mucho más organizado y siempre al alcance de mi mano.'
+      ]
+    },
+    'bella-co': {
+      nombre:'Bella & Co.', iniciales:'BC',
+      ubicacion:'San José Miahuatlán, Puebla',
+      facebook:'https://www.facebook.com/', instagram:'https://www.instagram.com/',
+      parrafos:[
+        'Nuestro objetivo siempre ha sido ofrecer ropa y accesorios que nuestras clientas puedan disfrutar, pero conforme el negocio fue creciendo también fue necesario encontrar una mejor forma de organizarnos.',
+        'Antes, llevar el control de las prendas, las ventas y el inventario podía tomar mucho tiempo. Con PuntoTeck ahora podemos tener una visión mucho más clara de nuestro negocio.',
+        'Podemos saber qué productos tenemos disponibles, cuáles se venden más y cuáles necesitamos volver a surtir. Esto nos ayuda a tomar mejores decisiones y a mantener organizada nuestra mercancía.',
+        'Otra de las ventajas es que no tenemos que estar siempre dentro de la tienda para mantenernos informadas. Desde el teléfono podemos consultar información importante y seguir al pendiente del negocio aunque estemos fuera.',
+        'También nos gusta poder contar con una página web para mostrar nuestros productos. Tener el inventario y nuestra presencia en línea conectados nos facilita mucho la administración.',
+        'Gracias a PuntoTeck, podemos dedicar menos tiempo a preocuparnos por el control del negocio y más tiempo a buscar nuevas oportunidades para hacerlo crecer.'
+      ]
+    }
+  };
+
+  var SVG_FB = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 10-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0022 12z"/></svg>';
+  var SVG_IG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.7 0 3 0 4.1.1 1 .1 1.7.2 2.3.5.6.2 1.1.5 1.6 1s.8 1 1 1.6c.2.6.4 1.3.5 2.3.1 1.1.1 1.4.1 4.1s0 3-.1 4.1c-.1 1-.2 1.7-.5 2.3-.2.6-.5 1.1-1 1.6s-1 .8-1.6 1c-.6.2-1.3.4-2.3.5-1.1.1-1.4.1-4.1.1s-3 0-4.1-.1c-1-.1-1.7-.2-2.3-.5-.6-.2-1.1-.5-1.6-1s-.8-1-1-1.6c-.2-.6-.4-1.3-.5-2.3C2 15 2 14.7 2 12s0-3 .1-4.1c.1-1 .2-1.7.5-2.3.2-.6.5-1.1 1-1.6s1-.8 1.6-1c.6-.2 1.3-.4 2.3-.5C9 2 9.3 2 12 2zm0 1.8c-2.7 0-3 0-4 .1-.9 0-1.4.2-1.7.3-.4.2-.7.4-1 .7s-.5.6-.7 1c-.1.3-.3.8-.3 1.7-.1 1-.1 1.3-.1 4s0 3 .1 4c0 .9.2 1.4.3 1.7.2.4.4.7.7 1s.6.5 1 .7c.3.1.8.3 1.7.3 1 .1 1.3.1 4 .1s3 0 4-.1c.9 0 1.4-.2 1.7-.3.4-.2.7-.4 1-.7s.5-.6.7-1c.1-.3.3-.8.3-1.7.1-1 .1-1.3.1-4s0-3-.1-4c0-.9-.2-1.4-.3-1.7-.2-.4-.4-.7-.7-1s-.6-.5-1-.7c-.3-.1-.8-.3-1.7-.3-1-.1-1.3-.1-4-.1zm0 3.1a5.1 5.1 0 110 10.2 5.1 5.1 0 010-10.2zm0 1.8a3.3 3.3 0 100 6.6 3.3 3.3 0 000-6.6zm5.3-3.1a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>';
+
+  var modal = document.getElementById('modalHistoria');
+  if (modal){
+    var mAvatar = document.getElementById('modalAvatar');
+    var mNombre = document.getElementById('modalNombre');
+    var mUbic   = document.getElementById('modalUbicacion');
+    var mCuerpo = document.getElementById('modalCuerpo');
+    var mRedes  = document.getElementById('modalRedes');
+    var caja    = modal.querySelector('.modal-caja');
+    var btnCerrar = modal.querySelector('.modal-cerrar');
+    var ultimoFoco = null;
+
+    var abrirHistoria = function(clave){
+      var h = HISTORIAS[clave];
+      if (!h) return;
+      mAvatar.textContent = h.iniciales;
+      mNombre.textContent = h.nombre;
+      mUbic.textContent   = h.ubicacion;
+      mCuerpo.innerHTML = h.parrafos.map(function(p){ return '<p>' + p + '</p>'; }).join('');
+      var redes = '';
+      if (h.facebook){ redes += '<a class="modal-red fb" href="' + h.facebook + '" target="_blank" rel="noopener">' + SVG_FB + 'Facebook</a>'; }
+      if (h.instagram){ redes += '<a class="modal-red ig" href="' + h.instagram + '" target="_blank" rel="noopener">' + SVG_IG + 'Instagram</a>'; }
+      mRedes.innerHTML = redes;
+      ultimoFoco = document.activeElement;
+      modal.classList.add('abierto');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-abierto');
+      if (caja) caja.scrollTop = 0;
+      if (btnCerrar) btnCerrar.focus();
+    };
+    var cerrarModal = function(){
+      modal.classList.remove('abierto');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-abierto');
+      if (ultimoFoco && ultimoFoco.focus) ultimoFoco.focus();
+    };
+
+    /* Delegación: cubre las tarjetas de la cinta (y sus clones duplicados),
+       el botón del caso de éxito y los elementos que cierran el modal. */
+    document.addEventListener('click', function(e){
+      var disparador = e.target.closest('[data-historia]');
+      if (disparador){
+        e.preventDefault();
+        abrirHistoria(disparador.getAttribute('data-historia'));
+        return;
+      }
+      if (e.target.closest('[data-cerrar]')){ cerrarModal(); }
+    });
+    document.addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && modal.classList.contains('abierto')){ cerrarModal(); return; }
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){
+        var el = document.activeElement;
+        if (el && el.matches && el.matches('.cinta-tarjeta[data-historia]')){
+          e.preventDefault();
+          abrirHistoria(el.getAttribute('data-historia'));
+        }
+      }
     });
   }
 
