@@ -307,26 +307,52 @@
     .banda-stats{ flex-wrap:wrap; row-gap:16px; }
   }
 
-  /* ---------- Mockup 3D del panel (dashboard en monitor) + ticket ---------- */
+  /* ---------- Mockup 3D del punto de venta completo (monitor + teclado + mouse + escáner + impresora) ---------- */
   .ticket-holder{
     position:relative; display:flex; justify-content:center; align-items:center;
-    gap:14px;
-    min-height:400px;
+    min-height:450px;
     perspective:1400px;
   }
-  .monitor{
+  .escritorio-envoltura{ width:100%; max-width:580px; }
+  .escritorio{
     position:relative;
-    flex:1 1 62%; max-width:330px;
+    width:100%; max-width:580px; height:430px;
+    margin:0 auto;
     transform:rotateX(10deg) rotateY(-16deg) rotateZ(1deg);
     transform-style:preserve-3d;
     transition:transform .3s ease-out;
     will-change:transform;
+  }
+  .escritorio::before{
+    content:'';
+    position:absolute; left:50%; bottom:6px; transform:translateX(-50%);
+    width:430px; height:38px; border-radius:50%;
+    background:radial-gradient(ellipse at center, rgba(20,22,26,0.24) 0%, rgba(20,22,26,0) 72%);
+  }
+
+  /* Monitor: pieza principal, centrada al fondo del escritorio */
+  .monitor{
+    position:absolute; top:0; left:50%;
+    width:280px; margin-left:-140px;
+    transform-style:preserve-3d;
+    transform:translateZ(6px);
+  }
+  .monitor::before{
+    /* base/pie del monitor */
+    content:''; position:absolute; left:50%; bottom:-30px; transform:translateX(-50%);
+    width:86px; height:8px; border-radius:50%; background:var(--tinta); opacity:0.85;
+  }
+  .monitor::after{
+    /* cuello del monitor */
+    content:''; position:absolute; left:50%; bottom:-24px; transform:translateX(-50%);
+    width:12px; height:24px; background:var(--tinta); border-radius:2px;
   }
   .monitor-marco{
     background:var(--tinta);
     border-radius:14px;
     padding:14px 14px 30px;
     box-shadow:0 40px 70px rgba(20,22,26,0.32), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    position:relative;
   }
   .monitor-marco::after{
     content:'';
@@ -338,7 +364,7 @@
     border-radius:6px;
     overflow:hidden;
     display:grid; grid-template-columns:74px 1fr;
-    min-height:270px;
+    min-height:230px;
     box-shadow:0 0 0 1px rgba(0,0,0,0.15) inset;
   }
   .mini-sidebar{
@@ -378,6 +404,90 @@
   .mini-chart .barra:nth-child(3n+2){ background:var(--ambar); }
   .mini-chart .barra:nth-child(3n){ background:var(--azul); }
 
+  /* Teclado: pieza plana "recostada" frente al monitor */
+  .teclado{
+    position:absolute; top:298px; left:50%;
+    width:224px; height:58px; margin-left:-112px;
+    background:var(--tinta);
+    border-radius:10px;
+    box-shadow:0 26px 46px rgba(20,22,26,0.30);
+    transform:rotateX(32deg) translateZ(34px);
+    transform-style:preserve-3d;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.14) 0 14px, transparent 14px 18px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.14) 0 8px, transparent 8px 12px);
+    background-position: 8px 8px;
+    background-size: calc(100% - 16px) 32px;
+    background-repeat:no-repeat;
+  }
+  .teclado-reposo{
+    position:absolute; left:0; right:0; bottom:0; height:13px;
+    background:rgba(255,255,255,0.07); border-radius:0 0 10px 10px;
+  }
+
+  /* Mouse: pieza plana junto al teclado */
+  .mouse-pos{
+    position:absolute; top:360px; left:calc(50% + 60px);
+    width:36px; height:54px;
+    background:var(--tinta);
+    border-radius:50% 50% 42% 42% / 62% 62% 32% 32%;
+    box-shadow:0 22px 38px rgba(20,22,26,0.28);
+    transform:rotateX(32deg) translateZ(34px);
+    transform-style:preserve-3d;
+  }
+  .mouse-pos::after{
+    content:''; position:absolute; top:6px; left:50%; transform:translateX(-50%);
+    width:2px; height:14px; border-radius:2px; background:rgba(255,255,255,0.25);
+  }
+
+  /* Escáner de código de barras: de pie, a la izquierda */
+  .escaner{
+    position:absolute; top:64px; left:0;
+    width:60px; height:158px;
+    background:var(--tinta);
+    border-radius:14px 14px 34px 34px;
+    box-shadow:0 26px 44px rgba(20,22,26,0.30);
+    transform:rotateY(20deg) rotateZ(-4deg) translateZ(26px);
+    transform-style:preserve-3d;
+  }
+  .escaner-ojo{
+    position:absolute; top:16px; left:50%; transform:translateX(-50%);
+    width:32px; height:32px; border-radius:50%;
+    background:var(--ciruela);
+    box-shadow:0 0 0 4px rgba(5,150,105,0.16), 0 0 16px rgba(5,150,105,0.55);
+    animation:escaner-pulso 2.4s ease-in-out infinite;
+    overflow:hidden;
+  }
+  .escaner-ojo::after{
+    content:''; position:absolute; inset:7px; border-radius:50%;
+    background:repeating-linear-gradient(90deg, rgba(255,255,255,0.9) 0 2px, transparent 2px 5px);
+  }
+  @keyframes escaner-pulso{
+    0%, 100%{ box-shadow:0 0 0 4px rgba(5,150,105,0.16), 0 0 16px rgba(5,150,105,0.55); }
+    50%{ box-shadow:0 0 0 6px rgba(5,150,105,0.22), 0 0 24px rgba(5,150,105,0.8); }
+  }
+
+  /* Impresora de tickets: a la derecha, con el ticket saliendo de la ranura */
+  .impresora{
+    position:absolute; top:312px; right:-2%;
+    width:150px; height:78px;
+    background:var(--tinta);
+    border-radius:12px;
+    box-shadow:0 24px 44px rgba(20,22,26,0.30);
+    transform:rotateY(-16deg) rotateZ(3deg) translateZ(14px);
+    transform-style:preserve-3d;
+  }
+  .impresora-ranura{
+    position:absolute; top:10px; left:14px; right:14px; height:6px;
+    border-radius:3px; background:#000;
+    box-shadow:inset 0 2px 4px rgba(0,0,0,0.7);
+  }
+  .impresora-luz{
+    position:absolute; bottom:10px; right:14px;
+    width:8px; height:8px; border-radius:50%;
+    background:var(--ciruela); box-shadow:0 0 8px rgba(5,150,105,0.8);
+  }
+
   .insignia{
     position:absolute; z-index:3;
     background:var(--papel); border-radius:18px;
@@ -387,11 +497,11 @@
   }
   .insignia .num{ font-family:var(--serif); font-size:1.4rem; line-height:1; }
   .insignia .txt{ font-size:0.68rem; color:var(--tinta-suave); margin-top:2px; white-space:nowrap; }
-  .insignia-1{ top:-6%; left:2%; }
+  .insignia-1{ top:-4%; left:0; }
   .insignia-1 .num{ color:var(--ciruela); }
-  .insignia-2{ top:36%; right:-4%; animation-delay:1.2s; }
+  .insignia-2{ top:38%; right:-6%; animation-delay:1.2s; }
   .insignia-2 .num{ color:var(--ambar); }
-  .insignia-3{ bottom:-8%; left:22%; animation-delay:2.4s; }
+  .insignia-3{ bottom:-6%; left:26%; animation-delay:2.4s; }
   .insignia-3 .num{ color:var(--azul); }
 
   @keyframes flotar{
@@ -400,28 +510,35 @@
   }
   @media (prefers-reduced-motion: reduce){
     .insignia{ animation:none; }
-    .monitor{ transform:rotateX(4deg) rotateY(-8deg); }
+    .escritorio{ transform:rotateX(4deg) rotateY(-8deg); }
+    .escaner-ojo{ animation:none; }
+  }
+  @media (max-width:680px){
+    .insignia{ display:none; }
+    .escritorio-envoltura{ transform:scale(0.82); transform-origin:top center; height:353px; }
+    .ticket-holder{ min-height:370px; }
   }
   @media (max-width:520px){
-    .insignia{ display:none; }
-    .ticket-holder{ flex-direction:column; gap:24px; }
-    .monitor{ transform:rotateX(6deg) rotateY(-10deg); max-width:280px; flex:0 0 auto; }
-    .ticket{ transform:rotateX(0) rotateY(0) rotateZ(0); }
+    .escritorio-envoltura{ transform:scale(0.66); transform-origin:top center; height:284px; }
+    .ticket-holder{ min-height:300px; }
+  }
+  @media (max-width:400px){
+    .escritorio-envoltura{ transform:scale(0.56); height:241px; }
+    .ticket-holder{ min-height:260px; }
   }
   .ticket{
+    position:absolute; top:-34px; right:8%;
     background:var(--papel);
-    width:190px;
-    flex:0 0 auto;
-    padding:20px 16px 24px;
+    width:130px;
+    padding:16px 13px 20px;
     font-family:var(--mono);
-    font-size:0.66rem;
+    font-size:0.6rem;
     color:#3a332f;
-    box-shadow:0 30px 55px rgba(20,22,26,0.22);
-    position:relative;
+    box-shadow:0 30px 55px rgba(20,22,26,0.24);
     z-index:2;
-    border-radius:14px;
+    border-radius:12px;
     overflow:visible;
-    transform:rotateX(6deg) rotateY(16deg) rotateZ(-3deg);
+    transform:rotateX(6deg) rotateY(16deg) rotateZ(-3deg) translateZ(50px);
     transform-style:preserve-3d;
     clip-path: polygon(
       0% 0%, 100% 0%, 100% 96%,
@@ -829,48 +946,84 @@
     </div>
 
     <div class="ticket-holder">
-      <div class="monitor" id="monitor3d">
-        <div class="monitor-marco">
-          <div class="monitor-pantalla">
-            <div class="mini-sidebar">
-              <div class="dot-marca"></div>
-              <div class="mini-item activo"></div>
-              <div class="mini-item"></div>
-              <div class="mini-item"></div>
-              <div class="mini-item"></div>
-              <div class="mini-item"></div>
-              <div class="mini-item"></div>
-            </div>
-            <div class="mini-main">
-              <div class="mini-topbar">
-                <div class="titulo">Panel · Ropa Shop</div>
-                <div class="fecha">Corte del día</div>
-              </div>
-              <div class="mini-cards">
-                <div class="mini-card">
-                  <div class="n">$8,240</div>
-                  <div class="l">Ventas hoy</div>
+      <div class="escritorio-envoltura">
+        <div class="escritorio" id="escritorio3d">
+
+          <div class="monitor">
+            <div class="monitor-marco">
+              <div class="monitor-pantalla">
+                <div class="mini-sidebar">
+                  <div class="dot-marca"></div>
+                  <div class="mini-item activo"></div>
+                  <div class="mini-item"></div>
+                  <div class="mini-item"></div>
+                  <div class="mini-item"></div>
+                  <div class="mini-item"></div>
+                  <div class="mini-item"></div>
                 </div>
-                <div class="mini-card">
-                  <div class="n">6</div>
-                  <div class="l">Apartados</div>
+                <div class="mini-main">
+                  <div class="mini-topbar">
+                    <div class="titulo">Panel · Ropa Shop</div>
+                    <div class="fecha">Corte del día</div>
+                  </div>
+                  <div class="mini-cards">
+                    <div class="mini-card">
+                      <div class="n">$8,240</div>
+                      <div class="l">Ventas hoy</div>
+                    </div>
+                    <div class="mini-card">
+                      <div class="n">6</div>
+                      <div class="l">Apartados</div>
+                    </div>
+                    <div class="mini-card">
+                      <div class="n">3</div>
+                      <div class="l">Créditos</div>
+                    </div>
+                  </div>
+                  <div class="mini-chart">
+                    <div class="barra" style="height:35%"></div>
+                    <div class="barra" style="height:55%"></div>
+                    <div class="barra" style="height:40%"></div>
+                    <div class="barra" style="height:70%"></div>
+                    <div class="barra" style="height:50%"></div>
+                    <div class="barra" style="height:85%"></div>
+                    <div class="barra" style="height:60%"></div>
+                  </div>
                 </div>
-                <div class="mini-card">
-                  <div class="n">3</div>
-                  <div class="l">Créditos</div>
-                </div>
-              </div>
-              <div class="mini-chart">
-                <div class="barra" style="height:35%"></div>
-                <div class="barra" style="height:55%"></div>
-                <div class="barra" style="height:40%"></div>
-                <div class="barra" style="height:70%"></div>
-                <div class="barra" style="height:50%"></div>
-                <div class="barra" style="height:85%"></div>
-                <div class="barra" style="height:60%"></div>
               </div>
             </div>
           </div>
+
+          <!-- MODIFICADO: equipo completo del punto de venta en 3D -->
+          <div class="teclado">
+            <div class="teclado-reposo"></div>
+          </div>
+
+          <div class="mouse-pos"></div>
+
+          <div class="escaner">
+            <div class="escaner-ojo"></div>
+          </div>
+
+          <div class="impresora">
+            <div class="impresora-ranura"></div>
+            <div class="impresora-luz"></div>
+          </div>
+
+          <div class="ticket">
+            <div class="t-header t-linea">
+              <div class="t-nombre">Boutique Ejemplo</div>
+              <div class="t-sub">Ticket de venta · Caja 1</div>
+            </div>
+            <div class="t-sep t-linea"></div>
+            <div class="t-fila t-linea"><span>Blusa lino manga larga</span><span>$450.00</span></div>
+            <div class="t-fila t-linea"><span>Pantalón palazzo T.M</span><span>$620.00</span></div>
+            <div class="t-fila t-linea"><span>Descuento cliente frecuente</span><span>-$50.00</span></div>
+            <div class="t-sep t-linea"></div>
+            <div class="t-total t-linea"><span>Total</span><span>$1,020.00</span></div>
+            <div class="t-sello t-linea">VENTA REGISTRADA</div>
+          </div>
+
         </div>
       </div>
 
@@ -885,19 +1038,6 @@
       <div class="insignia insignia-3">
         <div class="num">5</div>
         <div class="txt">funciones en un solo lugar</div>
-      </div>
-      <div class="ticket">
-        <div class="t-header t-linea">
-          <div class="t-nombre">Boutique Ejemplo</div>
-          <div class="t-sub">Ticket de venta · Caja 1</div>
-        </div>
-        <div class="t-sep t-linea"></div>
-        <div class="t-fila t-linea"><span>Blusa lino manga larga</span><span>$450.00</span></div>
-        <div class="t-fila t-linea"><span>Pantalón palazzo T.M</span><span>$620.00</span></div>
-        <div class="t-fila t-linea"><span>Descuento cliente frecuente</span><span>-$50.00</span></div>
-        <div class="t-sep t-linea"></div>
-        <div class="t-total t-linea"><span>Total</span><span>$1,020.00</span></div>
-        <div class="t-sello t-linea">VENTA REGISTRADA</div>
       </div>
     </div>
   </div>
@@ -1362,26 +1502,26 @@
   }, { threshold: 0.4 });
   contadores.forEach(function(el){ obsContador.observe(el); });
 
-  /* Inclinación 3D del monitor según la posición del mouse */
-  var monitor = document.getElementById('monitor3d');
-  if (monitor){
-    var holder = monitor.parentElement;
+  /* Inclinación 3D de todo el punto de venta (escritorio) según la posición del mouse */
+  var escritorio = document.getElementById('escritorio3d');
+  if (escritorio){
+    var holder = escritorio.closest('.ticket-holder');
     holder.addEventListener('mousemove', function(e){
       var rect = holder.getBoundingClientRect();
       var px = (e.clientX - rect.left) / rect.width;   // 0 a 1
       var py = (e.clientY - rect.top) / rect.height;    // 0 a 1
       var rotY = -24 + (px * 16);   // de -24° a -8°
       var rotX = 4 + ((1 - py) * 10); // de 4° a 14°
-      monitor.style.transform = 'rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) rotateZ(1deg)';
+      escritorio.style.transform = 'rotateX(' + rotX + 'deg) rotateY(' + rotY + 'deg) rotateZ(1deg)';
     });
     holder.addEventListener('mouseleave', function(){
-      monitor.style.transform = 'rotateX(10deg) rotateY(-16deg) rotateZ(1deg)';
+      escritorio.style.transform = 'rotateX(10deg) rotateY(-16deg) rotateZ(1deg)';
     });
   }
 
   /* Resalta el link activo del menú según la sección visible */
   var links = document.querySelectorAll('.nav-links a');
-  var secciones = ['historias','flujo','confianza','caso','contacto'].map(function(id){ return document.getElementById(id); }).filter(Boolean);
+  var secciones = ['historias','flujo','confianza','contacto'].map(function(id){ return document.getElementById(id); }).filter(Boolean);
   var navObserver = new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       var id = entry.target.id;
