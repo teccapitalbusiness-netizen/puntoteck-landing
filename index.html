@@ -186,10 +186,8 @@
 
   /* ---------- Franja de confianza (justo bajo el hero) ---------- */
   .banda-confianza{
-    background:linear-gradient(90deg, rgba(5,150,105,0.06) 0%, var(--lino-alt) 35%, rgba(217,119,6,0.06) 100%);
-    border-top:1px solid var(--borde);
-    border-bottom:1px solid var(--borde);
-    padding:36px 0;
+    background:linear-gradient(135deg, var(--ciruela) 0%, var(--ciruela-oscura) 60%, #0B3D66 130%);
+    padding:52px 0 48px;
   }
   .banda-grid{
     display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center;
@@ -232,9 +230,6 @@
   /* ---------- Cinta corrediza de tarjetas de historias de éxito ---------- */
   .cinta-contenedor{
     overflow:hidden;
-    border-top:1px solid var(--borde);
-    margin-top:32px;
-    padding-top:28px;
     -webkit-mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
     mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
   }
@@ -245,25 +240,57 @@
   .cinta-contenedor:hover .cinta-pista{ animation-play-state:paused; }
 
   .cinta-tarjeta{
-    display:block; flex-shrink:0; width:260px;
-    background:var(--papel); border:1px solid var(--borde); border-radius:18px;
-    padding:22px; box-shadow:0 10px 26px rgba(20,22,26,0.08);
+    position:relative;
+    display:block; flex-shrink:0; width:270px;
+    background:linear-gradient(165deg, #FFFFFF 0%, var(--lino-alt) 100%);
+    border:none; border-top:5px solid var(--ciruela); border-radius:18px;
+    padding:26px 24px 22px; box-shadow:0 18px 38px rgba(11,25,20,0.30);
     text-decoration:none; color:inherit;
+    overflow:hidden;
     transition:box-shadow .25s ease, transform .25s ease;
   }
-  .cinta-tarjeta:hover{ box-shadow:0 18px 36px rgba(20,22,26,0.16); transform:translateY(-4px); }
-  .ct-encabezado{ display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .cinta-tarjeta::after{
+    content:'"'; position:absolute; top:-14px; right:14px;
+    font-family:var(--serif); font-size:5rem; line-height:1;
+    color:rgba(5,150,105,0.08); pointer-events:none;
+  }
+  .cinta-tarjeta:hover{ box-shadow:0 24px 46px rgba(11,25,20,0.38); transform:translateY(-6px); }
+
+  .ct-encabezado{ position:relative; display:flex; align-items:center; gap:10px; margin-bottom:14px; }
   .ct-nombre{ font-weight:600; font-size:0.92rem; color:var(--tinta); }
   .ct-ubicacion{ font-size:0.75rem; color:var(--tinta-suave); }
-  .ct-cita{ font-size:0.86rem; color:var(--tinta-suave); line-height:1.5; margin-bottom:14px; }
-  .ct-vermas{ font-size:0.82rem; font-weight:600; color:var(--ciruela); }
+  .ct-cita{ position:relative; font-size:0.86rem; color:var(--tinta-suave); line-height:1.5; margin-bottom:16px; }
+  .ct-vermas{
+    position:relative;
+    display:inline-flex; align-items:center; gap:5px;
+    font-size:0.8rem; font-weight:600; color:var(--papel);
+    background:var(--ciruela);
+    padding:7px 14px; border-radius:999px;
+  }
+  .ct-vermas svg{ width:12px; height:12px; }
+
+  /* Colores que rotan entre tarjetas reales */
+  a.cinta-tarjeta:nth-of-type(3n+2){ border-top-color:var(--ambar); }
+  a.cinta-tarjeta:nth-of-type(3n+2)::after{ color:rgba(217,119,6,0.09); }
+  a.cinta-tarjeta:nth-of-type(3n+2) .ct-vermas{ background:var(--ambar); }
+  a.cinta-tarjeta:nth-of-type(3n+2) .avatar-mini{ background:var(--ambar); }
+  a.cinta-tarjeta:nth-of-type(3n){ border-top-color:var(--azul); }
+  a.cinta-tarjeta:nth-of-type(3n)::after{ color:rgba(37,99,235,0.09); }
+  a.cinta-tarjeta:nth-of-type(3n) .ct-vermas{ background:var(--azul); }
+  a.cinta-tarjeta:nth-of-type(3n) .avatar-mini{ background:var(--azul); }
 
   .cinta-tarjeta-proxima{
-    border-style:dashed; box-shadow:none; cursor:default;
+    background:rgba(255,255,255,0.12);
+    border:1px dashed rgba(255,255,255,0.45);
+    backdrop-filter:blur(6px);
+    box-shadow:none; cursor:default;
   }
+  .cinta-tarjeta-proxima::after{ color:rgba(255,255,255,0.10); }
   .cinta-tarjeta-proxima:hover{ transform:none; box-shadow:none; }
-  .cinta-tarjeta-proxima .ct-cita{ font-style:italic; margin-bottom:0; }
-  .cinta-tarjeta-proxima .avatar-mini{ background:var(--lino-alt); color:var(--tinta-suave); }
+  .cinta-tarjeta-proxima .ct-nombre{ color:#fff; }
+  .cinta-tarjeta-proxima .ct-ubicacion{ color:rgba(255,255,255,0.7); }
+  .cinta-tarjeta-proxima .ct-cita{ color:rgba(255,255,255,0.85); font-style:italic; margin-bottom:0; }
+  .cinta-tarjeta-proxima .avatar-mini{ background:rgba(255,255,255,0.2); color:#fff; }
 
   @keyframes desplazar-cinta{
     from{ transform:translateX(0); }
@@ -272,6 +299,11 @@
   @media (prefers-reduced-motion: reduce){
     .cinta-pista{ animation:none; flex-wrap:wrap; width:auto; }
   }
+  #historias .corte{
+    background:rgba(255,255,255,0.16); color:#fff;
+  }
+  #historias .corte::before{ background:#fff; }
+
   @media (max-width:900px){
     .banda-grid{ grid-template-columns:1fr; gap:24px; }
     .banda-stats{ gap:24px; }
@@ -846,29 +878,8 @@
 </section>
 
 <section class="banda-confianza" id="historias">
-  <div class="wrap banda-grid revelar">
-    <div class="banda-texto">
-      <div class="avatar-mini">AB</div>
-      <div>
-        <span class="banda-tienda">Amara Boutique · San José Miahuatlán, Puebla</span>
-        <p class="banda-cita">"PuntoTeck me permite administrar mi boutique de una forma más sencilla, tener mi negocio al alcance de mi teléfono y dedicar más tiempo a hacerlo crecer."</p>
-      </div>
-      <a class="banda-link" href="#caso">Conoce la historia completa</a>
-    </div>
-    <div class="banda-stats">
-      <div class="stat-mini">
-        <div class="num" style="font-size:1.05rem; color:var(--ciruela);">Todo en un lugar</div>
-        <div class="label">ventas, inventario y catálogo web</div>
-      </div>
-      <div class="stat-mini">
-        <div class="num" style="font-size:1.05rem; color:var(--ambar);">Desde el celular</div>
-        <div class="label">revisa su negocio sin estar en la tienda</div>
-      </div>
-      <div class="stat-mini">
-        <div class="num" style="font-size:1.05rem; color:var(--azul);">Se actualiza solo</div>
-        <div class="label">su página web sigue a su inventario</div>
-      </div>
-    </div>
+  <div class="wrap">
+    <div class="corte revelar">HISTORIAS DE ÉXITO</div>
   </div>
 
   <div class="cinta-contenedor">
@@ -882,7 +893,7 @@
           </div>
         </div>
         <p class="ct-cita">"Ahora tengo mi negocio al alcance de mi teléfono y más tiempo para hacerlo crecer."</p>
-        <span class="ct-vermas">Ver más</span>
+        <span class="ct-vermas">Ver más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
 
       <div class="cinta-tarjeta cinta-tarjeta-proxima">
@@ -905,7 +916,7 @@
           </div>
         </div>
         <p class="ct-cita">"Puedo revisar mis ventas, mi inventario y las prendas que más se venden de forma sencilla."</p>
-        <span class="ct-vermas">Ver más</span>
+        <span class="ct-vermas">Ver más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
 
       <div class="cinta-tarjeta cinta-tarjeta-proxima">
@@ -928,7 +939,7 @@
           </div>
         </div>
         <p class="ct-cita">"Contar con página web ha sido una gran ventaja para mostrar mi inventario."</p>
-        <span class="ct-vermas">Ver más</span>
+        <span class="ct-vermas">Ver más <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
       </a>
     </div>
   </div>
