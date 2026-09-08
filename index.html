@@ -395,11 +395,15 @@
   .section-intro p{ margin-top:16px; color:var(--tinta-suave); font-size:1.05rem; }
 
   .corte{
-    display:flex; align-items:center; gap:14px; color:var(--tinta-suave);
-    font-size:0.82rem; margin:0 0 8px;
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(5,150,105,0.09);
+    color:var(--ciruela-oscura);
+    font-size:0.76rem; font-weight:600; letter-spacing:0.02em;
+    padding:7px 16px 7px 12px; border-radius:999px;
+    margin-bottom:16px;
   }
-  .corte::before, .corte::after{
-    content:''; flex:1; border-top:1px dashed var(--borde);
+  .corte::before{
+    content:''; width:7px; height:7px; border-radius:50%; background:var(--ciruela); flex-shrink:0;
   }
 
   /* ---------- Flujo del día (secuencia real) ---------- */
@@ -448,18 +452,21 @@
   }
 
   /* ---------- Mazo de pantallas del sistema ---------- */
+  #pantallas{
+    background:linear-gradient(180deg, var(--lino) 0%, rgba(37,99,235,0.05) 45%, rgba(5,150,105,0.05) 100%);
+  }
   .baraja{
     position:relative;
-    height:330px;
+    height:420px;
     display:flex; justify-content:center; align-items:center;
     margin-bottom:12px;
   }
   .carta-pantalla{
     position:absolute;
-    width:176px; height:236px;
-    background:var(--papel);
-    border-radius:16px;
-    box-shadow:0 16px 34px rgba(20,22,26,0.16);
+    width:232px; height:310px;
+    background:linear-gradient(160deg, #FFFFFF 0%, var(--lino-alt) 100%);
+    border-radius:20px;
+    box-shadow:0 20px 42px rgba(20,22,26,0.18);
     overflow:hidden;
     cursor:pointer;
     display:flex; flex-direction:column;
@@ -472,65 +479,81 @@
   .carta-pantalla:nth-child(4){ z-index:2; }
   .carta-pantalla:nth-child(5){ z-index:1; }
   .carta-pantalla.activa{
-    transform:translateX(var(--tx)) translateY(-26px) rotate(0deg) scale(1.08);
-    box-shadow:0 32px 60px rgba(20,22,26,0.30);
+    transform:translateX(var(--tx)) translateY(-32px) rotate(0deg) scale(1.08);
+    box-shadow:0 36px 68px rgba(20,22,26,0.32);
     z-index:20;
   }
   .carta-mock{
-    flex:1; padding:14px 12px; display:flex; flex-direction:column; gap:7px;
+    position:relative;
+    flex:1; padding:20px 18px; display:flex; flex-direction:column; gap:10px;
+    overflow:hidden;
   }
+  .carta-mock::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(160deg, rgba(5,150,105,0.14) 0%, rgba(5,150,105,0) 55%);
+    pointer-events:none;
+  }
+  .carta-pantalla:nth-child(2) .carta-mock::before{ background:linear-gradient(160deg, rgba(217,119,6,0.14) 0%, rgba(217,119,6,0) 55%); }
+  .carta-pantalla:nth-child(3) .carta-mock::before{ background:linear-gradient(160deg, rgba(37,99,235,0.14) 0%, rgba(37,99,235,0) 55%); }
+  .carta-pantalla:nth-child(4) .carta-mock::before{ background:linear-gradient(160deg, rgba(217,119,6,0.14) 0%, rgba(217,119,6,0) 55%); }
+  .carta-pantalla:nth-child(5) .carta-mock::before{ background:linear-gradient(160deg, rgba(5,150,105,0.14) 0%, rgba(5,150,105,0) 55%); }
   .carta-etiqueta{
-    padding:9px 12px; font-size:0.7rem; font-weight:600; color:var(--tinta);
+    position:relative;
+    padding:13px 16px; font-size:0.86rem; font-weight:600; color:var(--tinta);
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(4px);
     border-top:1px solid var(--borde);
-    display:flex; align-items:center; gap:6px;
+    display:flex; align-items:center; gap:7px;
   }
-  .carta-etiqueta::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--ciruela); }
+  .carta-etiqueta::before{ content:''; width:8px; height:8px; border-radius:50%; background:var(--ciruela); }
   .carta-pantalla:nth-child(2) .carta-etiqueta::before{ background:var(--ambar); }
   .carta-pantalla:nth-child(3) .carta-etiqueta::before{ background:var(--azul); }
   .carta-pantalla:nth-child(4) .carta-etiqueta::before{ background:var(--ambar); }
   .carta-pantalla:nth-child(5) .carta-etiqueta::before{ background:var(--ciruela); }
 
   /* mini contenido: panel de venta */
-  .cv-header{ height:8px; width:60%; border-radius:3px; background:var(--tinta); opacity:0.85; }
+  .cv-header{ height:10px; width:60%; border-radius:3px; background:var(--tinta); opacity:0.85; }
   .cv-fila{ display:flex; justify-content:space-between; }
-  .cv-fila span:first-child{ height:6px; width:65%; border-radius:3px; background:var(--lino-alt); }
-  .cv-fila span:last-child{ height:6px; width:20%; border-radius:3px; background:var(--borde); }
-  .cv-total{ margin-top:auto; height:22px; border-radius:6px; background:var(--ciruela); opacity:0.9; }
+  .cv-fila span:first-child{ height:7px; width:65%; border-radius:3px; background:rgba(20,22,26,0.10); }
+  .cv-fila span:last-child{ height:7px; width:20%; border-radius:3px; background:rgba(20,22,26,0.16); }
+  .cv-total{ margin-top:auto; height:30px; border-radius:8px; background:var(--ciruela); opacity:0.9; }
 
   /* mini contenido: registro de producto */
-  .cr-campo .cr-label{ height:5px; width:35%; border-radius:2px; background:var(--borde); margin-bottom:5px; }
-  .cr-campo .cr-input{ height:14px; border-radius:5px; background:var(--lino-alt); }
-  .cr-barcode{ margin-top:auto; height:26px; display:flex; align-items:flex-end; gap:2px; }
+  .cr-campo .cr-label{ height:6px; width:35%; border-radius:2px; background:rgba(20,22,26,0.16); margin-bottom:6px; }
+  .cr-campo .cr-input{ height:18px; border-radius:6px; background:rgba(20,22,26,0.08); }
+  .cr-barcode{ margin-top:auto; height:36px; display:flex; align-items:flex-end; gap:3px; }
   .cr-barcode span{ flex:1; background:var(--tinta); }
 
   /* mini contenido: gráficas y reportes */
   .cg-kpi{ display:flex; justify-content:space-between; align-items:flex-end; }
-  .cg-kpi .num{ font-family:var(--serif); font-size:1.1rem; color:var(--tinta); }
-  .cg-kpi .pill{ font-size:0.55rem; font-weight:600; color:var(--verde); background:rgba(22,163,74,0.14); padding:2px 7px; border-radius:8px; }
-  .cg-chart{ margin-top:auto; flex:1; display:flex; align-items:flex-end; gap:4px; }
-  .cg-chart .barra{ flex:1; border-radius:3px 3px 0 0; background:var(--azul); opacity:0.85; }
+  .cg-kpi .num{ font-family:var(--serif); font-size:1.5rem; color:var(--tinta); }
+  .cg-kpi .pill{ font-size:0.62rem; font-weight:600; color:var(--verde); background:rgba(22,163,74,0.16); padding:3px 9px; border-radius:9px; }
+  .cg-chart{ margin-top:auto; flex:1; display:flex; align-items:flex-end; gap:5px; }
+  .cg-chart .barra{ flex:1; border-radius:4px 4px 0 0; background:var(--azul); opacity:0.85; }
   .cg-chart .barra:nth-child(3n+2){ background:var(--ambar); }
   .cg-chart .barra:nth-child(3n){ background:var(--ciruela); }
 
   /* mini contenido: apartados y créditos */
-  .ca-fila{ display:flex; align-items:center; gap:8px; }
-  .ca-fila .ca-avatar{ width:22px; height:22px; border-radius:50%; background:var(--lino-alt); flex-shrink:0; }
-  .ca-fila .ca-texto{ flex:1; height:6px; border-radius:3px; background:var(--lino-alt); }
-  .ca-fila .ca-pill{ font-size:0.5rem; font-weight:600; padding:2px 6px; border-radius:7px; white-space:nowrap; }
-  .ca-fila:nth-child(1) .ca-pill{ background:rgba(22,163,74,0.14); color:var(--verde); }
-  .ca-fila:nth-child(2) .ca-pill{ background:rgba(217,119,6,0.14); color:var(--ambar); }
-  .ca-fila:nth-child(3) .ca-pill{ background:rgba(37,99,235,0.14); color:var(--azul); }
+  .ca-fila{ display:flex; align-items:center; gap:10px; }
+  .ca-fila .ca-avatar{ width:28px; height:28px; border-radius:50%; background:rgba(20,22,26,0.10); flex-shrink:0; }
+  .ca-fila .ca-texto{ flex:1; height:7px; border-radius:3px; background:rgba(20,22,26,0.10); }
+  .ca-fila .ca-pill{ font-size:0.58rem; font-weight:600; padding:3px 8px; border-radius:8px; white-space:nowrap; }
+  .ca-fila:nth-child(1) .ca-pill{ background:rgba(22,163,74,0.16); color:var(--verde); }
+  .ca-fila:nth-child(2) .ca-pill{ background:rgba(217,119,6,0.16); color:var(--ambar); }
+  .ca-fila:nth-child(3) .ca-pill{ background:rgba(37,99,235,0.16); color:var(--azul); }
 
   /* mini contenido: inventario */
-  .ci-grid{ flex:1; display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
-  .ci-grid div{ border-radius:4px; background:var(--verde); opacity:0.75; }
+  .ci-grid{ flex:1; display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
+  .ci-grid div{ border-radius:5px; background:var(--verde); opacity:0.8; }
   .ci-grid div:nth-child(3n){ background:var(--ambar); }
   .ci-grid div:nth-child(5n){ background:var(--tinta-suave); opacity:0.35; }
 
   @media (max-width:620px){
-    .baraja{ height:270px; }
-    .carta-pantalla{ width:132px; height:180px; }
-    .carta-etiqueta{ font-size:0.62rem; padding:7px 10px; }
+    .baraja{ height:300px; }
+    .carta-pantalla{ width:160px; height:216px; }
+    .carta-etiqueta{ font-size:0.7rem; padding:9px 12px; }
+    .cg-kpi .num{ font-size:1.1rem; }
+    .cv-total{ height:22px; }
   }
   @media (prefers-reduced-motion: reduce){
     .carta-pantalla{ transition:none; }
@@ -776,7 +799,7 @@
     </div>
 
     <div class="baraja revelar" id="baraja">
-      <div class="carta-pantalla" style="--tx:-132px; --tilt:-14deg;">
+      <div class="carta-pantalla" style="--tx:-175px; --tilt:-14deg;">
         <div class="carta-mock">
           <div class="cv-header"></div>
           <div class="cv-fila"><span></span><span></span></div>
@@ -787,7 +810,7 @@
         <div class="carta-etiqueta">Panel de venta</div>
       </div>
 
-      <div class="carta-pantalla" style="--tx:-66px; --tilt:-7deg;">
+      <div class="carta-pantalla" style="--tx:-88px; --tilt:-7deg;">
         <div class="carta-mock">
           <div class="cr-campo"><div class="cr-label"></div><div class="cr-input"></div></div>
           <div class="cr-campo"><div class="cr-label"></div><div class="cr-input"></div></div>
@@ -817,7 +840,7 @@
         <div class="carta-etiqueta">Gráficas y reportes</div>
       </div>
 
-      <div class="carta-pantalla" style="--tx:66px; --tilt:7deg;">
+      <div class="carta-pantalla" style="--tx:88px; --tilt:7deg;">
         <div class="carta-mock">
           <div class="ca-fila"><div class="ca-avatar"></div><div class="ca-texto"></div><span class="ca-pill">Pagado</span></div>
           <div class="ca-fila"><div class="ca-avatar"></div><div class="ca-texto"></div><span class="ca-pill">Pendiente</span></div>
@@ -826,7 +849,7 @@
         <div class="carta-etiqueta">Apartados y créditos</div>
       </div>
 
-      <div class="carta-pantalla" style="--tx:132px; --tilt:14deg;">
+      <div class="carta-pantalla" style="--tx:175px; --tilt:14deg;">
         <div class="carta-mock">
           <div class="ci-grid">
             <div></div><div></div><div></div><div></div>
