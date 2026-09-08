@@ -228,6 +228,50 @@
   .stat-mini .label{
     font-size:0.78rem; color:var(--tinta-suave); margin-top:4px; max-width:14ch;
   }
+
+  /* ---------- Cinta corrediza de tarjetas de historias de éxito ---------- */
+  .cinta-contenedor{
+    overflow:hidden;
+    border-top:1px solid var(--borde);
+    margin-top:32px;
+    padding-top:28px;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+    mask-image:linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  }
+  .cinta-pista{
+    display:flex; gap:20px; width:max-content;
+    animation:desplazar-cinta 38s linear infinite;
+  }
+  .cinta-contenedor:hover .cinta-pista{ animation-play-state:paused; }
+
+  .cinta-tarjeta{
+    display:block; flex-shrink:0; width:260px;
+    background:var(--papel); border:1px solid var(--borde); border-radius:18px;
+    padding:22px; box-shadow:0 10px 26px rgba(20,22,26,0.08);
+    text-decoration:none; color:inherit;
+    transition:box-shadow .25s ease, transform .25s ease;
+  }
+  .cinta-tarjeta:hover{ box-shadow:0 18px 36px rgba(20,22,26,0.16); transform:translateY(-4px); }
+  .ct-encabezado{ display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+  .ct-nombre{ font-weight:600; font-size:0.92rem; color:var(--tinta); }
+  .ct-ubicacion{ font-size:0.75rem; color:var(--tinta-suave); }
+  .ct-cita{ font-size:0.86rem; color:var(--tinta-suave); line-height:1.5; margin-bottom:14px; }
+  .ct-vermas{ font-size:0.82rem; font-weight:600; color:var(--ciruela); }
+
+  .cinta-tarjeta-proxima{
+    border-style:dashed; box-shadow:none; cursor:default;
+  }
+  .cinta-tarjeta-proxima:hover{ transform:none; box-shadow:none; }
+  .cinta-tarjeta-proxima .ct-cita{ font-style:italic; margin-bottom:0; }
+  .cinta-tarjeta-proxima .avatar-mini{ background:var(--lino-alt); color:var(--tinta-suave); }
+
+  @keyframes desplazar-cinta{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .cinta-pista{ animation:none; flex-wrap:wrap; width:auto; }
+  }
   @media (max-width:900px){
     .banda-grid{ grid-template-columns:1fr; gap:24px; }
     .banda-stats{ gap:24px; }
@@ -826,6 +870,68 @@
       </div>
     </div>
   </div>
+
+  <div class="cinta-contenedor">
+    <div class="cinta-pista" id="cintaPista">
+      <a class="cinta-tarjeta" href="#caso">
+        <div class="ct-encabezado">
+          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">AB</div>
+          <div>
+            <div class="ct-nombre">Amara Boutique</div>
+            <div class="ct-ubicacion">San José Miahuatlán, Puebla</div>
+          </div>
+        </div>
+        <p class="ct-cita">"Ahora tengo mi negocio al alcance de mi teléfono y más tiempo para hacerlo crecer."</p>
+        <span class="ct-vermas">Ver más</span>
+      </a>
+
+      <div class="cinta-tarjeta cinta-tarjeta-proxima">
+        <div class="ct-encabezado">
+          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">+</div>
+          <div>
+            <div class="ct-nombre">Próxima historia</div>
+            <div class="ct-ubicacion">Muy pronto</div>
+          </div>
+        </div>
+        <p class="ct-cita">Estamos documentando el siguiente caso real de una boutique usando PuntoTeck.</p>
+      </div>
+
+      <a class="cinta-tarjeta" href="#caso">
+        <div class="ct-encabezado">
+          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">AB</div>
+          <div>
+            <div class="ct-nombre">Amara Boutique</div>
+            <div class="ct-ubicacion">San José Miahuatlán, Puebla</div>
+          </div>
+        </div>
+        <p class="ct-cita">"Puedo revisar mis ventas, mi inventario y las prendas que más se venden de forma sencilla."</p>
+        <span class="ct-vermas">Ver más</span>
+      </a>
+
+      <div class="cinta-tarjeta cinta-tarjeta-proxima">
+        <div class="ct-encabezado">
+          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">+</div>
+          <div>
+            <div class="ct-nombre">Próxima historia</div>
+            <div class="ct-ubicacion">Muy pronto</div>
+          </div>
+        </div>
+        <p class="ct-cita">Este espacio se va a llenar con más boutiques reales usando PuntoTeck.</p>
+      </div>
+
+      <a class="cinta-tarjeta" href="#caso">
+        <div class="ct-encabezado">
+          <div class="avatar-mini" style="width:34px;height:34px;font-size:0.8rem;">AB</div>
+          <div>
+            <div class="ct-nombre">Amara Boutique</div>
+            <div class="ct-ubicacion">San José Miahuatlán, Puebla</div>
+          </div>
+        </div>
+        <p class="ct-cita">"Contar con página web ha sido una gran ventaja para mostrar mi inventario."</p>
+        <span class="ct-vermas">Ver más</span>
+      </a>
+    </div>
+  </div>
 </section>
 
 <section id="pantallas">
@@ -1045,6 +1151,12 @@
 <script>
 (function(){
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Cinta corrediza: duplica el contenido para que el loop sea perfecto */
+  if (!reduceMotion){
+    var cintaPista = document.getElementById('cintaPista');
+    if (cintaPista){ cintaPista.innerHTML += cintaPista.innerHTML; }
+  }
 
   /* Menú móvil */
   var toggle = document.getElementById('navToggle');
