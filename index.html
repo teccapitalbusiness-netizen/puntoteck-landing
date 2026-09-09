@@ -313,11 +313,17 @@
     min-height:450px;
     perspective:1400px;
   }
-  .escritorio-envoltura{ width:100%; max-width:580px; }
+  .escritorio-envoltura{ position:relative; width:100%; height:430px; }
+  .escritorio-centrador{
+    position:absolute; top:0; left:50%;
+    width:540px; height:430px;
+    transform:translateX(-50%) scale(1);
+    transform-origin:top center;
+    transform-style:preserve-3d;
+  }
   .escritorio{
     position:relative;
-    width:100%; max-width:580px; height:430px;
-    margin:0 auto;
+    width:540px; height:430px;
     transform:rotateX(10deg) rotateY(-16deg) rotateZ(1deg);
     transform-style:preserve-3d;
     transition:transform .3s ease-out;
@@ -333,7 +339,7 @@
   /* Monitor: pieza principal, centrada al fondo del escritorio */
   .monitor{
     position:absolute; top:0; left:50%;
-    width:280px; margin-left:-140px;
+    width:260px; margin-left:-130px;
     transform-style:preserve-3d;
     transform:translateZ(6px);
   }
@@ -406,6 +412,7 @@
 
   /* Teclado: pieza plana "recostada" frente al monitor */
   .teclado{
+    border:1.5px solid rgba(255,255,255,0.10);
     position:absolute; top:298px; left:50%;
     width:224px; height:58px; margin-left:-112px;
     background:var(--tinta);
@@ -427,6 +434,7 @@
 
   /* Mouse: pieza plana junto al teclado */
   .mouse-pos{
+    border:1.5px solid rgba(255,255,255,0.10);
     position:absolute; top:360px; left:calc(50% + 60px);
     width:36px; height:54px;
     background:var(--tinta);
@@ -442,6 +450,7 @@
 
   /* Escáner de código de barras: de pie, a la izquierda */
   .escaner{
+    border:1.5px solid rgba(255,255,255,0.10);
     position:absolute; top:64px; left:0;
     width:60px; height:158px;
     background:var(--tinta);
@@ -469,8 +478,9 @@
 
   /* Impresora de tickets: a la derecha, con el ticket saliendo de la ranura */
   .impresora{
-    position:absolute; top:312px; right:-2%;
-    width:150px; height:78px;
+    border:1.5px solid rgba(255,255,255,0.10);
+    position:absolute; top:250px; right:4px;
+    width:132px; height:74px;
     background:var(--tinta);
     border-radius:12px;
     box-shadow:0 24px 44px rgba(20,22,26,0.30);
@@ -499,9 +509,9 @@
   .insignia .txt{ font-size:0.68rem; color:var(--tinta-suave); margin-top:2px; white-space:nowrap; }
   .insignia-1{ top:-4%; left:0; }
   .insignia-1 .num{ color:var(--ciruela); }
-  .insignia-2{ top:38%; right:-6%; animation-delay:1.2s; }
+  .insignia-2{ top:58%; right:-4%; animation-delay:1.2s; }
   .insignia-2 .num{ color:var(--ambar); }
-  .insignia-3{ bottom:-6%; left:26%; animation-delay:2.4s; }
+  .insignia-3{ bottom:-8%; left:30%; animation-delay:2.4s; }
   .insignia-3 .num{ color:var(--azul); }
 
   @keyframes flotar{
@@ -513,31 +523,40 @@
     .escritorio{ transform:rotateX(4deg) rotateY(-8deg); }
     .escaner-ojo{ animation:none; }
   }
+  @media (max-width:1024px) and (min-width:821px){
+    .escritorio-centrador{ transform:translateX(-50%) scale(0.76); }
+    .escritorio-envoltura{ height:330px; }
+    .ticket-holder{ min-height:350px; }
+  }
   @media (max-width:680px){
     .insignia{ display:none; }
-    .escritorio-envoltura{ transform:scale(0.82); transform-origin:top center; height:353px; }
-    .ticket-holder{ min-height:370px; }
+    .escritorio-envoltura{ height:366px; overflow:hidden; }
+    .escritorio-centrador{ transform:translateX(-50%) scale(0.85); }
+    .ticket-holder{ min-height:385px; }
   }
   @media (max-width:520px){
-    .escritorio-envoltura{ transform:scale(0.66); transform-origin:top center; height:284px; }
-    .ticket-holder{ min-height:300px; }
+    .escritorio-centrador{ transform:translateX(-50%) scale(0.64); }
+    .escritorio-envoltura{ height:275px; }
+    .ticket-holder{ min-height:295px; }
   }
   @media (max-width:400px){
-    .escritorio-envoltura{ transform:scale(0.56); height:241px; }
+    .escritorio-centrador{ transform:translateX(-50%) scale(0.56); }
+    .escritorio-envoltura{ height:241px; }
     .ticket-holder{ min-height:260px; }
   }
   .ticket{
-    position:absolute; top:-34px; right:8%;
+    position:absolute; top:2px; right:0;
     background:var(--papel);
-    width:130px;
-    padding:16px 13px 20px;
+    width:150px;
+    max-height:222px;
+    padding:16px 14px 20px;
     font-family:var(--mono);
     font-size:0.6rem;
     color:#3a332f;
     box-shadow:0 30px 55px rgba(20,22,26,0.24);
     z-index:2;
     border-radius:12px;
-    overflow:visible;
+    overflow:hidden;
     transform:rotateX(6deg) rotateY(16deg) rotateZ(-3deg) translateZ(50px);
     transform-style:preserve-3d;
     clip-path: polygon(
@@ -744,6 +763,7 @@
   .ci-grid div:nth-child(5n){ background:var(--tinta-suave); opacity:0.35; }
 
   @media (max-width:620px){
+    #pantallas{ overflow:hidden; }
     .baraja{ height:300px; }
     .carta-pantalla{ width:160px; height:216px; }
     .carta-etiqueta{ font-size:0.7rem; padding:9px 12px; }
@@ -947,6 +967,7 @@
 
     <div class="ticket-holder">
       <div class="escritorio-envoltura">
+        <div class="escritorio-centrador">
         <div class="escritorio" id="escritorio3d">
 
           <div class="monitor">
@@ -1024,6 +1045,7 @@
             <div class="t-sello t-linea">VENTA REGISTRADA</div>
           </div>
 
+        </div>
         </div>
       </div>
 
