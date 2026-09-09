@@ -64,11 +64,11 @@
     padding:18px 0;
   }
   .marca{
-    font-family:var(--serif); font-weight:600; font-size:1.35rem; letter-spacing:-0.01em;
-    display:flex; align-items:center;
+    font-family:var(--serif); font-weight:800; font-size:1.35rem; letter-spacing:-0.01em;
+    display:flex; align-items:center; gap:10px; color:var(--tinta);
   }
   .marca span{color:var(--ciruela);}
-  .marca img{ height:42px; width:auto; display:block; border-radius:8px; }
+  .marca img{ height:42px; width:42px; object-fit:cover; display:block; border-radius:9px; }
   .nav-links{
     display:flex; gap:32px; font-size:0.95rem;
   }
@@ -156,11 +156,11 @@
   }
   .hero h1{
     font-family:var(--serif);
-    font-weight:500;
-    font-size:clamp(2.4rem, 4.2vw, 3.6rem);
-    line-height:1.08;
-    letter-spacing:-0.01em;
-    max-width:14ch;
+    font-weight:800;
+    font-size:clamp(2.6rem, 4.6vw, 3.9rem);
+    line-height:1.06;
+    letter-spacing:-0.025em;
+    max-width:15ch;
   }
   .hero p.lead{
     margin-top:22px;
@@ -612,9 +612,9 @@
   section{ padding:96px 0; }
   .section-intro{ max-width:54ch; margin-bottom:56px; }
   .section-intro h2{
-    font-family:var(--serif); font-weight:600;
+    font-family:var(--serif); font-weight:800;
     font-size:clamp(2.1rem, 3.6vw, 3rem);
-    line-height:1.1; letter-spacing:-0.01em;
+    line-height:1.1; letter-spacing:-0.02em;
   }
   .section-intro p{ margin-top:18px; color:var(--tinta-suave); font-size:1.1rem; line-height:1.6; }
 
@@ -1136,7 +1136,7 @@
     padding-bottom:48px;
   }
   .footer-marca{ display:flex; align-items:center; gap:8px; font-family:var(--serif); font-weight:600; font-size:1.15rem; color:var(--papel); margin-bottom:16px; }
-  .footer-marca img{ height:48px; width:auto; display:block; border-radius:10px; }
+  .footer-marca img{ height:48px; width:48px; object-fit:cover; display:block; border-radius:11px; }
   .footer-marca span{ color:var(--ciruela); }
   .footer-desc{ font-size:0.9rem; line-height:1.6; max-width:32ch; margin-bottom:20px; }
   .footer-badge{
@@ -1297,7 +1297,7 @@
 
 <header>
   <nav class="wrap nav">
-    <div class="marca"><img src="images/logo.jpeg" alt="PuntoTeck, punto de venta para boutiques"></div>
+    <div class="marca"><img src="images/logo.jpeg" alt="PuntoTeck">Punto<span>Teck</span></div>
     <div class="nav-links">
       <a href="#historias">Historias</a>
       <a href="#flujo">Cómo funciona</a>
@@ -1766,7 +1766,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="footer-marca"><img src="images/logo.jpeg" alt="PuntoTeck"></div>
+        <div class="footer-marca"><img src="images/logo.jpeg" alt="PuntoTeck">Punto<span>Teck</span></div>
         <p class="footer-desc">El sistema de punto de venta y administración pensado para boutiques de ropa: vende, aparta, da crédito y controla tu inventario desde un solo lugar.</p>
         <div class="footer-badge"><span class="dot"></span> Hecho para boutiques mexicanas</div>
       </div>
