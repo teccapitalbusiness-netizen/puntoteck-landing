@@ -718,13 +718,25 @@
     background:var(--lino); aspect-ratio:9/18.5;
     box-shadow:0 0 0 1px rgba(0,0,0,0.2) inset;
   }
-  .telefono-pantalla img{
-    position:absolute; top:0; left:0; width:100%; height:auto; display:block;
-    animation:telefono-scroll 10s ease-in-out infinite alternate;
+  /* MODIFICADO: 3 capturas reales que se deslizan solas dentro del teléfono */
+  .telefono-pista{
+    display:flex; width:300%; height:100%;
+    animation:telefono-desliza 13s ease-in-out infinite alternate;
   }
-  @keyframes telefono-scroll{
-    0%, 12%{ transform:translateY(0); }
-    88%, 100%{ transform:translateY(-36%); }
+  .telefono-pista img{
+    width:calc(100% / 3); height:100%; object-fit:cover; flex-shrink:0; display:block;
+  }
+  @keyframes telefono-desliza{
+    0%, 26%{ transform:translateX(0); }
+    37%, 60%{ transform:translateX(-33.3333%); }
+    71%, 100%{ transform:translateX(-66.6666%); }
+  }
+  .telefono-puntos{
+    position:absolute; left:0; right:0; bottom:10px; z-index:2;
+    display:flex; justify-content:center; gap:6px;
+  }
+  .telefono-puntos span{
+    width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,0.4);
   }
   @media (max-width:820px){
     .flujo-extra{ grid-template-columns:1fr; padding:32px 26px; text-align:left; }
@@ -732,7 +744,7 @@
   }
   @media (prefers-reduced-motion: reduce){
     .telefono{ animation:none; }
-    .telefono-pantalla img{ animation:none; }
+    .telefono-pista{ animation:none; }
     .telefono-marco{ transition:none; }
   }
   .paso-contenido p{ color:var(--tinta-suave); max-width:56ch; }
@@ -925,78 +937,76 @@
     .lightbox-pantalla, .lightbox-caja, .lightbox-cerrar{ transition:none; }
     .lightbox-caja{ transform:none; }
   }
-  /* ---------- Confianza: galería bento interactiva con movimiento continuo ---------- */
-  .confianza-galeria{
-    display:grid; grid-template-columns:repeat(4, 1fr); grid-auto-rows:150px;
-    gap:14px; margin-bottom:44px;
-  }
-  .cg-foto{
-    position:relative; display:block; overflow:hidden; border-radius:18px;
-    text-decoration:none; cursor:pointer;
-    box-shadow:0 14px 30px rgba(20,22,26,0.12);
-    transition:box-shadow .35s ease, transform .35s ease;
-  }
-  .cg-foto img{
-    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
-    transform-origin:var(--kb-origen, 50% 50%);
-    animation:ken-burns var(--kb-duracion, 16s) ease-in-out infinite alternate;
-    animation-delay:var(--kb-retraso, 0s);
-    transition:filter .5s ease;
-  }
-  @keyframes ken-burns{
-    0%{ transform:scale(1); }
-    100%{ transform:scale(1.14); }
-  }
-  .cg-foto:hover img{ animation-play-state:paused; }
-  .cg-overlay{
-    position:absolute; inset:0;
-    background:linear-gradient(0deg, rgba(11,25,20,0.82) 0%, rgba(11,25,20,0.05) 55%, rgba(11,25,20,0) 72%);
-    display:flex; align-items:flex-end; padding:18px;
-    opacity:0.32; transition:opacity .4s ease;
-  }
-  .cg-foto:hover .cg-overlay,
-  .cg-foto.cg-reflector .cg-overlay{ opacity:1; }
-  .cg-etiqueta{
-    position:relative; color:#fff; font-size:0.92rem; font-weight:600;
-    transform:translateY(6px); opacity:0; transition:transform .4s ease, opacity .4s ease;
-  }
-  .cg-foto:hover .cg-etiqueta,
-  .cg-foto.cg-reflector .cg-etiqueta{ transform:translateY(0); opacity:1; }
-  .cg-etiqueta::before{
-    content:''; position:absolute; left:0; bottom:-8px; height:2px; width:0;
-    background:var(--ciruela); transition:width .5s ease .1s;
-  }
-  .cg-foto.cg-reflector .cg-etiqueta::before{ width:28px; }
-  .cg-lupa{
-    position:absolute; top:14px; right:14px; z-index:1;
-    width:34px; height:34px; border-radius:50%;
-    background:rgba(255,255,255,0.16); backdrop-filter:blur(6px);
+  /* ---------- Confianza: carrusel 3D tipo coverflow ---------- */
+  .cf-carrusel{
+    position:relative;
+    height:400px;
+    perspective:1500px;
     display:flex; align-items:center; justify-content:center;
-    opacity:0; transform:scale(0.7) rotate(-20deg); transition:opacity .3s ease, transform .3s ease;
+    margin-bottom:8px;
+    overflow:hidden;
   }
-  .cg-foto:hover .cg-lupa{ opacity:1; transform:scale(1) rotate(0deg); }
-  .cg-lupa svg{ width:16px; height:16px; stroke:#fff; }
-  .cg-foto:hover{ box-shadow:0 20px 42px rgba(20,22,26,0.22); }
-  .cg-1{ grid-column:1 / 3; grid-row:1 / 3; --kb-origen:30% 40%; --kb-duracion:19s; --kb-retraso:0s; }
-  .cg-2{ grid-column:3 / 4; grid-row:1 / 3; --kb-origen:60% 30%; --kb-duracion:15s; --kb-retraso:1.4s; }
-  .cg-3{ grid-column:4 / 5; grid-row:1 / 2; --kb-origen:50% 60%; --kb-duracion:13s; --kb-retraso:0.6s; }
-  .cg-4{ grid-column:4 / 5; grid-row:2 / 3; --kb-origen:40% 40%; --kb-duracion:17s; --kb-retraso:2.1s; }
-  .cg-5{ grid-column:1 / 5; grid-row:3 / 4; --kb-origen:50% 50%; --kb-duracion:21s; --kb-retraso:0.9s; }
-  @media (max-width:820px){
-    .confianza-galeria{ grid-template-columns:1fr 1fr; grid-auto-rows:130px; }
-    .cg-1{ grid-column:1 / 3; grid-row:1 / 3; }
-    .cg-2{ grid-column:1 / 2; grid-row:3 / 5; }
-    .cg-3{ grid-column:2 / 3; grid-row:3 / 4; }
-    .cg-4{ grid-column:2 / 3; grid-row:4 / 5; }
-    .cg-5{ grid-column:1 / 3; grid-row:5 / 7; }
+  .cf-pista{
+    position:relative; width:100%; height:100%;
+    transform-style:preserve-3d;
   }
-  @media (max-width:520px){
-    .confianza-galeria{ grid-template-columns:1fr; grid-auto-rows:180px; gap:12px; }
-    .cg-1, .cg-2, .cg-3, .cg-4, .cg-5{ grid-column:1 / 2; grid-row:auto; }
+  .cf-tarjeta{
+    position:absolute; top:50%; left:50%;
+    width:220px; height:320px;
+    margin:-160px 0 0 -110px;
+    border-radius:20px; overflow:hidden;
+    cursor:pointer;
+    box-shadow:0 30px 60px rgba(11,25,20,0.35);
+    transition:transform .65s cubic-bezier(.22,.9,.28,1), filter .65s ease;
+    will-change:transform;
+  }
+  .cf-tarjeta img{
+    width:100%; height:100%; object-fit:cover; display:block; pointer-events:none;
+  }
+  .cf-tarjeta.cf-activa{ cursor:zoom-in; }
+  .cf-etiqueta-pista{
+    position:relative; height:26px; text-align:center; margin-bottom:26px;
+  }
+  .cf-etiqueta-item{
+    position:absolute; left:0; right:0; top:0;
+    color:var(--tinta); font-weight:600; font-size:0.98rem;
+    opacity:0; transform:translateY(6px);
+    transition:opacity .4s ease, transform .4s ease;
+    pointer-events:none;
+  }
+  .cf-etiqueta-item.cf-etiqueta-activa{ opacity:1; transform:translateY(0); }
+  .cf-flecha{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:20;
+    width:44px; height:44px; border-radius:50%;
+    background:var(--papel); border:none; cursor:pointer;
+    box-shadow:0 12px 26px rgba(20,22,26,0.20);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--tinta); transition:background .2s ease, transform .2s ease, color .2s ease;
+  }
+  .cf-flecha:hover{ background:var(--ciruela); color:#fff; transform:translateY(-50%) scale(1.08); }
+  .cf-flecha svg{ width:19px; height:19px; }
+  .cf-prev{ left:0; }
+  .cf-next{ right:0; }
+  .cf-puntos{
+    display:flex; justify-content:center; gap:9px; margin-bottom:44px;
+  }
+  .cf-punto{
+    width:8px; height:8px; border-radius:50%; border:none; padding:0;
+    background:var(--borde); cursor:pointer; transition:background .25s ease, transform .25s ease;
+  }
+  .cf-punto.cf-punto-activo{ background:var(--ciruela); transform:scale(1.3); }
+  @media (max-width:680px){
+    .cf-carrusel{ height:330px; }
+    .cf-tarjeta{ width:172px; height:250px; margin:-125px 0 0 -86px; }
+    .cf-flecha{ width:38px; height:38px; }
+  }
+  @media (max-width:420px){
+    .cf-carrusel{ height:290px; }
+    .cf-tarjeta{ width:148px; height:216px; margin:-108px 0 0 -74px; }
   }
   @media (prefers-reduced-motion: reduce){
-    .cg-foto img{ animation:none; }
-    .cg-overlay, .cg-etiqueta, .cg-lupa, .cg-foto{ transition:none; }
+    .cf-tarjeta{ transition:none; }
+    .cf-etiqueta-item{ transition:none; }
   }
 
   .confianza-item{ background:var(--papel); border-radius:16px; padding:22px 24px;
@@ -1512,7 +1522,12 @@
           <div class="telefono-marco" id="telefonoMarco">
             <div class="telefono-notch"></div>
             <div class="telefono-pantalla">
-              <img src="images/pag_web.png" alt="Página web generada automáticamente por PuntoTeck, vista en un teléfono" loading="lazy">
+              <div class="telefono-pista">
+                <img src="images/cap1.jpeg" alt="Captura de la página web de PuntoTeck vista en un teléfono, pantalla 1" loading="lazy">
+                <img src="images/cap2.jpeg" alt="Captura de la página web de PuntoTeck vista en un teléfono, pantalla 2" loading="lazy">
+                <img src="images/cap3.jpeg" alt="Captura de la página web de PuntoTeck vista en un teléfono, pantalla 3" loading="lazy">
+              </div>
+              <div class="telefono-puntos"><span></span><span></span><span></span></div>
             </div>
           </div>
         </div>
@@ -1526,36 +1541,36 @@
     <div class="corte">CONFIANZA</div>
     <div class="section-intro revelar">
       <h2>Lo que nos importa que sepas antes de empezar</h2>
-      <p>PuntoTeck se construyó viendo trabajar boutiques reales — por eso hay reglas que no negociamos. Así se ve una boutique trabajando con PuntoTeck todos los días; toca cualquier foto para verla en grande.</p>
+      <p>PuntoTeck se construyó viendo trabajar boutiques reales — por eso hay reglas que no negociamos. Así se ve una boutique trabajando con PuntoTeck todos los días; gira el carrusel o toca la foto de en medio para verla en grande.</p>
     </div>
 
-    <div class="confianza-galeria revelar-hijos" id="confianzaGaleria">
-      <a class="cg-foto cg-1" href="#" data-cg-titulo="La boutique, un día cualquiera">
-        <img src="images/hero.png" alt="Interior de una boutique de ropa trabajando con PuntoTeck" loading="lazy">
-        <span class="cg-lupa"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-        <span class="cg-overlay"><span class="cg-etiqueta">La boutique, un día cualquiera</span></span>
-      </a>
-      <a class="cg-foto cg-2" href="#" data-cg-titulo="Fachada de la boutique">
-        <img src="images/fachada.png" alt="Fachada e interior de una boutique de ropa" loading="lazy">
-        <span class="cg-lupa"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-        <span class="cg-overlay"><span class="cg-etiqueta">Fachada de la boutique</span></span>
-      </a>
-      <a class="cg-foto cg-3" href="#" data-cg-titulo="Cobrando en el mostrador">
-        <img src="images/mostrador.png" alt="Boutique cobrando en mostrador con PuntoTeck" loading="lazy">
-        <span class="cg-lupa"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-        <span class="cg-overlay"><span class="cg-etiqueta">Cobrando en el mostrador</span></span>
-      </a>
-      <a class="cg-foto cg-4" href="#" data-cg-titulo="Cada prenda, con su etiqueta">
-        <img src="images/detalle-etiqueta.png" alt="Etiqueta de código de barras colocada sobre una prenda doblada" loading="lazy">
-        <span class="cg-lupa"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-        <span class="cg-overlay"><span class="cg-etiqueta">Cada prenda, con su etiqueta</span></span>
-      </a>
-      <a class="cg-foto cg-5" href="#" data-cg-titulo="Listas para salir a piso">
-        <img src="images/flatlay.png" alt="Prendas dobladas junto a un ticket de venta impreso" loading="lazy">
-        <span class="cg-lupa"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
-        <span class="cg-overlay"><span class="cg-etiqueta">Listas para salir a piso</span></span>
-      </a>
+    <div class="cf-carrusel revelar" id="cfCarrusel">
+      <button class="cf-flecha cf-prev" type="button" aria-label="Foto anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="cf-pista" id="cfPista">
+        <div class="cf-tarjeta" data-cf-titulo="La boutique, un día cualquiera">
+          <img src="images/hero.png" alt="Interior de una boutique de ropa trabajando con PuntoTeck" loading="lazy">
+        </div>
+        <div class="cf-tarjeta" data-cf-titulo="Fachada de la boutique">
+          <img src="images/fachada.png" alt="Fachada e interior de una boutique de ropa" loading="lazy">
+        </div>
+        <div class="cf-tarjeta" data-cf-titulo="Cobrando en el mostrador">
+          <img src="images/mostrador.png" alt="Boutique cobrando en mostrador con PuntoTeck" loading="lazy">
+        </div>
+        <div class="cf-tarjeta" data-cf-titulo="Cada prenda, con su etiqueta">
+          <img src="images/detalle-etiqueta.png" alt="Etiqueta de código de barras colocada sobre una prenda doblada" loading="lazy">
+        </div>
+        <div class="cf-tarjeta" data-cf-titulo="Listas para salir a piso">
+          <img src="images/flatlay.png" alt="Prendas dobladas junto a un ticket de venta impreso" loading="lazy">
+        </div>
+      </div>
+      <button class="cf-flecha cf-next" type="button" aria-label="Siguiente foto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
     </div>
+    <div class="cf-etiqueta-pista" id="cfEtiquetaPista"></div>
+    <div class="cf-puntos" id="cfPuntos"></div>
 
     <div class="confianza-grid revelar-hijos">
       <div class="confianza-item">
@@ -1907,46 +1922,108 @@
     iniciarAuto();
   }
 
-  /* MODIFICADO: galería interactiva de confianza — abre el lightbox al tocar una foto */
-  var fotosConfianza = document.querySelectorAll('.cg-foto');
-  fotosConfianza.forEach(function(a){
-    a.addEventListener('click', function(e){
-      e.preventDefault();
-      var img = a.querySelector('img');
-      if (!img) return;
-      abrirLightbox(img.getAttribute('src'), img.getAttribute('alt'), a.getAttribute('data-cg-titulo') || '');
-    });
-  });
+  /* MODIFICADO: carrusel 3D tipo coverflow de la sección confianza */
+  var cfPista = document.getElementById('cfPista');
+  var cfTarjetas = cfPista ? Array.prototype.slice.call(cfPista.querySelectorAll('.cf-tarjeta')) : [];
+  if (cfTarjetas.length){
+    var cfCarrusel = document.getElementById('cfCarrusel');
+    var cfEtiquetaPista = document.getElementById('cfEtiquetaPista');
+    var cfPuntosCont = document.getElementById('cfPuntos');
+    var cfTotal = cfTarjetas.length;
+    var cfActivo = 0;
+    var cfTemporizador = null;
 
-  /* MODIFICADO: reflector que recorre la galería sola, como un mini carrusel */
-  if (fotosConfianza.length && !reduceMotion){
-    var idxReflector = 0;
-    var temporizadorReflector = null;
-    var moverReflector = function(){
-      fotosConfianza.forEach(function(f){ f.classList.remove('cg-reflector'); });
-      fotosConfianza[idxReflector].classList.add('cg-reflector');
-      idxReflector = (idxReflector + 1) % fotosConfianza.length;
+    // Construye una etiqueta y un punto por cada tarjeta
+    cfTarjetas.forEach(function(t, i){
+      var etq = document.createElement('div');
+      etq.className = 'cf-etiqueta-item';
+      etq.textContent = t.getAttribute('data-cf-titulo') || '';
+      cfEtiquetaPista.appendChild(etq);
+
+      var punto = document.createElement('button');
+      punto.type = 'button';
+      punto.className = 'cf-punto';
+      punto.setAttribute('aria-label', 'Ir a la foto ' + (i + 1));
+      punto.addEventListener('click', function(){ irA(i); reiniciarAuto(); });
+      cfPuntosCont.appendChild(punto);
+    });
+    var cfEtiquetas = Array.prototype.slice.call(cfEtiquetaPista.children);
+    var cfPuntos = Array.prototype.slice.call(cfPuntosCont.children);
+
+    var render = function(){
+      var mitad = Math.floor(cfTotal / 2);
+      cfTarjetas.forEach(function(t, i){
+        var offset = i - cfActivo;
+        while (offset > mitad) offset -= cfTotal;
+        while (offset < -mitad) offset += cfTotal;
+        var abs = Math.abs(offset);
+        var tx = offset * (window.innerWidth <= 420 ? 92 : window.innerWidth <= 680 ? 112 : 152);
+        var rot = offset * -30;
+        var escala = 1 - abs * 0.16;
+        var brillo = 1 - abs * 0.24;
+        t.style.transform = 'translateX(' + tx + 'px) rotateY(' + rot + 'deg) scale(' + escala + ')';
+        t.style.zIndex = 10 - abs;
+        t.style.filter = 'brightness(' + Math.max(brillo, 0.4) + ')';
+        t.classList.toggle('cf-activa', offset === 0);
+      });
+      cfEtiquetas.forEach(function(e, i){ e.classList.toggle('cf-etiqueta-activa', i === cfActivo); });
+      cfPuntos.forEach(function(p, i){ p.classList.toggle('cf-punto-activo', i === cfActivo); });
     };
-    var iniciarReflector = function(){
-      clearInterval(temporizadorReflector);
-      temporizadorReflector = setInterval(moverReflector, 2600);
+
+    var irA = function(i){
+      cfActivo = ((i % cfTotal) + cfTotal) % cfTotal;
+      render();
     };
-    var pausarReflector = function(){
-      clearInterval(temporizadorReflector);
-      fotosConfianza.forEach(function(f){ f.classList.remove('cg-reflector'); });
+    var siguiente = function(){ irA(cfActivo + 1); };
+    var anterior = function(){ irA(cfActivo - 1); };
+
+    var iniciarAutoCarrusel = function(){
+      if (reduceMotion) return;
+      clearInterval(cfTemporizador);
+      cfTemporizador = setInterval(siguiente, 3400);
     };
-    var galeriaConfianza = document.getElementById('confianzaGaleria');
-    if (galeriaConfianza){
-      galeriaConfianza.addEventListener('mouseenter', pausarReflector);
-      galeriaConfianza.addEventListener('mouseleave', iniciarReflector);
-      var obsGaleria = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if (entry.isIntersecting){ moverReflector(); iniciarReflector(); }
-          else { clearInterval(temporizadorReflector); }
-        });
-      }, { threshold: 0.35 });
-      obsGaleria.observe(galeriaConfianza);
-    }
+    var reiniciarAuto = function(){ iniciarAutoCarrusel(); };
+
+    cfCarrusel.querySelector('.cf-prev').addEventListener('click', function(){ anterior(); reiniciarAuto(); });
+    cfCarrusel.querySelector('.cf-next').addEventListener('click', function(){ siguiente(); reiniciarAuto(); });
+
+    cfTarjetas.forEach(function(t, i){
+      t.addEventListener('click', function(){
+        if (i === cfActivo){
+          var img = t.querySelector('img');
+          if (img) abrirLightbox(img.getAttribute('src'), img.getAttribute('alt'), t.getAttribute('data-cf-titulo') || '');
+        } else {
+          irA(i);
+          reiniciarAuto();
+        }
+      });
+    });
+
+    // Deslizar con el dedo en móvil
+    var cfInicioX = null;
+    cfPista.addEventListener('touchstart', function(e){ cfInicioX = e.touches[0].clientX; }, { passive: true });
+    cfPista.addEventListener('touchend', function(e){
+      if (cfInicioX === null) return;
+      var delta = e.changedTouches[0].clientX - cfInicioX;
+      if (delta > 40) anterior();
+      else if (delta < -40) siguiente();
+      cfInicioX = null;
+      reiniciarAuto();
+    });
+
+    cfCarrusel.addEventListener('mouseenter', function(){ clearInterval(cfTemporizador); });
+    cfCarrusel.addEventListener('mouseleave', iniciarAutoCarrusel);
+    window.addEventListener('resize', render);
+
+    var obsCarrusel = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) iniciarAutoCarrusel();
+        else clearInterval(cfTemporizador);
+      });
+    }, { threshold: 0.35 });
+    obsCarrusel.observe(cfCarrusel);
+
+    render();
   }
 
   if (reduceMotion) return;
