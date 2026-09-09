@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PuntoTeck — Punto de venta para boutiques de ropa</title>
+<title>PuntoTeck | Punto de venta para boutiques de ropa</title>
 <meta name="description" content="PuntoTeck es el sistema de punto de venta y administración pensado para boutiques de ropa: vende, aparta, da crédito, corta caja y controla tu inventario desde un solo lugar.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     /* Paleta tomada directo de tailwind.config.js de mira-pos, para que
@@ -27,8 +27,8 @@
     --rosa:#D97706;        /* alias retro-compatible, igual a --ambar */
     --papel:#FFFFFF;
     --borde:#DEDEDA;
-    --serif: 'Fraunces', serif;
-    --sans: 'Inter', 'Work Sans', sans-serif;
+    --serif: 'Montserrat', sans-serif;
+    --sans: 'Montserrat', sans-serif;
     --mono: 'IBM Plex Mono', monospace;
     --max: 1120px;
   }
@@ -65,8 +65,10 @@
   }
   .marca{
     font-family:var(--serif); font-weight:600; font-size:1.35rem; letter-spacing:-0.01em;
+    display:flex; align-items:center;
   }
   .marca span{color:var(--ciruela);}
+  .marca img{ height:42px; width:auto; display:block; border-radius:8px; }
   .nav-links{
     display:flex; gap:32px; font-size:0.95rem;
   }
@@ -789,7 +791,18 @@
     display:flex; flex-direction:column;
     transform:translateX(var(--tx)) rotate(var(--tilt));
     transition:transform .5s cubic-bezier(.22,.9,.28,1), box-shadow .4s ease;
+    /* MODIFICADO: flotación continua vía la propiedad translate (independiente de
+       transform), así el vaivén se suma al abanico y a la carta activa sin conflictos */
+    animation:carta-vaiven 4.6s ease-in-out infinite;
   }
+  @keyframes carta-vaiven{
+    0%, 100%{ translate:0 0; }
+    50%{ translate:0 -9px; }
+  }
+  .carta-pantalla:nth-child(2){ animation-delay:-0.9s; }
+  .carta-pantalla:nth-child(3){ animation-delay:-1.8s; }
+  .carta-pantalla:nth-child(4){ animation-delay:-2.7s; }
+  .carta-pantalla:nth-child(5){ animation-delay:-3.6s; }
   .carta-pantalla:nth-child(1){ z-index:1; }
   .carta-pantalla:nth-child(2){ z-index:2; }
   .carta-pantalla:nth-child(3){ z-index:3; }
@@ -881,7 +894,7 @@
     .cv-total{ height:22px; }
   }
   @media (prefers-reduced-motion: reduce){
-    .carta-pantalla{ transition:none; }
+    .carta-pantalla{ transition:none; animation:none; }
   }
 
   /* MODIFICADO: lightbox para ver cada pantalla en grande */
@@ -1123,6 +1136,7 @@
     padding-bottom:48px;
   }
   .footer-marca{ display:flex; align-items:center; gap:8px; font-family:var(--serif); font-weight:600; font-size:1.15rem; color:var(--papel); margin-bottom:16px; }
+  .footer-marca img{ height:48px; width:auto; display:block; border-radius:10px; }
   .footer-marca span{ color:var(--ciruela); }
   .footer-desc{ font-size:0.9rem; line-height:1.6; max-width:32ch; margin-bottom:20px; }
   .footer-badge{
@@ -1283,7 +1297,7 @@
 
 <header>
   <nav class="wrap nav">
-    <div class="marca">Punto<span>Teck</span></div>
+    <div class="marca"><img src="images/logo.jpeg" alt="PuntoTeck, punto de venta para boutiques"></div>
     <div class="nav-links">
       <a href="#historias">Historias</a>
       <a href="#flujo">Cómo funciona</a>
@@ -1307,7 +1321,7 @@
   <div class="wrap hero-grid">
     <div>
       <h1>El punto de venta que entiende cómo se vende ropa</h1>
-      <p class="lead">Vende, aparta, da crédito y controla tu inventario desde un solo lugar — pensado para boutiques, no adaptado de un sistema genérico.</p>
+      <p class="lead">Vende, aparta, da crédito y controla tu inventario desde un solo lugar. PuntoTeck está pensado para boutiques y las necesidades reales de este tipo de negocio.</p>
       <div class="hero-ctas">
         <a class="btn-primaria" href="#contacto">Agendar demo</a>
         <a class="btn-secundaria" href="#flujo">Ver cómo funciona</a>
@@ -1529,7 +1543,7 @@
   <div class="wrap">
     <div class="section-intro revelar">
       <h2>Un día completo de venta, sin salir del <span class="marcador">mismo sistema</span></h2>
-      <p>Así se ve el flujo real de una boutique — desde que se abre la caja hasta que se cuadra en la noche.</p>
+      <p>Así se ve el flujo real de una boutique, desde que se abre la caja hasta que se cuadra en la noche.</p>
     </div>
 
     <div class="pasos">
@@ -1544,7 +1558,7 @@
         <div class="paso-num">2</div>
         <div class="paso-contenido">
           <h3>Vender</h3>
-          <p>Escaneo por código de barras, búsqueda por nombre o talla, y ticket impreso al instante — el inventario se descuenta solo.</p>
+          <p>Escaneo por código de barras, búsqueda por nombre o talla, y ticket impreso al instante. El inventario se descuenta solo.</p>
         </div>
       </div>
       <div class="paso">
@@ -1565,7 +1579,7 @@
         <div class="paso-num">5</div>
         <div class="paso-contenido">
           <h3>Cortar caja</h3>
-          <p>Al cierre, el corte separa automáticamente lo que entró por ventas, créditos y apartados — sin sumar nada a mano.</p>
+          <p>Al cierre, el corte separa automáticamente lo que entró por ventas, créditos y apartados, sin sumar nada a mano.</p>
         </div>
       </div>
     </div>
@@ -1575,7 +1589,7 @@
       <div class="flujo-extra-texto">
         <span class="flujo-extra-tag">Bonus, no letra chiquita</span>
         <h3>Tu boutique también vive en internet, sin que muevas un dedo</h3>
-        <p>Cada producto que cargas a tu inventario aparece automáticamente en tu propia página web pública — con foto, precio y disponibilidad siempre al día.</p>
+        <p>Cada producto que cargas a tu inventario aparece automáticamente en tu propia página web pública, con foto, precio y disponibilidad siempre al día.</p>
         <ul class="flujo-extra-lista">
           <li>Se ve bien en el teléfono, en tablet y en computadora, sin configurar nada.</li>
           <li>Elige entre varias plantillas listas para boutiques de ropa y cámbiala cuando quieras.</li>
@@ -1606,7 +1620,7 @@
     <div class="corte">CONFIANZA</div>
     <div class="section-intro revelar">
       <h2>Lo que nos importa que sepas <span class="marcador">antes de empezar</span></h2>
-      <p>PuntoTeck se construyó viendo trabajar boutiques reales — por eso hay reglas que no negociamos. Así se ve una boutique trabajando con PuntoTeck todos los días; gira el carrusel o toca la foto de en medio para verla en grande.</p>
+      <p>PuntoTeck se construyó viendo trabajar boutiques reales. Por eso hay reglas que no negociamos. Así se ve una boutique trabajando con PuntoTeck todos los días.</p>
     </div>
 
     <div class="cf-carrusel revelar" id="cfCarrusel">
@@ -1644,7 +1658,7 @@
       </div>
       <div class="confianza-item">
         <h3>Sin letra chiquita</h3>
-        <p>Si en algún momento activas una función con costo adicional, lo vas a ver claramente reflejado antes de que se cobre — nunca como sorpresa a fin de mes.</p>
+        <p>Si en algún momento activas una función con costo adicional, lo vas a ver claramente reflejado antes de que se cobre, nunca como sorpresa a fin de mes.</p>
       </div>
       <div class="confianza-item">
         <h3>Tú decides qué activar</h3>
@@ -1663,7 +1677,7 @@
     <div class="corte revelar">MEMBRESÍAS</div>
     <div class="section-intro revelar">
       <h2>Una membresía, <span class="marcador">todo incluido</span></h2>
-      <p>Vende, aparta, da crédito, controla tu inventario y ten tu página web — todo dentro del mismo precio, sin funciones escondidas ni cobros sorpresa.</p>
+      <p>Vende, aparta, da crédito, controla tu inventario y ten tu página web: todo dentro del mismo precio, sin funciones escondidas ni cobros sorpresa.</p>
     </div>
 
     <!-- MODIFICADO: precios provisionales (299/2400) — Jorge los actualizará después.
@@ -1752,7 +1766,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="footer-marca">Punto<span>Teck</span></div>
+        <div class="footer-marca"><img src="images/logo.jpeg" alt="PuntoTeck"></div>
         <p class="footer-desc">El sistema de punto de venta y administración pensado para boutiques de ropa: vende, aparta, da crédito y controla tu inventario desde un solo lugar.</p>
         <div class="footer-badge"><span class="dot"></span> Hecho para boutiques mexicanas</div>
       </div>
@@ -1772,6 +1786,7 @@
         <a href="mailto:informespuntoteck@gmail.com">informespuntoteck@gmail.com</a>
         <a href="tel:+522361112213">+52 1 236 111 2213</a>
         <a href="https://wa.me/5212361112213" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        <a href="https://www.instagram.com/punto_teck/" target="_blank" rel="noopener">Instagram</a>
       </div>
     </div>
     <div class="footer-base">
