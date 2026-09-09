@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Términos y Condiciones — PuntoTeck</title>
+<title>Términos y Condiciones | PuntoTeck</title>
 <meta name="description" content="Términos y condiciones de uso del servicio PuntoTeck, sistema de punto de venta para boutiques de ropa.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500;1,600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --lino:#F7F7F5; --lino-alt:#EEEEEA;
@@ -16,7 +16,7 @@
     --ciruela:#059669; --ciruela-oscura:#047857;
     --ambar:#D97706; --azul:#2563EB; --danger:#DC2626;
     --papel:#FFFFFF; --borde:#DEDEDA;
-    --serif:'Fraunces', serif; --sans:'Inter','Work Sans', sans-serif; --mono:'IBM Plex Mono', monospace;
+    --serif:'Montserrat', sans-serif; --sans:'Montserrat', sans-serif; --mono:'IBM Plex Mono', monospace;
     --max:880px;
   }
   *{ box-sizing:border-box; }
@@ -32,7 +32,8 @@
     padding:18px 0;
   }
   header .wrap{ display:flex; align-items:center; justify-content:space-between; max-width:1120px; }
-  .marca{ font-family:var(--serif); font-weight:600; font-size:1.3rem; color:var(--tinta); text-decoration:none; }
+  .marca{ display:flex; align-items:center; text-decoration:none; }
+  .marca img{ height:40px; width:auto; display:block; border-radius:8px; }
   .marca span{ color:var(--ciruela); }
   .volver{
     font-size:0.9rem; font-weight:600; color:var(--tinta-suave); text-decoration:none;
@@ -112,7 +113,7 @@
 
 <header>
   <div class="wrap">
-    <a class="marca" href="index.html">Punto<span>Teck</span></a>
+    <a class="marca" href="index.html"><img src="images/logo.jpeg" alt="PuntoTeck"></a>
     <a class="volver" href="index.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       Volver al inicio
