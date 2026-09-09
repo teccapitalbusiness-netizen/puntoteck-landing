@@ -710,11 +710,36 @@
   }
   .telefono-marco{
     width:200px; background:#0c0e11; border-radius:32px; padding:12px 10px;
-    box-shadow:0 30px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.05) inset;
+    border:1.5px solid rgba(5,150,105,0.5);
+    box-shadow:
+      0 30px 60px rgba(0,0,0,0.45),
+      0 0 0 1px rgba(255,255,255,0.05) inset,
+      0 0 0 5px rgba(5,150,105,0.08),
+      0 0 34px rgba(5,150,105,0.4),
+      0 0 80px rgba(5,150,105,0.22);
     transform:rotateY(-8deg) rotateX(3deg);
     transition:transform .5s cubic-bezier(.22,.9,.28,1);
     transform-style:preserve-3d;
     will-change:transform;
+    animation:telefono-resplandor 2.6s ease-in-out infinite alternate;
+  }
+  @keyframes telefono-resplandor{
+    0%{
+      box-shadow:
+        0 30px 60px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(255,255,255,0.05) inset,
+        0 0 0 5px rgba(5,150,105,0.08),
+        0 0 34px rgba(5,150,105,0.35),
+        0 0 80px rgba(5,150,105,0.18);
+    }
+    100%{
+      box-shadow:
+        0 30px 60px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(255,255,255,0.05) inset,
+        0 0 0 6px rgba(5,150,105,0.13),
+        0 0 46px rgba(5,150,105,0.55),
+        0 0 100px rgba(5,150,105,0.3);
+    }
   }
   .telefono-notch{
     width:56px; height:16px; background:#0c0e11; border-radius:0 0 12px 12px;
@@ -753,7 +778,7 @@
   @media (prefers-reduced-motion: reduce){
     .telefono{ animation:none; }
     .telefono-pista{ animation:none; }
-    .telefono-marco{ transition:none; }
+    .telefono-marco{ transition:none; animation:none; }
   }
   .paso-contenido p{ color:var(--tinta-suave); max-width:56ch; }
 
