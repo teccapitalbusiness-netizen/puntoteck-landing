@@ -1131,6 +1131,35 @@
   .footer-red{
     position:absolute; inset:0; z-index:0; opacity:0.55; pointer-events:none;
   }
+  /* MODIFICADO: movimiento continuo en el fondo del footer */
+  .footer-red{ animation:constelacion-deriva 50s ease-in-out infinite; }
+  @keyframes constelacion-deriva{
+    0%, 100%{ transform:translate(0, 0) scale(1); }
+    50%{ transform:translate(-12px, 6px) scale(1.015); }
+  }
+  .footer-red circle{
+    animation:estrella-brillo 3.6s ease-in-out infinite;
+    transform-origin:center; transform-box:fill-box;
+  }
+  .footer-red circle:nth-child(2n){ animation-duration:4.4s; animation-delay:-0.8s; }
+  .footer-red circle:nth-child(3n){ animation-duration:2.9s; animation-delay:-1.6s; }
+  .footer-red circle:nth-child(4n+1){ animation-delay:-2.4s; }
+  @keyframes estrella-brillo{
+    0%, 100%{ opacity:0.4; transform:scale(1); }
+    50%{ opacity:1; transform:scale(1.7); }
+  }
+  .footer-red line{
+    animation:linea-pulso 5.5s ease-in-out infinite;
+  }
+  .footer-red line:nth-child(2n){ animation-duration:6.8s; animation-delay:-1.2s; }
+  .footer-red line:nth-child(3n){ animation-delay:-2.4s; }
+  @keyframes linea-pulso{
+    0%, 100%{ opacity:0.45; }
+    50%{ opacity:1; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .footer-red, .footer-red circle, .footer-red line{ animation:none; }
+  }
   .footer-grid{
     display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px;
     padding-bottom:48px;
@@ -1297,7 +1326,7 @@
 
 <header>
   <nav class="wrap nav">
-    <div class="marca"><img src="images/logo.jpeg" alt="PuntoTeck">Punto<span>Teck</span></div>
+    <div class="marca"><img src="images/logo.jpeg" alt="PuntoTeck"><span class="marca-texto">Punto<span>Teck</span></span></div>
     <div class="nav-links">
       <a href="#historias">Historias</a>
       <a href="#flujo">Cómo funciona</a>
@@ -1766,7 +1795,7 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="footer-marca"><img src="images/logo.jpeg" alt="PuntoTeck">Punto<span>Teck</span></div>
+        <div class="footer-marca"><img src="images/logo.jpeg" alt="PuntoTeck"><span class="marca-texto">Punto<span>Teck</span></span></div>
         <p class="footer-desc">El sistema de punto de venta y administración pensado para boutiques de ropa: vende, aparta, da crédito y controla tu inventario desde un solo lugar.</p>
         <div class="footer-badge"><span class="dot"></span> Hecho para boutiques mexicanas</div>
       </div>
