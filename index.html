@@ -41,12 +41,12 @@
     color:var(--tinta);
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
-    cursor:url('images/puntero.jpeg') 4 4, auto;
+    cursor:url('images/puntero.png') 4 4, auto;
   }
   /* MODIFICADO: cursor personalizado también sobre los elementos que fuerzan cursor:pointer */
   a, button, [role="button"], .carta-pantalla, .cf-tarjeta, .cf-flecha, .cf-punto,
   .lightbox-cerrar, .modal-cerrar, .whatsapp-flotante, .nav-toggle{
-    cursor:url('images/puntero.jpeg') 4 4, pointer;
+    cursor:url('images/puntero.png') 4 4, pointer;
   }
   img,svg{display:block; max-width:100%;}
   a{color:inherit;}
@@ -73,7 +73,7 @@
     font-family:var(--serif); font-weight:800; font-size:1.35rem; letter-spacing:-0.01em;
     display:flex; align-items:center; gap:10px; color:var(--tinta);
   }
-  .marca span{color:var(--ciruela);}
+  .marca-texto > span{color:var(--ciruela);}
   .marca img{ height:42px; width:42px; object-fit:cover; display:block; border-radius:9px; }
   .nav-links{
     display:flex; gap:32px; font-size:0.95rem;
@@ -1203,7 +1203,7 @@
   }
   .footer-marca{ display:flex; align-items:center; gap:8px; font-family:var(--serif); font-weight:600; font-size:1.15rem; color:var(--papel); margin-bottom:16px; }
   .footer-marca img{ height:48px; width:48px; object-fit:cover; display:block; border-radius:11px; }
-  .footer-marca span{ color:var(--ciruela); }
+  .footer-marca .marca-texto > span{ color:var(--ciruela); }
   .footer-desc{ font-size:0.9rem; line-height:1.6; max-width:32ch; margin-bottom:20px; }
   .footer-badge{
     display:inline-flex; align-items:center; gap:8px;
@@ -1371,7 +1371,7 @@
       <a href="#precios">Precios</a>
       <a href="#contacto">Contacto</a>
     </div>
-    <a class="nav-cta" href="#contacto">Agendar demo</a>
+    <a class="nav-cta" href="#precios">Agendar demo</a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
   </nav>
   <div class="nav-mobile" id="navMobile">
@@ -1389,7 +1389,7 @@
       <h1>El punto de venta que entiende cómo se vende ropa</h1>
       <p class="lead">Vende, aparta, da crédito y controla tu inventario desde un solo lugar. PuntoTeck está pensado para boutiques y las necesidades reales de este tipo de negocio.</p>
       <div class="hero-ctas">
-        <a class="btn-primaria" href="#contacto">Agendar demo</a>
+        <a class="btn-primaria" href="#precios">Agendar demo</a>
         <a class="btn-secundaria" href="#flujo">Ver cómo funciona</a>
       </div>
       <p class="hero-nota">Funciona en tienda física y en línea, todo desde el mismo sistema.</p>
@@ -1865,6 +1865,7 @@
         <a href="tel:+522361112213">+52 1 236 111 2213</a>
         <a href="https://wa.me/5212361112213" target="_blank" rel="noopener">Escribir por WhatsApp</a>
         <a href="https://www.instagram.com/punto_teck/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/people/PuntoTeck/61594111229953/" target="_blank" rel="noopener">Facebook</a>
       </div>
     </div>
     <div class="footer-base">
