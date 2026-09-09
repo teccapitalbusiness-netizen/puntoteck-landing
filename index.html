@@ -530,19 +530,34 @@
   }
   @media (max-width:680px){
     .insignia{ display:none; }
-    .escritorio-envoltura{ height:366px; overflow:hidden; }
-    .escritorio-centrador{ transform:translateX(-50%) scale(0.85); }
+    .escritorio-envoltura{ overflow:hidden; height:409px; }
+    .escritorio-centrador{ transform:translateX(-50%) scale(0.95); }
+    .ticket-holder{ min-height:425px; }
+  }
+  @media (max-width:600px){
+    .escritorio-centrador{ transform:translateX(-50%) scale(0.86); }
+    .escritorio-envoltura{ height:370px; }
     .ticket-holder{ min-height:385px; }
   }
-  @media (max-width:520px){
-    .escritorio-centrador{ transform:translateX(-50%) scale(0.64); }
-    .escritorio-envoltura{ height:275px; }
-    .ticket-holder{ min-height:295px; }
+  @media (max-width:512px){
+    .escritorio-centrador{ transform:translateX(-50%) scale(0.74); }
+    .escritorio-envoltura{ height:318px; }
+    .ticket-holder{ min-height:335px; }
   }
-  @media (max-width:400px){
-    .escritorio-centrador{ transform:translateX(-50%) scale(0.56); }
-    .escritorio-envoltura{ height:241px; }
-    .ticket-holder{ min-height:260px; }
+  @media (max-width:448px){
+    .escritorio-centrador{ transform:translateX(-50%) scale(0.66); }
+    .escritorio-envoltura{ height:284px; }
+    .ticket-holder{ min-height:300px; }
+  }
+  @media (max-width:404px){
+    .escritorio-centrador{ transform:translateX(-50%) scale(0.58); }
+    .escritorio-envoltura{ height:250px; }
+    .ticket-holder{ min-height:266px; }
+  }
+  @media (max-width:361px){
+    .escritorio-centrador{ transform:translateX(-50%) scale(0.5); }
+    .escritorio-envoltura{ height:215px; }
+    .ticket-holder{ min-height:232px; }
   }
   .ticket{
     position:absolute; top:2px; right:0;
@@ -662,6 +677,20 @@
   #pantallas{
     background:linear-gradient(180deg, var(--lino) 0%, rgba(37,99,235,0.05) 45%, rgba(5,150,105,0.05) 100%);
   }
+  /* MODIFICADO: título con resaltado tipo marcador */
+  .intro-pantallas h2{ font-size:clamp(2rem, 3.4vw, 2.8rem); }
+  .marcador{
+    position:relative; white-space:nowrap;
+    font-style:italic; color:var(--ciruela-oscura);
+  }
+  .marcador::after{
+    content:''; position:absolute; left:-4px; right:-4px; bottom:2px;
+    height:0.42em; z-index:-1;
+    background:linear-gradient(100deg, rgba(5,150,105,0.22) 0%, rgba(217,119,6,0.20) 100%);
+    border-radius:4px;
+    transform:skewX(-8deg) rotate(-1deg);
+  }
+  .intro-pantallas p strong{ color:var(--ciruela); font-weight:600; }
   .baraja{
     position:relative;
     height:420px;
@@ -773,6 +802,60 @@
   @media (prefers-reduced-motion: reduce){
     .carta-pantalla{ transition:none; }
   }
+
+  /* MODIFICADO: lightbox para ver cada pantalla en grande */
+  .lightbox-pantalla{
+    position:fixed; inset:0; z-index:220;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+    opacity:0; pointer-events:none;
+    transition:opacity .25s ease;
+  }
+  .lightbox-pantalla.abierto{ opacity:1; pointer-events:auto; }
+  .lightbox-fondo{
+    position:absolute; inset:0;
+    background:rgba(11,25,20,0.72);
+    backdrop-filter:blur(6px);
+  }
+  .lightbox-caja{
+    position:relative; z-index:1;
+    max-width:min(560px, 94vw); max-height:88vh;
+    background:var(--papel); border-radius:20px;
+    border-top:5px solid var(--ciruela);
+    box-shadow:0 40px 90px rgba(0,0,0,0.45);
+    padding:18px 18px 16px;
+    display:flex; flex-direction:column; gap:12px;
+    transform:scale(0.92);
+    transition:transform .25s ease;
+  }
+  .lightbox-pantalla.abierto .lightbox-caja{ transform:scale(1); }
+  .lightbox-caja img{
+    width:100%; max-height:calc(88vh - 110px);
+    object-fit:contain; border-radius:12px; display:block;
+    background:var(--lino);
+  }
+  .lightbox-titulo{
+    font-family:var(--mono); font-size:0.85rem; color:var(--ciruela);
+    text-transform:uppercase; letter-spacing:0.05em;
+    display:flex; align-items:center; gap:8px;
+  }
+  .lightbox-titulo::before{
+    content:''; width:9px; height:9px; border-radius:50%; background:var(--ciruela);
+  }
+  .lightbox-cerrar{
+    position:absolute; top:12px; right:12px; z-index:2;
+    width:36px; height:36px; border-radius:50%;
+    background:var(--lino-alt); color:var(--tinta);
+    border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .2s ease, color .2s ease, transform .3s ease;
+  }
+  .lightbox-cerrar:hover{ background:var(--danger); color:#fff; transform:rotate(90deg); }
+  .lightbox-cerrar svg{ width:17px; height:17px; }
+  @media (prefers-reduced-motion: reduce){
+    .lightbox-pantalla, .lightbox-caja, .lightbox-cerrar{ transition:none; }
+    .lightbox-caja{ transform:none; }
+  }
   .galeria{
     display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:14px;
     height:360px;
@@ -802,8 +885,8 @@
   .confianza-item p{ color:var(--tinta-suave); max-width:44ch; }
 
   @media (max-width:820px){
-    .hero-grid{ grid-template-columns:1fr; }
-    .ticket-holder{ order:-1; margin-bottom:8px; }
+    .hero-grid{ grid-template-columns:1fr; gap:36px; }
+    .ticket-holder{ margin-top:8px; }
     .confianza-grid{ grid-template-columns:1fr; }
   }
 
@@ -1131,9 +1214,9 @@
 <section id="pantallas">
   <div class="wrap">
     <div class="corte revelar">EL SISTEMA POR DENTRO</div>
-    <div class="section-intro revelar">
-      <h2>Cada pantalla, pensada para vender ropa</h2>
-      <p>Del cobro al reporte del mes, así se ve PuntoTeck por dentro. Tócalas para verlas de cerca.</p>
+    <div class="section-intro revelar intro-pantallas">
+      <h2>Cada pantalla, pensada para <span class="marcador">vender ropa</span></h2>
+      <p>Del cobro al reporte del mes, así se ve PuntoTeck por dentro. <strong>Toca cualquier tarjeta para verla en grande.</strong></p>
     </div>
 
     <div class="baraja revelar" id="baraja">
@@ -1299,6 +1382,18 @@
     <span class="modal-tag">Historia de éxito · PuntoTeck</span>
     <div class="modal-cuerpo" id="modalCuerpo"></div>
     <div class="modal-redes" id="modalRedes"></div>
+  </div>
+</div>
+
+<!-- MODIFICADO: lightbox para ver las pantallas del sistema en grande -->
+<div class="lightbox-pantalla" id="lightboxPantalla" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Vista ampliada de pantalla del sistema">
+  <div class="lightbox-fondo" data-lb-cerrar></div>
+  <div class="lightbox-caja">
+    <button class="lightbox-cerrar" type="button" data-lb-cerrar aria-label="Cerrar vista ampliada">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="lightbox-titulo" id="lightboxTitulo">Dashboard</div>
+    <img id="lightboxImagen" src="" alt="">
   </div>
 </div>
 
@@ -1478,10 +1573,42 @@
         activarCarta((idxActivo + 1) % cartas.length);
       }, 2800);
     };
+
+    /* MODIFICADO: lightbox — al presionar una carta se ve en grande */
+    var lb = document.getElementById('lightboxPantalla');
+    var lbImg = document.getElementById('lightboxImagen');
+    var lbTitulo = document.getElementById('lightboxTitulo');
+    var abrirLightbox = function(carta){
+      var img = carta.querySelector('.carta-mock img');
+      var etiqueta = carta.querySelector('.carta-etiqueta');
+      if (!img || !lb) return;
+      lbImg.src = img.getAttribute('src');
+      lbImg.alt = img.getAttribute('alt') || '';
+      lbTitulo.textContent = etiqueta ? etiqueta.textContent : '';
+      lb.classList.add('abierto');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-abierto');
+      clearInterval(temporizador);
+    };
+    var cerrarLightbox = function(){
+      lb.classList.remove('abierto');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-abierto');
+      iniciarAuto();
+    };
+    if (lb){
+      lb.addEventListener('click', function(e){
+        if (e.target.closest('[data-lb-cerrar]')) cerrarLightbox();
+      });
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape' && lb.classList.contains('abierto')) cerrarLightbox();
+      });
+    }
+
     cartas.forEach(function(c, i){
       c.addEventListener('click', function(){
         activarCarta(i);
-        iniciarAuto();
+        abrirLightbox(c);
       });
     });
     iniciarAuto();
