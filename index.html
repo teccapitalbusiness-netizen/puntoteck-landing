@@ -608,13 +608,13 @@
 
   /* ---------- Secciones generales ---------- */
   section{ padding:96px 0; }
-  .section-intro{ max-width:52ch; margin-bottom:56px; }
+  .section-intro{ max-width:54ch; margin-bottom:56px; }
   .section-intro h2{
-    font-family:var(--serif); font-weight:500;
-    font-size:clamp(1.9rem, 3vw, 2.5rem);
-    line-height:1.15;
+    font-family:var(--serif); font-weight:600;
+    font-size:clamp(2.1rem, 3.6vw, 3rem);
+    line-height:1.1; letter-spacing:-0.01em;
   }
-  .section-intro p{ margin-top:16px; color:var(--tinta-suave); font-size:1.05rem; }
+  .section-intro p{ margin-top:18px; color:var(--tinta-suave); font-size:1.1rem; line-height:1.6; }
 
   .corte{
     display:inline-flex; align-items:center; gap:8px;
@@ -674,8 +674,8 @@
     border-radius:999px; padding:6px 14px; margin-bottom:16px;
   }
   .flujo-extra-texto h3{
-    font-family:var(--serif); font-weight:500; color:var(--papel);
-    font-size:clamp(1.4rem, 2.4vw, 1.7rem); line-height:1.25; margin-bottom:14px;
+    font-family:var(--serif); font-weight:600; color:var(--papel);
+    font-size:clamp(1.55rem, 2.7vw, 1.9rem); line-height:1.2; letter-spacing:-0.01em; margin-bottom:14px;
   }
   .flujo-extra-texto > p{ color:rgba(247,247,245,0.68); line-height:1.65; margin-bottom:20px; }
   .flujo-extra-lista{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
@@ -759,7 +759,7 @@
     background:linear-gradient(180deg, var(--lino) 0%, rgba(37,99,235,0.05) 45%, rgba(5,150,105,0.05) 100%);
   }
   /* MODIFICADO: título con resaltado tipo marcador */
-  .intro-pantallas h2{ font-size:clamp(2rem, 3.4vw, 2.8rem); }
+  /* El h2 hereda el tamaño más grande de .section-intro; aquí solo vive el resaltado de marcador */
   .marcador{
     position:relative; white-space:nowrap;
     font-style:italic; color:var(--ciruela-oscura);
@@ -957,7 +957,6 @@
     border-radius:20px; overflow:hidden;
     cursor:pointer;
     box-shadow:0 30px 60px rgba(11,25,20,0.35);
-    transition:transform .65s cubic-bezier(.22,.9,.28,1), filter .65s ease;
     will-change:transform;
   }
   .cf-tarjeta img{
@@ -1463,7 +1462,7 @@
 <section class="flujo" id="flujo">
   <div class="wrap">
     <div class="section-intro revelar">
-      <h2>Un día completo de venta, sin salir del mismo sistema</h2>
+      <h2>Un día completo de venta, sin salir del <span class="marcador">mismo sistema</span></h2>
       <p>Así se ve el flujo real de una boutique — desde que se abre la caja hasta que se cuadra en la noche.</p>
     </div>
 
@@ -1540,7 +1539,7 @@
   <div class="wrap">
     <div class="corte">CONFIANZA</div>
     <div class="section-intro revelar">
-      <h2>Lo que nos importa que sepas antes de empezar</h2>
+      <h2>Lo que nos importa que sepas <span class="marcador">antes de empezar</span></h2>
       <p>PuntoTeck se construyó viendo trabajar boutiques reales — por eso hay reglas que no negociamos. Así se ve una boutique trabajando con PuntoTeck todos los días; gira el carrusel o toca la foto de en medio para verla en grande.</p>
     </div>
 
@@ -1922,7 +1921,7 @@
     iniciarAuto();
   }
 
-  /* MODIFICADO: carrusel 3D tipo coverflow de la sección confianza */
+  /* MODIFICADO: carrusel 3D tipo coverflow de la sección confianza — movimiento continuo, sin pausas */
   var cfPista = document.getElementById('cfPista');
   var cfTarjetas = cfPista ? Array.prototype.slice.call(cfPista.querySelectorAll('.cf-tarjeta')) : [];
   if (cfTarjetas.length){
@@ -1930,8 +1929,7 @@
     var cfEtiquetaPista = document.getElementById('cfEtiquetaPista');
     var cfPuntosCont = document.getElementById('cfPuntos');
     var cfTotal = cfTarjetas.length;
-    var cfActivo = 0;
-    var cfTemporizador = null;
+    var cfMitad = Math.floor(cfTotal / 2);
 
     // Construye una etiqueta y un punto por cada tarjeta
     cfTarjetas.forEach(function(t, i){
@@ -1944,48 +1942,59 @@
       punto.type = 'button';
       punto.className = 'cf-punto';
       punto.setAttribute('aria-label', 'Ir a la foto ' + (i + 1));
-      punto.addEventListener('click', function(){ irA(i); reiniciarAuto(); });
+      punto.addEventListener('click', function(){ irA(i); });
       cfPuntosCont.appendChild(punto);
     });
     var cfEtiquetas = Array.prototype.slice.call(cfEtiquetaPista.children);
     var cfPuntos = Array.prototype.slice.call(cfPuntosCont.children);
 
-    var render = function(){
-      var mitad = Math.floor(cfTotal / 2);
+    // posObjetivo avanza solo con el tiempo (deriva continua) y los clics solo la empujan,
+    // nunca la detienen; posActual la persigue suavizado cuadro por cuadro.
+    var posObjetivo = 0;
+    var posActual = 0;
+    var cfActivo = 0;
+    var anchoPaso = 152;
+
+    var calcularAnchoPaso = function(){
+      var w = window.innerWidth;
+      anchoPaso = w <= 420 ? 92 : (w <= 680 ? 112 : 152);
+    };
+    calcularAnchoPaso();
+
+    var renderContinuo = function(pos){
       cfTarjetas.forEach(function(t, i){
-        var offset = i - cfActivo;
-        while (offset > mitad) offset -= cfTotal;
-        while (offset < -mitad) offset += cfTotal;
+        var offset = i - pos;
+        // Envuelve al representante más cercano dentro de (-mitad, mitad]
+        offset = offset - cfTotal * Math.round(offset / cfTotal);
         var abs = Math.abs(offset);
-        var tx = offset * (window.innerWidth <= 420 ? 92 : window.innerWidth <= 680 ? 112 : 152);
+        var tx = offset * anchoPaso;
         var rot = offset * -30;
-        var escala = 1 - abs * 0.16;
-        var brillo = 1 - abs * 0.24;
+        var escala = Math.max(1 - abs * 0.16, 0.4);
+        var brillo = Math.max(1 - abs * 0.24, 0.4);
         t.style.transform = 'translateX(' + tx + 'px) rotateY(' + rot + 'deg) scale(' + escala + ')';
-        t.style.zIndex = 10 - abs;
-        t.style.filter = 'brightness(' + Math.max(brillo, 0.4) + ')';
-        t.classList.toggle('cf-activa', offset === 0);
+        t.style.zIndex = Math.round(10 - abs);
+        t.style.filter = 'brightness(' + brillo + ')';
       });
-      cfEtiquetas.forEach(function(e, i){ e.classList.toggle('cf-etiqueta-activa', i === cfActivo); });
-      cfPuntos.forEach(function(p, i){ p.classList.toggle('cf-punto-activo', i === cfActivo); });
+      var nuevoActivo = ((Math.round(pos) % cfTotal) + cfTotal) % cfTotal;
+      if (nuevoActivo !== cfActivo || !cfTarjetas[cfActivo].classList.contains('cf-activa')){
+        cfActivo = nuevoActivo;
+        cfTarjetas.forEach(function(t, i){ t.classList.toggle('cf-activa', i === cfActivo); });
+        cfEtiquetas.forEach(function(e, i){ e.classList.toggle('cf-etiqueta-activa', i === cfActivo); });
+        cfPuntos.forEach(function(p, i){ p.classList.toggle('cf-punto-activo', i === cfActivo); });
+      }
     };
 
+    // Empuja el objetivo por el camino más corto hacia el índice i, sin detener la deriva
     var irA = function(i){
-      cfActivo = ((i % cfTotal) + cfTotal) % cfTotal;
-      render();
+      var actualMod = ((posObjetivo % cfTotal) + cfTotal) % cfTotal;
+      var delta = ((i - actualMod + cfMitad + cfTotal) % cfTotal) - cfMitad;
+      posObjetivo += delta;
     };
-    var siguiente = function(){ irA(cfActivo + 1); };
-    var anterior = function(){ irA(cfActivo - 1); };
+    var siguiente = function(){ posObjetivo += 1; };
+    var anterior = function(){ posObjetivo -= 1; };
 
-    var iniciarAutoCarrusel = function(){
-      if (reduceMotion) return;
-      clearInterval(cfTemporizador);
-      cfTemporizador = setInterval(siguiente, 3400);
-    };
-    var reiniciarAuto = function(){ iniciarAutoCarrusel(); };
-
-    cfCarrusel.querySelector('.cf-prev').addEventListener('click', function(){ anterior(); reiniciarAuto(); });
-    cfCarrusel.querySelector('.cf-next').addEventListener('click', function(){ siguiente(); reiniciarAuto(); });
+    cfCarrusel.querySelector('.cf-prev').addEventListener('click', anterior);
+    cfCarrusel.querySelector('.cf-next').addEventListener('click', siguiente);
 
     cfTarjetas.forEach(function(t, i){
       t.addEventListener('click', function(){
@@ -1994,7 +2003,6 @@
           if (img) abrirLightbox(img.getAttribute('src'), img.getAttribute('alt'), t.getAttribute('data-cf-titulo') || '');
         } else {
           irA(i);
-          reiniciarAuto();
         }
       });
     });
@@ -2008,22 +2016,31 @@
       if (delta > 40) anterior();
       else if (delta < -40) siguiente();
       cfInicioX = null;
-      reiniciarAuto();
     });
 
-    cfCarrusel.addEventListener('mouseenter', function(){ clearInterval(cfTemporizador); });
-    cfCarrusel.addEventListener('mouseleave', iniciarAutoCarrusel);
-    window.addEventListener('resize', render);
+    window.addEventListener('resize', calcularAnchoPaso);
 
+    // La deriva automática solo se detiene visualmente fuera de pantalla, por rendimiento —
+    // nunca por hover ni por interacción, tal como se pidió.
+    var cfEnVista = true;
     var obsCarrusel = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if (entry.isIntersecting) iniciarAutoCarrusel();
-        else clearInterval(cfTemporizador);
-      });
-    }, { threshold: 0.35 });
+      entries.forEach(function(entry){ cfEnVista = entry.isIntersecting; });
+    }, { threshold: 0.2 });
     obsCarrusel.observe(cfCarrusel);
 
-    render();
+    var cfVelocidad = 1 / 4200; // una tarjeta cada 4.2s de deriva continua
+    var cfUltimoTiempo = null;
+    var pasoCarrusel = function(t){
+      if (cfUltimoTiempo === null) cfUltimoTiempo = t;
+      var dt = Math.min(t - cfUltimoTiempo, 100);
+      cfUltimoTiempo = t;
+      if (cfEnVista && !reduceMotion) posObjetivo += cfVelocidad * dt;
+      posActual += (posObjetivo - posActual) * Math.min(1, dt / 260);
+      renderContinuo(posActual);
+      requestAnimationFrame(pasoCarrusel);
+    };
+    renderContinuo(0);
+    requestAnimationFrame(pasoCarrusel);
   }
 
   if (reduceMotion) return;
