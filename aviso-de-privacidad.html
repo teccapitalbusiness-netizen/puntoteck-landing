@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aviso de Privacidad — PuntoTeck</title>
+<meta name="description" content="Aviso de privacidad de PuntoTeck conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --lino:#F7F7F5; --lino-alt:#EEEEEA;
+    --tinta:#14161A; --tinta-suave:#5A5F66;
+    --ciruela:#059669; --ciruela-oscura:#047857;
+    --ambar:#D97706; --azul:#2563EB; --danger:#DC2626;
+    --papel:#FFFFFF; --borde:#DEDEDA;
+    --serif:'Fraunces', serif; --sans:'Inter','Work Sans', sans-serif; --mono:'IBM Plex Mono', monospace;
+    --max:880px;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0; font-family:var(--sans); color:var(--tinta); background:var(--lino);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:var(--ciruela); }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 28px; }
+
+  header{
+    background:var(--lino-alt); border-bottom:1px solid var(--borde);
+    padding:18px 0;
+  }
+  header .wrap{ display:flex; align-items:center; justify-content:space-between; max-width:1120px; }
+  .marca{ font-family:var(--serif); font-weight:600; font-size:1.3rem; color:var(--tinta); text-decoration:none; }
+  .marca span{ color:var(--ciruela); }
+  .volver{
+    font-size:0.9rem; font-weight:600; color:var(--tinta-suave); text-decoration:none;
+    display:flex; align-items:center; gap:6px;
+  }
+  .volver:hover{ color:var(--ciruela); }
+  .volver svg{ width:16px; height:16px; }
+
+  main{ padding:64px 0 96px; }
+  .legal-cabecera{ margin-bottom:48px; }
+  .legal-etiqueta{
+    font-family:var(--mono); font-size:0.75rem; color:var(--ciruela);
+    letter-spacing:0.05em; margin-bottom:14px; display:flex; align-items:center; gap:8px;
+  }
+  .legal-etiqueta::before{ content:''; width:8px; height:8px; border-radius:50%; background:var(--ciruela); }
+  h1{
+    font-family:var(--serif); font-weight:500; font-size:clamp(2rem, 4vw, 2.7rem);
+    line-height:1.15; margin:0 0 14px;
+  }
+  .legal-fecha{ color:var(--tinta-suave); font-size:0.95rem; }
+
+  .legal-cuerpo h2{
+    font-family:var(--serif); font-weight:500; font-size:1.4rem;
+    margin:44px 0 14px; padding-top:4px;
+  }
+  .legal-cuerpo h2 .num{ color:var(--ciruela); font-family:var(--mono); font-size:1rem; margin-right:10px; }
+  .legal-cuerpo p{ line-height:1.7; color:var(--tinta-suave); margin:0 0 14px; font-size:1rem; }
+  .legal-cuerpo ul{ margin:0 0 14px; padding-left:22px; color:var(--tinta-suave); line-height:1.7; }
+  .legal-cuerpo li{ margin-bottom:6px; }
+  .legal-cuerpo strong{ color:var(--tinta); font-weight:600; }
+
+  .tabla-datos{
+    width:100%; border-collapse:collapse; margin:0 0 20px;
+    font-size:0.92rem; background:var(--papel); border-radius:12px; overflow:hidden;
+    box-shadow:0 8px 22px rgba(20,22,26,0.06);
+  }
+  .tabla-datos th, .tabla-datos td{ text-align:left; padding:12px 16px; border-bottom:1px solid var(--borde); }
+  .tabla-datos th{ font-family:var(--mono); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.04em; color:var(--ciruela); background:var(--lino-alt); }
+  .tabla-datos td{ color:var(--tinta-suave); }
+  .tabla-datos tr:last-child td{ border-bottom:none; }
+
+  .legal-aviso{
+    background:var(--papel); border-left:3px solid var(--ambar);
+    border-radius:0 12px 12px 0; padding:18px 22px; margin:36px 0;
+    font-size:0.92rem; color:var(--tinta-suave); line-height:1.6;
+  }
+  .legal-contacto{
+    background:var(--papel); border-radius:16px; padding:26px 28px; margin-top:40px;
+    box-shadow:0 12px 30px rgba(20,22,26,0.06);
+  }
+  .legal-contacto h2{ margin-top:0; }
+  .legal-contacto a{ font-weight:600; text-decoration:none; }
+  .legal-contacto a:hover{ text-decoration:underline; }
+
+  footer{
+    background:var(--lino-alt); border-top:1px solid var(--borde);
+    padding:26px 0; margin-top:0;
+  }
+  footer .wrap{
+    max-width:1120px; display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:10px; font-size:0.85rem; color:var(--tinta-suave);
+  }
+  footer a{ color:var(--tinta-suave); text-decoration:none; }
+  footer a:hover{ color:var(--ciruela); }
+  .footer-links{ display:flex; gap:18px; flex-wrap:wrap; }
+
+  .whatsapp-flotante{
+    position:fixed; right:22px; bottom:22px; z-index:190;
+    width:58px; height:58px; border-radius:50%;
+    background:#25D366;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 26px rgba(20,22,26,0.28);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .whatsapp-flotante:hover{ transform:scale(1.08); }
+  .whatsapp-flotante svg{ width:30px; height:30px; }
+
+  @media (max-width:600px){
+    .legal-cuerpo h2{ font-size:1.2rem; }
+    main{ padding:44px 0 72px; }
+    .tabla-datos{ font-size:0.82rem; }
+    .tabla-datos th, .tabla-datos td{ padding:10px 12px; }
+    .whatsapp-flotante{ right:16px; bottom:16px; width:52px; height:52px; }
+    .whatsapp-flotante svg{ width:27px; height:27px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="marca" href="index.html">Punto<span>Teck</span></a>
+    <a class="volver" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      Volver al inicio
+    </a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap legal-cuerpo">
+    <div class="legal-cabecera">
+      <div class="legal-etiqueta">DOCUMENTO LEGAL</div>
+      <h1>Aviso de privacidad</h1>
+      <div class="legal-fecha">Última actualización: septiembre de 2026</div>
+    </div>
+
+    <p>De conformidad con lo dispuesto por la <strong>Ley Federal de Protección de Datos Personales en Posesión de los Particulares</strong> (LFPDPPP) y su Reglamento, <strong>TEC CAPITAL Group</strong>, operador de <strong>PuntoTeck</strong>, pone a tu disposición el presente Aviso de Privacidad.</p>
+
+    <h2><span class="num">01</span>Responsable del tratamiento</h2>
+    <p>TEC CAPITAL Group, con domicilio en Tehuacán, Puebla, México, es responsable del tratamiento de los datos personales que se recaban a través del sitio web de PuntoTeck, del propio sistema de punto de venta y de los canales de contacto asociados (correo electrónico, WhatsApp y formularios de contacto).</p>
+
+    <h2><span class="num">02</span>Datos personales que recabamos</h2>
+    <p>Dependiendo de tu relación con PuntoTeck (visitante del sitio, prospecto o usuario del sistema), podemos recabar los siguientes datos:</p>
+    <table class="tabla-datos">
+      <tr><th>Categoría</th><th>Ejemplos</th></tr>
+      <tr><td>Datos de identificación y contacto</td><td>Nombre, correo electrónico, teléfono, nombre del negocio</td></tr>
+      <tr><td>Datos de la cuenta</td><td>Usuario, contraseña (almacenada de forma cifrada), plan contratado</td></tr>
+      <tr><td>Datos operativos del negocio</td><td>Catálogo de productos, inventario, ventas, apartados y créditos que tú mismo registras en el sistema</td></tr>
+      <tr><td>Datos de clientes de tu boutique</td><td>Nombre y contacto de tus clientes, cuando tú los registras para apartados o crédito</td></tr>
+      <tr><td>Datos de navegación</td><td>Dirección IP, tipo de dispositivo, páginas visitadas, mediante cookies y tecnologías similares</td></tr>
+    </table>
+    <p>No solicitamos ni recabamos datos personales sensibles (salud, origen étnico, creencias religiosas, etc.) como parte del funcionamiento normal del servicio.</p>
+
+    <h2><span class="num">03</span>Finalidades del tratamiento</h2>
+    <p><strong>Finalidades primarias</strong> (necesarias para prestarte el servicio):</p>
+    <ul>
+      <li>Crear y administrar tu cuenta en PuntoTeck.</li>
+      <li>Procesar tus ventas, apartados, créditos e inventario dentro del sistema.</li>
+      <li>Brindarte soporte técnico y atención a solicitudes.</li>
+      <li>Facturar y procesar pagos por el uso del servicio.</li>
+      <li>Generar tu página web pública, cuando el plan contratado incluya esta función.</li>
+    </ul>
+    <p><strong>Finalidades secundarias</strong> (puedes oponerte a estas sin afectar el servicio):</p>
+    <ul>
+      <li>Enviarte novedades, promociones o contenido informativo sobre PuntoTeck.</li>
+      <li>Realizar estudios internos sobre el uso de la plataforma para mejorarla.</li>
+    </ul>
+    <p>Si no deseas que tus datos se utilicen para las finalidades secundarias, puedes solicitarlo escribiendo a <a href="mailto:informespuntoteck@gmail.com">informespuntoteck@gmail.com</a>.</p>
+
+    <h2><span class="num">04</span>Transferencia de datos</h2>
+    <p>Tus datos personales no se venden ni se comparten con terceros ajenos a la operación del servicio. Podemos compartir información estrictamente necesaria con proveedores que nos ayudan a operar PuntoTeck (por ejemplo, servicios de hospedaje, procesamiento de pagos o mensajería), quienes están obligados contractualmente a proteger tus datos y utilizarlos únicamente para el fin encomendado.</p>
+    <p>También podremos compartir información cuando así lo requiera una autoridad competente, de conformidad con la legislación aplicable.</p>
+
+    <h2><span class="num">05</span>Derechos ARCO</h2>
+    <p>Tienes derecho a <strong>Acceder</strong> a tus datos personales, <strong>Rectificarlos</strong> si son inexactos, <strong>Cancelarlos</strong> cuando consideres que no se requieren para alguna de las finalidades señaladas, u <strong>Oponerte</strong> al tratamiento de los mismos para fines específicos (derechos ARCO).</p>
+    <p>Para ejercer estos derechos, envía tu solicitud a <a href="mailto:informespuntoteck@gmail.com">informespuntoteck@gmail.com</a> indicando tu nombre completo, el derecho que deseas ejercer y una descripción clara de tu solicitud. Te responderemos dentro de los plazos que marca la ley.</p>
+
+    <h2><span class="num">06</span>Uso de cookies</h2>
+    <p>El sitio web de PuntoTeck puede utilizar cookies y tecnologías similares para recordar tus preferencias, entender cómo se usa el sitio y mejorar tu experiencia de navegación. Puedes deshabilitar las cookies desde la configuración de tu navegador; esto podría afectar algunas funciones del sitio.</p>
+
+    <h2><span class="num">07</span>Medidas de seguridad</h2>
+    <p>Implementamos medidas administrativas y técnicas razonables para proteger tus datos personales contra daño, pérdida, alteración, acceso o tratamiento no autorizado, incluyendo el cifrado de contraseñas y controles de acceso a la información.</p>
+
+    <h2><span class="num">08</span>Cambios a este aviso</h2>
+    <p>Este Aviso de Privacidad puede actualizarse para reflejar cambios en nuestras prácticas o en la legislación aplicable. Cualquier modificación será publicada en esta misma página, indicando la fecha de la última actualización.</p>
+
+    <div class="legal-aviso">
+      Este documento es una versión inicial de trabajo, elaborada como punto de partida conforme a la LFPDPPP. TEC CAPITAL Group recomienda que sea revisado por un abogado especializado en protección de datos antes de su publicación definitiva.
+    </div>
+
+    <div class="legal-contacto">
+      <h2 style="margin-top:0;">¿Dudas sobre tus datos personales?</h2>
+      <p style="margin-bottom:0;">Escríbenos a <a href="mailto:informespuntoteck@gmail.com">informespuntoteck@gmail.com</a> o al <a href="tel:+522361112213">+52 1 236 111 2213</a>.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>PuntoTeck — un desarrollo de TEC CAPITAL WEB</div>
+    <div class="footer-links">
+      <a href="index.html">Inicio</a>
+      <a href="terminos-y-condiciones.html">Términos y condiciones</a>
+      <a href="aviso-de-privacidad.html">Aviso de privacidad</a>
+    </div>
+  </div>
+</footer>
+
+<a class="whatsapp-flotante" href="https://wa.me/5212361112213" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.386.703 4.605 1.912 6.47L4 29l7.72-1.876A11.93 11.93 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3Zm0 21.75a9.7 9.7 0 0 1-4.95-1.354l-.355-.21-4.584 1.114 1.135-4.47-.232-.366A9.68 9.68 0 0 1 5.25 15c0-5.93 4.823-10.75 10.754-10.75S26.758 9.07 26.758 15 21.935 24.75 16.004 24.75Zm5.55-7.98c-.304-.152-1.797-.888-2.076-.99-.279-.102-.482-.152-.686.152-.203.305-.787.99-.965 1.192-.178.203-.355.229-.66.076-.304-.152-1.283-.473-2.444-1.51-.904-.807-1.514-1.804-1.692-2.108-.178-.305-.019-.47.133-.622.137-.136.304-.355.457-.533.152-.178.203-.305.304-.508.102-.203.05-.381-.025-.533-.076-.152-.686-1.654-.94-2.266-.248-.596-.5-.516-.686-.526l-.584-.01c-.203 0-.533.076-.812.381-.279.305-1.066 1.042-1.066 2.542s1.092 2.95 1.244 3.153c.152.203 2.148 3.28 5.204 4.6.727.314 1.294.501 1.736.641.729.232 1.393.199 1.918.121.585-.087 1.797-.735 2.05-1.445.254-.71.254-1.318.178-1.445-.076-.127-.279-.203-.584-.355Z"/></svg>
+</a>
+
+</body>
+</html>
