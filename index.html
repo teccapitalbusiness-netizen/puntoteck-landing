@@ -1173,6 +1173,16 @@
     margin-left:4px;
   }
   .precio-destacada .precio-periodo{ color:rgba(247,247,245,0.55); }
+  /* MODIFICADO: insignia de 14 días de prueba gratis, en tono ámbar */
+  .precio-prueba{
+    display:inline-flex; align-items:center; gap:7px;
+    background:rgba(217,119,6,0.13); color:#A15A05;
+    font-size:0.82rem; font-weight:700;
+    padding:7px 14px; border-radius:999px;
+    margin-bottom:22px;
+  }
+  .precio-prueba svg{ width:15px; height:15px; flex-shrink:0; }
+  .precio-destacada .precio-prueba{ background:rgba(217,119,6,0.24); color:#F5A94B; }
   .precio-lista{ list-style:none; margin:0 0 30px; padding:0; flex:1; display:flex; flex-direction:column; gap:13px; }
   .precio-lista li{
     position:relative; padding-left:26px; font-size:0.94rem; color:var(--tinta-suave); line-height:1.4;
@@ -1783,7 +1793,7 @@
         <div class="cf-tarjeta" data-cf-titulo="Etiquetas con código de barras, listas para vender">
           <img src="images/detalle-etiqueta.png" alt="Etiqueta de PuntoTeck con código de barras sobre una prenda doblada" loading="lazy">
         </div>
-        <div class="cf-tarjeta" data-cf-titulo="Tu tienda en línea, siempre abierta">
+        <div class="cf-tarjeta" data-cf-titulo="Tu página web, siempre abierta">
           <img src="images/vista-pagweb.png" alt="Página web de la boutique generada por PuntoTeck, vista desde una tablet" loading="lazy">
         </div>
       </div>
@@ -1839,6 +1849,10 @@
         <div class="precio-cifra">
           <span class="precio-moneda">$</span>299<span class="precio-periodo">MXN / mes</span>
         </div>
+        <div class="precio-prueba">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="m9 16 2 2 4-4"/></svg>
+          14 días de prueba gratis
+        </div>
         <ul class="precio-lista">
           <li>Punto de venta ilimitado</li>
           <li>Apartados y crédito a clientas</li>
@@ -1858,6 +1872,10 @@
         </div>
         <div class="precio-cifra">
           <span class="precio-moneda">$</span>2,400<span class="precio-periodo">MXN / año</span>
+        </div>
+        <div class="precio-prueba">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/><path d="m9 16 2 2 4-4"/></svg>
+          14 días de prueba gratis
         </div>
         <ul class="precio-lista">
           <li>Punto de venta ilimitado</li>
